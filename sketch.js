@@ -262,7 +262,7 @@ function draw() {
 
 }
 
-// function tank(datos, coordenadas) {
+function tank(datos) {
 
 //   this.lat = coordenadas.lat;
 //   this.lng = coordenadas.lng;
@@ -274,7 +274,8 @@ function draw() {
 //     textAlign(CENTER, BOTTOM);
 //     text(this.nombre, datos.x, datos.y - 10)
 //   }
-// }
+return
+}
 
 function keyPressed() {
   switch (key) {
