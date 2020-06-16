@@ -1,0 +1,247 @@
+//Data loading settings
+let table;
+let tableObject;
+let url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3WkkXWxUp3TXEBsqGeeAtuMNKwVu3ZPASyzY8C43B5fWEyKqp2Xs0sEcM3_VXy_eoJNI_a8Mo8aiN/pub?gid=182439664&single=true&output=csv"
+let data = [];
+
+//Map settings
+let AMIGA_Map;
+let canvas;
+const mappa = new Mappa('Leaflet');
+
+//GUI settings
+// var strokeWidth = 1;
+// var strokeColor = '#FFFFFF';
+var item = ['ip', 'cap_hs', 'radio_status', 'front_end', 'amiga_box','bbox', 'terminado'];
+var showLabel = false;
+var showName = false;
+var	showLSID = true;
+var	showUC = false;
+var radius = 2;
+
+// gui
+var visible = true;
+var gui;
+
+// Lets put all our map options in a single object
+
+const options = {
+  lat: -35.110417,
+  lng: -69.537750,
+  zoom: 13,
+  style: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}
+
+const malargue = {
+  // Malargue coords: -35.46667,-69.58333
+  lat: -35.46667,
+  lng: -69.58333,
+}
+
+function preload(){
+table = loadTable(url, "csv", "header");
+}
+
+function setup() {
+  textAlign(CENTER, CENTER);
+  canvas = createCanvas(640, 640);
+  frameRate(5);
+
+  // Create Layout GUI
+  gui = createGui();
+  gui.setPosition(650,100);
+  sliderRange(0.5, 4, 0.1);
+  gui.addGlobals('item', 'showLSID', 'showName', 'showLabel', 'showUC', 'radius');
+  
+  console.log(table);
+  // tableObject = table.getObject();
+  // Create a tile map with the options declared
+  AMIGA_Map = mappa.tileMap(options);
+  AMIGA_Map.overlay(canvas);
+
+  for (let row of table.rows) {
+    let name = row.get('SD');
+    let lsid = row.get('LSID');
+    
+    let ip = row.get('IP');
+
+    let amiga_box = row.get('AMIGA_Box');
+    let cap_hs = row.get('Cap_HS');
+    let terminado = row.get('Terminado');
+    let radio_status = row.get('Radio_Status');
+    
+    let utmz = 19;
+    let easting = Number(row.get('LAT'));
+    let northing = Number(row.get('LON')) - 10000000;
+
+    var utm = new UTMConv.UTMCoords(utmz, easting, northing);
+    var degd = utm.to_deg();
+    var pos = {
+      lat : degd.latd,
+      lng : degd.lngd
+    }
+
+    data.push({name, lsid, pos, cap_hs, amiga_box, terminado, radio_status, ip});
+  }
+  console.log(data);
+}
+
+function draw() {
+  clear();
+  
+  const zoom = AMIGA_Map.zoom();
+  const scl = pow(2, zoom);
+  const scl2 = 0.0002;
+  const offset = radius * 1.5;
+ 
+  for (elt of data){
+    let caseLabel = "_";
+    
+    switch(item) {
+
+		  case 'amiga_box':
+        caseLabel = elt.amiga_box; 
+		    if(caseLabel !== "" && caseLabel !== "-"){
+          fill(0,200,0);
+         }
+         else{
+           fill(200);
+         }
+		    break;
+
+		  case 'cap_hs':
+        caseLabel = elt.cap_hs;
+		    if(caseLabel === "OK"){
+          fill(0,220,220);
+         }
+         else if(caseLabel === "CAP"){
+          fill(220,0,0);
+         }
+         else{
+           fill(220);
+         }
+        break;
+      
+      case 'terminado':
+        caseLabel = elt.terminado;
+		    if(caseLabel === "Terminado"){
+          fill(0,220,0);
+         }
+         else{
+           fill(230);
+         }
+        break;
+        
+      case 'radio_status':
+        caseLabel = elt.radio_status;
+		    if(caseLabel === "OK"){
+          fill(0,220,0);
+         }
+         else if(caseLabel === "DEAD"){
+          fill(220,0,0);
+         }
+         else if(caseLabel === "REBOOT"){
+          fill(0,0,220);
+         }
+         else{
+           fill(220);
+         }
+        break;
+
+      case 'ip':
+        caseLabel = elt.ip;
+        if(caseLabel !== "" && caseLabel !== "-"){
+          fill(0,200,0);
+         }
+         else{
+           fill(200);
+         }
+        break;
+    }
+    let escala = constrain(scl * scl2, 3, 6);
+    // console.log(escala);
+    const point = AMIGA_Map.latLngToPixel(elt.pos.lat, elt.pos.lng);
+    
+    stroke(255);
+    strokeWeight(1);
+    circle(point.x, point.y, radius*2 * escala);
+    
+    var textID;
+
+    if(showName == true && showLSID == true){
+      textID = elt.name + " (" + elt.lsid + ")";
+    }
+
+    else if(showName == true && showLSID == false){
+      textID = elt.name;
+    }
+
+    else if(showName == false && showLSID == true){
+      textID = "(" + elt.lsid + ")";
+    }
+    else{
+      textID = "()";
+    }
+
+    let textsize = 2 * escala;
+    textSize(textsize);
+    fill(51);
+    noStroke();
+    text(textID, point.x, point.y - offset * escala);
+
+    if(showLabel == true){
+      text(caseLabel, point.x, point.y + offset * escala);
+    }
+  } 
+  if(showUC){
+    drawUC();
+  }
+  // noLoop();
+
+}
+
+// function tank(datos, coordenadas) {
+
+//   this.lat = coordenadas.lat;
+//   this.lng = coordenadas.lng;
+//   this.nombre = datos.nombre;
+
+//   this.show = function() {
+//     ellipse(datos.x, datos.y, datos.d * 10);
+
+//     textAlign(CENTER, BOTTOM);
+//     text(this.nombre, datos.x, datos.y - 10)
+//   }
+// }
+
+function keyPressed() {
+  switch(key) {
+    // type [p] to hide / show the GUI
+    case 'p':
+      visible = !visible;
+      if(visible) gui.show(); else gui.hide();
+      break;
+  }
+}
+
+function drawUC(){
+  let lista = ['93', '1574', '1570', '688', '1764', '1773', '93'];
+  let puntos = []
+  for (i of lista){
+    for (let j = 0; j < data.length; j++){
+      if (data[j].lsid == i){
+        puntos.push(data[j].pos);
+      }
+   }
+  }
+    strokeWeight(1);
+    noFill();
+    stroke(127);
+    beginShape();
+    for (elt of puntos){
+      const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
+      vertex(point.x, point.y);
+    endShape();
+    }
+}
