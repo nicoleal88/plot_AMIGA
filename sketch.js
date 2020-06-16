@@ -12,6 +12,7 @@ let table;
 let tableObject;
 let url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3WkkXWxUp3TXEBsqGeeAtuMNKwVu3ZPASyzY8C43B5fWEyKqp2Xs0sEcM3_VXy_eoJNI_a8Mo8aiN/pub?gid=182439664&single=true&output=csv"
 let data = [];
+let tanks = [];
 
 //Map settings
 let AMIGA_Map;
@@ -77,7 +78,7 @@ function setup() {
 
   frameRate(10);
 
-  // console.log(table);
+  console.log(table);
   // tableObject = table.getObject();
   // Create a tile map with the options declared
   AMIGA_Map = mappa.tileMap(options);
@@ -107,15 +108,33 @@ function setup() {
     let cap_hs = row.get('Cap_HS');
     let terminado = row.get('Terminado');
     let radio_uptime = row.get('Radio_Uptime');
+    let front_end = row.get('Front_End');
+    let bbox = row.get('BBox');
 
     //UMDs data
     let id1, id2, id3;
+    id1 = row.get('ID_M101');
+    id2 = row.get('ID_M102');
+    id3 = row.get('ID_M103');
     let ra1, ra2, ra3;
+    ra1 = Number(row.get('RA_M101'));
+    ra2 = Number(row.get('RA_M102'));
+    ra3 = Number(row.get('RA_M103'));
     let rd1, rd2, rd3;
+    rd1 = parseFloat(row.get('RD_M101').replace(/\s/g, "").replace(",", "."));
+    rd2 = parseFloat(row.get('RD_M102').replace(/\s/g, "").replace(",", "."));
+    rd3 = parseFloat(row.get('RD_M103').replace(/\s/g, "").replace(",", "."));
     let pa1, pa2, pa3;
+    pa1 = Number(row.get('PA_M101'));
+    pa2 = Number(row.get('PA_M102'));
+    pa3 = Number(row.get('PA_M103'));
     let ekit1, ekit2, ekit3;
-    let tx;
-    let dist;
+    ekit1 = row.get('eKit_M101');
+    ekit2 = row.get('eKit_M102');
+    ekit3 = row.get('eKit_M103');
+    
+    let tx = row.get('TX');
+    let dist = row.get('Distrib.');
     
     // Conversion from UTM to LatLng
     let utmz = 19;
@@ -128,20 +147,44 @@ function setup() {
       lng: degd.lngd
     }
 
-    // Data pushing
-    data.push({
+    let datos = {
       name,
       lsid,
       pos,
-      cap_hs,
-      amiga_box,
-      terminado,
-      radio_uptime,
+      id1,
+      ra1,
+      rd1,
+      pa1,
+      id2,
+      ra2,
+      rd2,
+      pa2,
+      id3,
+      ra3,
+      rd3,
+      pa3,
+      radio_mikrotik,
       ip,
-      radio_mikrotik
-    });
+      cap_hs,
+      radio_uptime,
+      front_end,
+      ekit1, 
+      ekit2, 
+      ekit3,
+      amiga_box,
+      tx,
+      dist,
+      bbox,
+      terminado
+    }
+
+    // Data pushing
+    data.push(datos);
+    let tank = new Tank(datos);
+    tanks.push(tank);
   }
-  // console.log(data);
+  console.log(data);
+  console.log(tanks);
   // AMIGA_Map.onChange(drawMap);
 
 }
@@ -154,6 +197,8 @@ function draw() {
   const scl = pow(2, zoom);
   const scl2 = 0.0002;
   const offset = radius * 1.5;
+  // let escala = constrain(scl * scl2, 2, 6);
+  let escala = scl * scl2;
 
   for (var elt of data) {
     let caseLabel = "_";
@@ -224,7 +269,6 @@ function draw() {
         break;
     }
 
-    let escala = constrain(scl * scl2, 2, 6);
     // console.log(escala);
     const point = AMIGA_Map.latLngToPixel(elt.pos.lat,
       elt.pos.lng);
@@ -255,6 +299,15 @@ function draw() {
       text(caseLabel, point.x, point.y + offset * escala);
     }
   }
+
+  for (let i = 0; i < tanks.length; i++){
+    tanks[i].update();
+    tanks[i].showSD(escala);
+    if (tanks[i].lsid === '1767' || tanks[i].lsid === '1765'){
+      tanks[i].showUMD(escala);
+    }
+  }
+
   if (showUC) {
     drawUC();
   }
