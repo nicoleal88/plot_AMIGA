@@ -29,14 +29,42 @@ class Tank{
         this.dist = datos.dist
         this.bbox = datos.bbox
         this.terminado = datos.terminado
+
+        this.caseLabel = "_-_";
+        this.textID;
+        this.textsize;
       }
       
       update(){
         this.point = AMIGA_Map.latLngToPixel(this.pos.lat,this.pos.lng)
       }
 
-      showSD(scl){
+      showSD(scl, item, label, name, lsid){
+        // Get fill color acording to item
+        this.getColor(item);
+        // Draw SD
         circle(this.point.x, this.point.y, radius * 1 * scl);
+        // Draw label text
+        if (label) {
+          text(this.caseLabel, this.point.x, this.point.y + radius * 1.5 * scl);
+        }
+        // Draw Name and/or LSID
+
+    if (name == true && lsid == true) {
+      this.textID = this.name + " (" + this.lsid + ")";
+    } else if (name == true && lsid == false) {
+      this.textID = this.name;
+    } else if (name == false && lsid == true) {
+      this.textID = "(" + this.lsid + ")";
+    } else {
+      this.textID = "(-_-)";
+    }
+
+    this.textsize = 3 * scl;
+    textSize(this.textsize);
+    fill(51);
+    noStroke();
+    text(this.textID, this.point.x, this.point.y - radius * 1.5 * scl);
       }
 
       showUMD(scl){
@@ -55,5 +83,72 @@ class Tank{
         //M101
         // let M103 = new UMD(90, 102, 166);
         // M103.show();
-}
+      }
+
+      getColor(option){
+        switch (option) {
+          case 'amiga_box':
+      this.caseLabel = this.amiga_box;
+      if (this.caseLabel !== "" && this.caseLabel !== "-") {
+        fill(colors.ok);
+      } else if(this.caseLabel === "" ){
+        fill(colors.warning);
+      }
+      else if(this.caseLabel === "-" ){
+        fill(100, 20);
+      }
+      else{
+        fill(colors.noData);
+      }
+      break;
+
+    case 'cap_hs':
+      this.caseLabel = this.cap_hs;
+      if (this.caseLabel === "OK") {
+        fill(colors.ok);
+      } else if (this.caseLabel === "CAP") {
+        fill("blue");
+      } else if (this.caseLabel === "" && this.radio_mikrotik === "OK") {
+        fill(colors.warning);
+      } else {
+        fill(colors.noData);
+      }
+      break;
+
+    case 'terminado':
+      this.caseLabel = this.terminado;
+      if (this.caseLabel === "Terminado") {
+        fill(colors.ok);
+      } else {
+        fill(colors.noData);
+      }
+      break;
+
+    case 'radio_uptime':
+      this.caseLabel = this.radio_uptime;
+      if (this.caseLabel === "OK") {
+        fill(colors.ok);
+      } else if (this.caseLabel === "DEAD") {
+        fill(colors.dead);
+      } else if (this.caseLabel === "REBOOT") {
+        fill(colors.warning);
+      } else {
+        fill(colors.noData);
+      }
+      break;
+
+    case 'ip':
+      this.caseLabel = this.ip;
+      if (this.caseLabel !== "" && this.caseLabel !== "-") {
+        fill(colors.ok);
+      } 
+      else if(this.caseLabel === "-" ){
+        fill(100, 20);
+      }
+      else {
+        fill(colors.noData);
+      }
+      break;
+        }
+      }
 }

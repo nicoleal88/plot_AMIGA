@@ -1,10 +1,13 @@
 // ToDo
 // - Add References
 // - Add Roads
-// - Add more data (FrontEnd, BBox, Batteries, etc.)
+// - Github.io
+// - Add classification of SDs (Araya, 433, AERALet, etc.) 
+
+// Done
 // - Add UMDs
 // - Make objects?
-// - Github.io 
+// - Add more data (FrontEnd, BBox, Batteries, etc.)
 
 //Data
 let table;
@@ -38,10 +41,12 @@ var item = ['ip',
   'bbox',
   'terminado'
 ];
+
 var showLabel = false;
 var showName = false;
 var showLSID = true;
 var showUC = false;
+var showUMDs = false;
 var radius = 2;
 
 // gui
@@ -104,6 +109,7 @@ function setup() {
     'showName',
     'showLabel',
     'showUC',
+    'showUMDs',
     'radius');
 
   // Data loading
@@ -208,111 +214,13 @@ function draw() {
   // let escala = constrain(scl * scl2, 2, 6);
   let escala = scl * scl2;
 
-  for (var elt of data) {
-    let caseLabel = "_";
-
-    switch (item) {
-
-      case 'amiga_box':
-        caseLabel = elt.amiga_box;
-        if (caseLabel !== "" && caseLabel !== "-") {
-          fill(colors.ok);
-        } else if(caseLabel === "" ){
-          fill(colors.warning);
-        }
-        else if(caseLabel === "-" ){
-          fill(100, 20);
-        }
-        else{
-          fill(colors.noData);
-        }
-        break;
-
-      case 'cap_hs':
-        caseLabel = elt.cap_hs;
-        if (caseLabel === "OK") {
-          fill(colors.ok);
-        } else if (caseLabel === "CAP") {
-          fill("blue");
-        } else if (caseLabel === "" && elt.radio_mikrotik === "OK") {
-          fill(colors.warning);
-        } else {
-          fill(colors.noData);
-        }
-        break;
-
-      case 'terminado':
-        caseLabel = elt.terminado;
-        if (caseLabel === "Terminado") {
-          fill(colors.ok);
-        } else {
-          fill(colors.noData);
-        }
-        break;
-
-      case 'radio_uptime':
-        caseLabel = elt.radio_uptime;
-        if (caseLabel === "OK") {
-          fill(colors.ok);
-        } else if (caseLabel === "DEAD") {
-          fill(colors.dead);
-        } else if (caseLabel === "REBOOT") {
-          fill(colors.warning);
-        } else {
-          fill(colors.noData);
-        }
-        break;
-
-      case 'ip':
-        caseLabel = elt.ip;
-        if (caseLabel !== "" && caseLabel !== "-") {
-          fill(colors.ok);
-        } 
-        else if(caseLabel === "-" ){
-          fill(100, 20);
-        }
-        else {
-          fill(colors.noData);
-        }
-        break;
-    }
-
-    // console.log(escala);
-    const point = AMIGA_Map.latLngToPixel(elt.pos.lat,
-      elt.pos.lng);
-
-    stroke(255);
-    strokeWeight(1);
-    circle(point.x, point.y, radius * 2 * escala);
-
-    var textID;
-
-    if (showName == true && showLSID == true) {
-      textID = elt.name + " (" + elt.lsid + ")";
-    } else if (showName == true && showLSID == false) {
-      textID = elt.name;
-    } else if (showName == false && showLSID == true) {
-      textID = "(" + elt.lsid + ")";
-    } else {
-      textID = "()";
-    }
-
-    let textsize = 3 * escala;
-    textSize(textsize);
-    fill(51);
-    noStroke();
-    text(textID, point.x, point.y - offset * escala);
-
-    if (showLabel) {
-      text(caseLabel, point.x, point.y + offset * escala);
-    }
-  }
-
   for (let i = 0; i < tanks.length; i++){
-    tanks[i].update();
-    tanks[i].showSD(escala);
-    if (tanks[i].terminado){
-      tanks[i].showUMD(escala);
+    tanks[i].update(); // Updates the position on the map
+    tanks[i].showSD(escala, item, showLabel, showName, showLSID); // Plots with a certain scale
+    if(showUMDs){
+      if (tanks[i].terminado){    // If the position is finished, and the checkbox is enabled:
+        tanks[i].showUMD(escala); // Show the UMDs
+      }
     }
   }
 
@@ -320,7 +228,6 @@ function draw() {
     drawShape(UC);
   }
   // noLoop();
-
 }
 
 function keyPressed() {
