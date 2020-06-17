@@ -22,7 +22,6 @@ let canvas;
 const mappa = new Mappa('Leaflet');
 
 //Colors
-
 let colors = {
   ok : "limegreen",
   warning : "yellow",
