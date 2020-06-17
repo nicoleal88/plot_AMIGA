@@ -6,7 +6,6 @@
 // - Make objects?
 // - Github.io 
 
-
 //Data
 let table;
 let tableObject;
@@ -60,6 +59,15 @@ const options = {
   style: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }
+
+let UC = ['93',
+          '1574',
+          '1570',
+          '688',
+          '1764',
+          '1773',
+          '93'
+          ];
 
 // const malargue = {
 //   // Malargue coords: -35.46667,-69.58333
@@ -303,31 +311,16 @@ function draw() {
   for (let i = 0; i < tanks.length; i++){
     tanks[i].update();
     tanks[i].showSD(escala);
-    if (tanks[i].lsid === '1767' || tanks[i].lsid === '1765'){
+    if (tanks[i].terminado){
       tanks[i].showUMD(escala);
     }
   }
 
   if (showUC) {
-    drawUC();
+    drawShape(UC);
   }
   // noLoop();
 
-}
-
-function tank(datos) {
-
-//   this.lat = coordenadas.lat;
-//   this.lng = coordenadas.lng;
-//   this.nombre = datos.nombre;
-
-//   this.show = function() {
-//     ellipse(datos.x, datos.y, datos.d * 10);
-
-//     textAlign(CENTER, BOTTOM);
-//     text(this.nombre, datos.x, datos.y - 10)
-//   }
-return
 }
 
 function keyPressed() {
@@ -341,15 +334,7 @@ function keyPressed() {
   }
 }
 
-function drawUC() {
-  let lista = ['93',
-    '1574',
-    '1570',
-    '688',
-    '1764',
-    '1773',
-    '93'
-  ];
+function drawShape(lista) {
   let puntos = []
   for (var i of lista) {
     for (var j = 0; j < data.length; j++) {
