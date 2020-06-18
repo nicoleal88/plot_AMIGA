@@ -19,6 +19,8 @@ let tableObject;
 let url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3WkkXWxUp3TXEBsqGeeAtuMNKwVu3ZPASyzY8C43B5fWEyKqp2Xs0sEcM3_VXy_eoJNI_a8Mo8aiN/pub?gid=182439664&single=true&output=csv"
 let data = [];
 let tanks = [];
+let roads = [];
+let roadsFile;
 
 //Map settings
 let AMIGA_Map;
@@ -66,6 +68,7 @@ let h433_2 = ['27', '29', '28', '54', '50', '42', '27'];
 
 function preload() {
   table = loadTable(url, "csv", "header");
+  roadsFile = loadStrings("files/roads_TEST.txt");
 }
 
 function setup() {
@@ -75,7 +78,9 @@ function setup() {
 
   frameRate(10);
 
-  console.log(table);
+  // console.log(table);
+  // console.log(roadsFile);
+  loadRoads(roadsFile);
   // tableObject = table.getObject();
   // Create a tile map with the options declared
   AMIGA_Map = mappa.tileMap(options);
@@ -105,12 +110,14 @@ function setup() {
     showLabel: true,
     showName: false,
     showLSID: true,
-    showUMDs: false
+    showUMDs: false,
+    showRoads: false
   };
   infoFolder.add(showInfo, 'showName');
   infoFolder.add(showInfo, 'showLSID');
   infoFolder.add(showInfo, 'showLabel');
   infoFolder.add(showInfo, 'showUMDs');
+  infoFolder.add(showInfo, 'showRoads');
 
   let hexagonsFolder = newGUI.addFolder("Show hexagons");
   showHexagons = {
@@ -279,6 +286,9 @@ function draw() {
   if (showHexagons.show433_2) {
     drawShape(h433_2, "cyan");
   }
+  if (showInfo.showRoads) {
+    drawRoads(roads, "grey");
+  }
   // noLoop();
 }
 
@@ -318,6 +328,41 @@ function drawShape(lista, col) {
 
 function addText() {
   const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
+}
+
+function loadRoads(file) {
+  let road = []
+  for (i = 0; i < file.length; i++) {
+    let line = file[i].split(/\s+/);
+    if (line.length == 2) {
+      let val = {
+        lat: line[0],
+        lng: line[1]
+      }
+      road.push(val);
+    } else {
+      roads.push(road);
+      road = []
+    }
+  }
+  roads.push(road);
+  console.log(roads);
+}
+
+function drawRoads(list, col) {
+  for (i = 0; i < list.length; i++) {
+    push();
+    strokeWeight(2);
+    noFill();
+    stroke(col);
+    beginShape();
+    for (var elt of list[i]) {
+      const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
+      vertex(point.x, point.y);
+    }
+    endShape();
+    pop();
+  }
 }
 
 // function windowResized() {
