@@ -34,36 +34,44 @@ let colors = {
 //GUI settings
 // var strokeWidth = 1;
 // var strokeColor = '#FFFFFF';
-var item = [
-  'cap_hs',
-  'ip',
-  'radio_uptime',
-  'front_end',
-  'amiga_box',
-  'bbox',
-  'terminado'
-];
 
-var showLabel = true;
-var showName = false;
-var showLSID = true;
-var showUMDs = false;
+let items;
+// let item = [
+//   'cap_hs',
+//   'ip',
+//   'radio_uptime',
+//   'front_end',
+//   'amiga_box',
+//   'bbox',
+//   'terminado'
+// ];
 
-var showUC = false;
-var showMARTA = false;
-var show433_1 = false;
-var show433_2 = false;
+let showInfo;
+// var showLabel = true;
+// var showName = false;
+// var showLSID = true;
+// var showUMDs = false;
 
-var show433 = true;
-var showTwins_KT = false;
-var showCampoIbarra = true;
-var showCampoAraya = true;
+let showHexagons;
+// var showUC = false;
+// var showMARTA = false;
+// var show433_1 = false;
+// var show433_2 = false;
 
-var mult = 25;
+let showSDs;
+// var show433 = true;
+// var showTwins_KT = false;
+// var showCampoIbarra = true;
+// var showCampoAraya = true;
+
+let mult;
 
 // gui
 var visible = true;
 var gui;
+
+// New gui
+let newGUI;
 
 // Lets put all our map options in a single object
 
@@ -136,26 +144,81 @@ function setup() {
   AMIGA_Map.overlay(canvas);
 
   // Create Layout GUI
-  gui = createGui();
+  // gui = createGui();
   // gui.setPosition(650,100);
-  gui.setPosition(windowHeight + 5, 0);
+  // gui.setPosition(windowHeight + 5, 0);
 
   // gui.setPosition(10,10);
-  sliderRange(1, 50, 1);
-  gui.addGlobals('item',
-    'showLSID',
-    'showName',
-    'showLabel',
-    'showUMDs',
-    'show433',
-    'showTwins_KT',
-    'showCampoIbarra',
-    'showCampoAraya',
-    'showUC',
-    'showMARTA',
-    'show433_1',
-    'show433_2',
-    'mult');
+  // sliderRange(1, 50, 1);
+  // gui.addGlobals('item',
+  //   'showLSID',
+  //   'showName',
+  //   'showLabel',
+  //   'showUMDs',
+  //   'show433',
+  //   'showTwins_KT',
+  //   'showCampoIbarra',
+  //   'showCampoAraya',
+  //   'showUC',
+  //   'showMARTA',
+  //   'show433_1',
+  //   'show433_2',
+  //   'mult');
+  // New gui config
+  newGUI = new dat.GUI();
+  
+  propiedades = {
+    item : "ip",
+    mult : 25
+  };
+
+  newGUI.add(propiedades, 'item', ['cap_hs',
+                                  'ip',
+                                  'radio_uptime',
+                                  'front_end',
+                                  'amiga_box',
+                                  'bbox',
+                                  'terminado'
+                                  ]
+              )
+  newGUI.add(propiedades, 'mult', 1, 50);
+
+  let infoFolder = newGUI.addFolder("Show info");
+  showInfo = {
+    showLabel : true,
+    showName : false,
+    showLSID : true,
+    showUMDs : false
+  };
+  infoFolder.add(showInfo, 'showLabel');
+  infoFolder.add(showInfo, 'showName');
+  infoFolder.add(showInfo, 'showLSID');
+  infoFolder.add(showInfo, 'showUMDs');
+
+  let hexagonsFolder = newGUI.addFolder("Show hexagons");
+  showHexagons = {
+    showUC : false,
+    showMARTA : false,
+    show433_1 : false,
+    show433_2 : false
+  }
+  hexagonsFolder.add(showHexagons, 'showUC');
+  hexagonsFolder.add(showHexagons, 'showMARTA');
+  hexagonsFolder.add(showHexagons, 'show433_1');
+  hexagonsFolder.add(showHexagons, 'show433_2');
+
+  let sdFolder = newGUI.addFolder("Show SDs");
+  showSDs = {
+    show433 : false,
+    showTwins_KT : false,
+    showCampoIbarra : false,
+    showCampoAraya : false
+  }
+  sdFolder.add(showSDs, 'show433');
+  sdFolder.add(showSDs, 'showTwins_KT');
+  sdFolder.add(showSDs, 'showCampoIbarra');
+  sdFolder.add(showSDs, 'showCampoAraya');
+
 
   // Data loading
   for (let row of table.rows) {
@@ -265,40 +328,40 @@ function draw() {
   for (let i = 0; i < tanks.length; i++){
     tanks[i].update(); // Updates the position on the map
 
-    if (show433 == false && tanks[i].tipo == '433m'){
+    if (showSDs.show433 == false && tanks[i].tipo == '433m'){
       tanks[i].update(); 
     }
-    else if (showTwins_KT == false && tanks[i].tipo == 'Twins_KT'){
+    else if (showSDs.showTwins_KT == false && tanks[i].tipo == 'Twins_KT'){
       tanks[i].update(); 
     }
-    else if (showCampoIbarra == false && tanks[i].tipo == 'Campo_Ibarra'){
+    else if (showSDs.showCampoIbarra == false && tanks[i].tipo == 'Campo_Ibarra'){
       tanks[i].update(); 
     }
-    else if (showCampoAraya == false && tanks[i].tipo == 'Campo_Araya'){
+    else if (showSDs.showCampoAraya == false && tanks[i].tipo == 'Campo_Araya'){
       tanks[i].update(); 
     }
     else{
-      tanks[i].showSD(escalaReal, item, showLabel, showName, showLSID); // Plots with a certain scale
+      tanks[i].showSD(escalaReal, propiedades.item, showInfo.showLabel, showInfo.showName, showInfo.showLSID); // Plots with a certain scale
     }
 
     
-    if(showUMDs){
+    if(showInfo.showUMDs){
       if (tanks[i].terminado){    // If the position is finished, and the checkbox is enabled:
         tanks[i].showUMD(escalaReal); // Show the UMDs
       }
     }
   }
 
-  if (showUC) {
+  if (showHexagons.showUC) {
     drawShape(UC, "black");
   }
-  if (showMARTA) {
+  if (showHexagons.showMARTA) {
     drawShape(MARTA, "orange");
   }
-  if (show433_1) {
+  if (showHexagons.show433_1) {
     drawShape(h433_1, "blue");
   }
-  if (show433_2) {
+  if (showHexagons.show433_2) {
     drawShape(h433_2, "cyan");
   }
   // noLoop();

@@ -46,10 +46,10 @@ class Tank{
         // Get fill color acording to item
         this.getColor(item);
         // Draw SD
-        circle(this.point.x, this.point.y, this.radius * 2 * scl * mult);
+        circle(this.point.x, this.point.y, this.radius * 2 * scl * propiedades.mult);
         // Draw label text
         if (label) {
-          text(this.caseLabel, this.point.x, this.point.y + this.radius * 2 * scl * mult);
+          text(this.caseLabel, this.point.x, this.point.y + this.radius * 2 * scl * propiedades.mult);
         }
         // Draw Name and/or LSID
 
@@ -67,18 +67,18 @@ class Tank{
     textSize(this.textsize);
     fill(51);
     noStroke();
-    text(this.textID, this.point.x, this.point.y - this.radius * 2 * scl * mult);
+    text(this.textID, this.point.x, this.point.y - this.radius * 2 * scl * propiedades.mult);
       }
 
       showUMD(scl){
         this.update();
         //M101
         let M101 = new UMD(this.point.x, this.point.y, this.ra1, this.rd1, this.pa1);
-        M101.show(scl * mult);
+        M101.show(scl * propiedades.mult);
         let M102 = new UMD(this.point.x, this.point.y, this.ra2, this.rd2, this.pa2);
-        M102.show(scl * mult);
+        M102.show(scl * propiedades.mult);
         let M103 = new UMD(this.point.x, this.point.y, this.ra3, this.rd3, this.pa3);
-        M103.show(scl * mult);
+        M103.show(scl * propiedades.mult);
         // M101.drawLine();
         //M101
         // let M102 = new UMD(90, 87, 164);
