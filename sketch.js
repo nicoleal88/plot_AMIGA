@@ -289,6 +289,9 @@ function draw() {
   if (showInfo.showRoads) {
     drawRoads(roads, "grey");
   }
+
+  showReferences();
+
   // noLoop();
 }
 
@@ -326,8 +329,21 @@ function drawShape(lista, col) {
   pop();
 }
 
-function addText() {
-  const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
+function showReferences() {
+  let width = 150;
+  let height = 200;
+  push();
+  fill(127, 127);
+  rect(canvas.width - width, 0, width, height);
+  pop();
+  push();
+  fill(51);
+  noStroke();
+  textSize(20);
+  textAlign(LEFT);
+  text("References", canvas.width - width, 10);
+  pop();
+  // const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
 }
 
 function loadRoads(file) {
