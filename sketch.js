@@ -27,10 +27,10 @@ const mappa = new Mappa('Leaflet');
 
 //Colors
 let colors = {
-  ok : "limegreen",
-  warning : "yellow",
-  dead : "red",
-  noData : "silver"
+  ok: "limegreen",
+  warning: "yellow",
+  dead: "red",
+  noData: "silver"
 }
 
 // New gui
@@ -81,32 +81,31 @@ function setup() {
   AMIGA_Map = mappa.tileMap(options);
   AMIGA_Map.overlay(canvas);
 
-  
+
   // New gui config
   newGUI = new dat.GUI();
-  
+
   propiedades = {
-    item : "ip",
-    mult : 25
+    item: "ip",
+    mult: 25
   };
 
   newGUI.add(propiedades, 'item', ['cap_hs',
-                                  'ip',
-                                  'radio_uptime',
-                                  'front_end',
-                                  'amiga_box',
-                                  'bbox',
-                                  'terminado'
-                                  ]
-              )
+    'ip',
+    'radio_uptime',
+    'front_end',
+    'amiga_box',
+    'bbox',
+    'terminado'
+  ])
   newGUI.add(propiedades, 'mult', 1, 50);
 
   let infoFolder = newGUI.addFolder("Show info");
   showInfo = {
-    showLabel : true,
-    showName : false,
-    showLSID : true,
-    showUMDs : false
+    showLabel: true,
+    showName: false,
+    showLSID: true,
+    showUMDs: false
   };
   infoFolder.add(showInfo, 'showName');
   infoFolder.add(showInfo, 'showLSID');
@@ -115,10 +114,10 @@ function setup() {
 
   let hexagonsFolder = newGUI.addFolder("Show hexagons");
   showHexagons = {
-    showUC : false,
-    showMARTA : false,
-    show433_1 : false,
-    show433_2 : false
+    showUC: false,
+    showMARTA: false,
+    show433_1: false,
+    show433_2: false
   }
   hexagonsFolder.add(showHexagons, 'showUC');
   hexagonsFolder.add(showHexagons, 'showMARTA');
@@ -127,18 +126,18 @@ function setup() {
 
   let sdFolder = newGUI.addFolder("Show SDs");
   showSDs = {
-    show433 : true,
-    showTwins_KT : false,
-    showCampoIbarra : true,
-    showCampoAraya : true
+    show433: true,
+    showTwins_KT: false,
+    showCampoIbarra: true,
+    showCampoAraya: true
   }
   sdFolder.add(showSDs, 'show433');
   sdFolder.add(showSDs, 'showTwins_KT');
   sdFolder.add(showSDs, 'showCampoIbarra');
   sdFolder.add(showSDs, 'showCampoAraya');
-  
+
   infoFolder.open();
-  
+
 
   // Data loading
   for (let row of table.rows) {
@@ -175,10 +174,10 @@ function setup() {
     ekit1 = row.get('eKit_M101');
     ekit2 = row.get('eKit_M102');
     ekit3 = row.get('eKit_M103');
-    
+
     let tx = row.get('TX');
     let dist = row.get('Distrib.');
-    
+
     // Conversion from UTM to LatLng
     let utmz = 19;
     let easting = Number(row.get('LAT'));
@@ -211,8 +210,8 @@ function setup() {
       cap_hs,
       radio_uptime,
       front_end,
-      ekit1, 
-      ekit2, 
+      ekit1,
+      ekit2,
       ekit3,
       amiga_box,
       tx,
@@ -245,28 +244,24 @@ function draw() {
   // let escala = constrain(scl * scl2, 2, 6);
   let escalaReal = scl1 * sclm;
 
-  for (let i = 0; i < tanks.length; i++){
+  for (let i = 0; i < tanks.length; i++) {
     tanks[i].update(); // Updates the position on the map
 
-    if (showSDs.show433 == false && tanks[i].tipo == '433m'){
-      tanks[i].update(); 
-    }
-    else if (showSDs.showTwins_KT == false && tanks[i].tipo == 'Twins_KT'){
-      tanks[i].update(); 
-    }
-    else if (showSDs.showCampoIbarra == false && tanks[i].tipo == 'Campo_Ibarra'){
-      tanks[i].update(); 
-    }
-    else if (showSDs.showCampoAraya == false && tanks[i].tipo == 'Campo_Araya'){
-      tanks[i].update(); 
-    }
-    else{
+    if (showSDs.show433 == false && tanks[i].tipo == '433m') {
+      tanks[i].update();
+    } else if (showSDs.showTwins_KT == false && tanks[i].tipo == 'Twins_KT') {
+      tanks[i].update();
+    } else if (showSDs.showCampoIbarra == false && tanks[i].tipo == 'Campo_Ibarra') {
+      tanks[i].update();
+    } else if (showSDs.showCampoAraya == false && tanks[i].tipo == 'Campo_Araya') {
+      tanks[i].update();
+    } else {
       tanks[i].showSD(escalaReal, propiedades.item, showInfo.showLabel, showInfo.showName, showInfo.showLSID); // Plots with a certain scale
     }
 
-    
-    if(showInfo.showUMDs){
-      if (tanks[i].terminado){    // If the position is finished, and the checkbox is enabled:
+
+    if (showInfo.showUMDs) {
+      if (tanks[i].terminado) { // If the position is finished, and the checkbox is enabled:
         tanks[i].showUMD(escalaReal); // Show the UMDs
       }
     }
@@ -315,7 +310,7 @@ function drawShape(lista, col) {
   for (var elt of puntos) {
     const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
     vertex(point.x, point.y);
-    
+
   }
   endShape();
   pop();
@@ -363,23 +358,23 @@ function addText() {
 // var gui;
 
 // Create Layout GUI
-  // gui = createGui();
-  // gui.setPosition(650,100);
-  // gui.setPosition(windowHeight + 5, 0);
+// gui = createGui();
+// gui.setPosition(650,100);
+// gui.setPosition(windowHeight + 5, 0);
 
-  // gui.setPosition(10,10);
-  // sliderRange(1, 50, 1);
-  // gui.addGlobals('item',
-  //   'showLSID',
-  //   'showName',
-  //   'showLabel',
-  //   'showUMDs',
-  //   'show433',
-  //   'showTwins_KT',
-  //   'showCampoIbarra',
-  //   'showCampoAraya',
-  //   'showUC',
-  //   'showMARTA',
-  //   'show433_1',
-  //   'show433_2',
-  //   'mult');
+// gui.setPosition(10,10);
+// sliderRange(1, 50, 1);
+// gui.addGlobals('item',
+//   'showLSID',
+//   'showName',
+//   'showLabel',
+//   'showUMDs',
+//   'show433',
+//   'showTwins_KT',
+//   'showCampoIbarra',
+//   'showCampoAraya',
+//   'showUC',
+//   'showMARTA',
+//   'show433_1',
+//   'show433_2',
+//   'mult');
