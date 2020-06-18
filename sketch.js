@@ -53,41 +53,11 @@ const options = {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }
 
-let UC = ['93',
-          '1574',
-          '1570',
-          '688',
-          '1764',
-          '1773',
-          '93'
-          ];
+let UC = ['93', '1574', '1570', '688', '1764', '1773', '93'];
+let MARTA = ['1764', '688', '1760', '1767', '669', '1765', '1764'];
+let h433_1 = ['30', '12', '97', '47', '99', '11', '30'];
+let h433_2 = ['27', '29', '28', '54', '50', '42', '27'];
 
-let MARTA = ['1764',
-          '688',
-          '1760',
-          '1767',
-          '669',
-          '1765',
-          '1764'
-          ];
-          
-let h433_1 = ['30',
-              '12',
-              '97',
-              '47',
-              '99',
-              '11',
-              '30'
-              ];
-              
-let h433_2 = ['27',
-              '29',
-              '28',
-              '54',
-              '50',
-              '42',
-              '27'
-              ];              
 // const malargue = {
 //   // Malargue coords: -35.46667,-69.58333
 //   lat: -35.46667,
@@ -329,7 +299,7 @@ function keyPressed() {
 }
 
 function drawShape(lista, col) {
-  let puntos = []
+  let puntos = [];
   for (var i of lista) {
     for (var j = 0; j < data.length; j++) {
       if (data[j].lsid == i) {
