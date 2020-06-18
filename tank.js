@@ -65,7 +65,7 @@ class Tank {
 
     this.textsize = 3 * scl * propiedades.mult;
     textSize(this.textsize);
-    fill(51);
+    fill(127);
     noStroke();
     text(this.textID, this.point.x, this.point.y - this.radius * 2 * scl * propiedades.mult);
   }

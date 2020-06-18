@@ -25,7 +25,9 @@ let roadsFile;
 //Map settings
 let AMIGA_Map;
 let canvas;
-const mappa = new Mappa('Leaflet');
+var key = 'pk.eyJ1Ijoibmljb2xlYWw4OCIsImEiOiJjazA3NWRmaHYzdjM5M2xwMHhoeGEwcnNhIn0.U9_rp4dKVkuTWEHODTHdgg';
+var mappa = new Mappa('MapboxGL', key);
+// const mappa = new Mappa('Leaflet');
 
 //Colors
 let colors = {
@@ -45,14 +47,30 @@ let mult;
 
 // Lets put all our map options in a single object
 
-const options = {
+// Leaflet options
+// const options = {
+//   lat: -35.11631067505913,
+//   lng: -69.53360985611256,
+//   // lat: -35.110417,
+//   // lng: -69.537750,
+//   zoom: 14,
+//   style: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
+//   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+//   scl : 0.00001
+// }
+
+// Mapbox options
+var options = {
   lat: -35.11631067505913,
   lng: -69.53360985611256,
-  // lat: -35.110417,
-  // lng: -69.537750,
-  zoom: 14,
-  style: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  zoom: 13.2,
+  // style: "mapbox://styles/mapbox/satellite-streets-v9",
+  style: "mapbox://styles/mapbox/dark-v9",
+  pitch: 0,
+  bearing: 0,
+  minZoom: 1,
+  renderWorldCopies: false,
+  scl : 0.00002
 }
 
 let UC = ['93', '1574', '1570', '688', '1764', '1773', '93'];
@@ -245,7 +263,8 @@ function draw() {
   // Zoom settings
   const zoom = AMIGA_Map.zoom();
   const scl1 = pow(2, zoom);
-  const sclm = 0.00001; // Escala para unidades en metros
+  // const sclm =  // Escala para unidades en metros Leaflet
+  const sclm = options.scl // Escala para unidades en metros Mapbox
   // const scl2 = 0.0002;
   // const offset = radius * 1.5;
   // let escala = constrain(scl * scl2, 2, 6);
