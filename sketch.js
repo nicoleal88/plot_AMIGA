@@ -1,13 +1,15 @@
 // ToDo
 // - Add References
 // - Add Roads
-// - Github.io
-// - Add classification of SDs (Araya, 433, AERALet, etc.) 
+// - Divide GUI into categories
 
 // Done
 // - Add UMDs
 // - Make objects?
 // - Add more data (FrontEnd, BBox, Batteries, etc.)
+// - Github.io
+// - Add classification of SDs (Araya, 433, AERALet, etc.) 
+
 
 //Data
 let table;
@@ -45,8 +47,12 @@ var item = [
 var showLabel = true;
 var showName = false;
 var showLSID = true;
-var showUC = false;
 var showUMDs = false;
+
+var showUC = false;
+var showMARTA = false;
+var show433_1 = false;
+var show433_2 = false;
 
 var show433 = true;
 var showTwins_KT = false;
@@ -80,6 +86,32 @@ let UC = ['93',
           '93'
           ];
 
+let MARTA = ['1764',
+          '688',
+          '1760',
+          '1767',
+          '669',
+          '1765',
+          '1764'
+          ];
+          
+let h433_1 = ['30',
+              '12',
+              '97',
+              '47',
+              '99',
+              '11',
+              '30'
+              ];
+              
+let h433_2 = ['27',
+              '29',
+              '28',
+              '54',
+              '50',
+              '42',
+              '27'
+              ];              
 // const malargue = {
 //   // Malargue coords: -35.46667,-69.58333
 //   lat: -35.46667,
@@ -114,12 +146,15 @@ function setup() {
     'showLSID',
     'showName',
     'showLabel',
-    'showUC',
     'showUMDs',
     'show433',
     'showTwins_KT',
     'showCampoIbarra',
     'showCampoAraya',
+    'showUC',
+    'showMARTA',
+    'show433_1',
+    'show433_2',
     'mult');
 
   // Data loading
@@ -255,7 +290,16 @@ function draw() {
   }
 
   if (showUC) {
-    drawShape(UC);
+    drawShape(UC, "black");
+  }
+  if (showMARTA) {
+    drawShape(MARTA, "orange");
+  }
+  if (show433_1) {
+    drawShape(h433_1, "blue");
+  }
+  if (show433_2) {
+    drawShape(h433_2, "cyan");
   }
   // noLoop();
 }
@@ -271,7 +315,7 @@ function keyPressed() {
   }
 }
 
-function drawShape(lista) {
+function drawShape(lista, col) {
   let puntos = []
   for (var i of lista) {
     for (var j = 0; j < data.length; j++) {
@@ -280,15 +324,18 @@ function drawShape(lista) {
       }
     }
   }
-  strokeWeight(1);
+  push();
+  strokeWeight(2);
   noFill();
-  stroke(127);
+  stroke(col);
   beginShape();
   for (var elt of puntos) {
     const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
     vertex(point.x, point.y);
-    endShape();
+    
   }
+  endShape();
+  pop();
 }
 
 function addText() {
