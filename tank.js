@@ -28,11 +28,14 @@ class Tank{
         this.tx = datos.tx
         this.dist = datos.dist
         this.bbox = datos.bbox
+        this.tipo = datos.tipo
         this.terminado = datos.terminado
 
         this.caseLabel = "_-_";
         this.textID;
         this.textsize;
+
+        this.radius = 1.8;
       }
       
       update(){
@@ -43,10 +46,10 @@ class Tank{
         // Get fill color acording to item
         this.getColor(item);
         // Draw SD
-        circle(this.point.x, this.point.y, radius * 1 * scl);
+        circle(this.point.x, this.point.y, this.radius * 2 * scl * mult);
         // Draw label text
         if (label) {
-          text(this.caseLabel, this.point.x, this.point.y + radius * 1.5 * scl);
+          text(this.caseLabel, this.point.x, this.point.y + this.radius * 2 * scl * mult);
         }
         // Draw Name and/or LSID
 
@@ -60,22 +63,22 @@ class Tank{
       this.textID = "(-_-)";
     }
 
-    this.textsize = 3 * scl;
+    this.textsize = 3 * scl * mult;
     textSize(this.textsize);
     fill(51);
     noStroke();
-    text(this.textID, this.point.x, this.point.y - radius * 1.5 * scl);
+    text(this.textID, this.point.x, this.point.y - this.radius * 2 * scl * mult);
       }
 
       showUMD(scl){
         this.update();
         //M101
         let M101 = new UMD(this.point.x, this.point.y, this.ra1, this.rd1, this.pa1);
-        M101.show(scl);
+        M101.show(scl * mult);
         let M102 = new UMD(this.point.x, this.point.y, this.ra2, this.rd2, this.pa2);
-        M102.show(scl);
+        M102.show(scl * mult);
         let M103 = new UMD(this.point.x, this.point.y, this.ra3, this.rd3, this.pa3);
-        M103.show(scl);
+        M103.show(scl * mult);
         // M101.drawLine();
         //M101
         // let M102 = new UMD(90, 87, 164);

@@ -13,16 +13,17 @@ class UMD {
       this.coordX = this.sd_x - this.rd * sin(this.pa) * scl;
       this.coordY = this.sd_y + this.rd * cos(this.pa) * scl;
  
-      fill(0, 200, 200);
+      
       push();
       translate(this.coordX, this.coordY);
       rotate(this.ra);
       rectMode(CENTER);
-      strokeWeight(2);
-      stroke(0);
+      strokeWeight(1);
+      fill(127, 100);
+      stroke(0, 100);
       rect(0, 0, 1.4* scl, 9.0* scl);
-      fill(255,0,0);
-    //   circle(7, 45,4);
+      fill(0, 150);
+      circle(0, 0, 0.6 * scl);
       pop();
     }
     

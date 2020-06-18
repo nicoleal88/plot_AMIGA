@@ -32,8 +32,9 @@ let colors = {
 //GUI settings
 // var strokeWidth = 1;
 // var strokeColor = '#FFFFFF';
-var item = ['ip',
+var item = [
   'cap_hs',
+  'ip',
   'radio_uptime',
   'front_end',
   'amiga_box',
@@ -41,12 +42,18 @@ var item = ['ip',
   'terminado'
 ];
 
-var showLabel = false;
+var showLabel = true;
 var showName = false;
 var showLSID = true;
 var showUC = false;
 var showUMDs = false;
-var radius = 2;
+
+var show433 = true;
+var showTwins_KT = false;
+var showCampoIbarra = true;
+var showCampoAraya = true;
+
+var mult = 25;
 
 // gui
 var visible = true;
@@ -102,14 +109,18 @@ function setup() {
   gui.setPosition(windowHeight + 5, 0);
 
   // gui.setPosition(10,10);
-  sliderRange(0.5, 4, 0.1);
+  sliderRange(1, 50, 1);
   gui.addGlobals('item',
     'showLSID',
     'showName',
     'showLabel',
     'showUC',
     'showUMDs',
-    'radius');
+    'show433',
+    'showTwins_KT',
+    'showCampoIbarra',
+    'showCampoAraya',
+    'mult');
 
   // Data loading
   for (let row of table.rows) {
@@ -123,6 +134,7 @@ function setup() {
     let radio_uptime = row.get('Radio_Uptime');
     let front_end = row.get('Front_End');
     let bbox = row.get('BBox');
+    let tipo = row.get('Tipo');
 
     //UMDs data
     let id1, id2, id3;
@@ -188,6 +200,7 @@ function setup() {
       tx,
       dist,
       bbox,
+      tipo,
       terminado
     }
 
@@ -207,18 +220,36 @@ function draw() {
 
   // Zoom settings
   const zoom = AMIGA_Map.zoom();
-  const scl = pow(2, zoom);
-  const scl2 = 0.0002;
-  const offset = radius * 1.5;
+  const scl1 = pow(2, zoom);
+  const sclm = 0.00001; // Escala para unidades en metros
+  // const scl2 = 0.0002;
+  // const offset = radius * 1.5;
   // let escala = constrain(scl * scl2, 2, 6);
-  let escala = scl * scl2;
+  let escalaReal = scl1 * sclm;
 
   for (let i = 0; i < tanks.length; i++){
     tanks[i].update(); // Updates the position on the map
-    tanks[i].showSD(escala, item, showLabel, showName, showLSID); // Plots with a certain scale
+
+    if (show433 == false && tanks[i].tipo == '433m'){
+      tanks[i].update(); 
+    }
+    else if (showTwins_KT == false && tanks[i].tipo == 'Twins_KT'){
+      tanks[i].update(); 
+    }
+    else if (showCampoIbarra == false && tanks[i].tipo == 'Campo_Ibarra'){
+      tanks[i].update(); 
+    }
+    else if (showCampoAraya == false && tanks[i].tipo == 'Campo_Araya'){
+      tanks[i].update(); 
+    }
+    else{
+      tanks[i].showSD(escalaReal, item, showLabel, showName, showLSID); // Plots with a certain scale
+    }
+
+    
     if(showUMDs){
       if (tanks[i].terminado){    // If the position is finished, and the checkbox is enabled:
-        tanks[i].showUMD(escala); // Show the UMDs
+        tanks[i].showUMD(escalaReal); // Show the UMDs
       }
     }
   }
