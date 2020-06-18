@@ -63,7 +63,7 @@ class Tank{
       this.textID = "(-_-)";
     }
 
-    this.textsize = 3 * scl * mult;
+    this.textsize = 3 * scl * propiedades.mult;
     textSize(this.textsize);
     fill(51);
     noStroke();

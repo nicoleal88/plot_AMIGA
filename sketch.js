@@ -1,14 +1,16 @@
 // ToDo
 // - Add References
 // - Add Roads
-// - Divide GUI into categories
+// - Add more data (FrontEnd, BBox, Batteries, etc.)
+// - Add button to export
+// - Add title of the things being plotted
 
 // Done
 // - Add UMDs
 // - Make objects?
-// - Add more data (FrontEnd, BBox, Batteries, etc.)
 // - Github.io
 // - Add classification of SDs (Araya, 433, AERALet, etc.) 
+// - Divide GUI into categories
 
 
 //Data
@@ -31,47 +33,13 @@ let colors = {
   noData : "silver"
 }
 
-//GUI settings
-// var strokeWidth = 1;
-// var strokeColor = '#FFFFFF';
-
-let items;
-// let item = [
-//   'cap_hs',
-//   'ip',
-//   'radio_uptime',
-//   'front_end',
-//   'amiga_box',
-//   'bbox',
-//   'terminado'
-// ];
-
-let showInfo;
-// var showLabel = true;
-// var showName = false;
-// var showLSID = true;
-// var showUMDs = false;
-
-let showHexagons;
-// var showUC = false;
-// var showMARTA = false;
-// var show433_1 = false;
-// var show433_2 = false;
-
-let showSDs;
-// var show433 = true;
-// var showTwins_KT = false;
-// var showCampoIbarra = true;
-// var showCampoAraya = true;
-
-let mult;
-
-// gui
-var visible = true;
-var gui;
-
 // New gui
 let newGUI;
+let items;
+let showInfo;
+let showHexagons;
+let showSDs;
+let mult;
 
 // Lets put all our map options in a single object
 
@@ -143,27 +111,7 @@ function setup() {
   AMIGA_Map = mappa.tileMap(options);
   AMIGA_Map.overlay(canvas);
 
-  // Create Layout GUI
-  // gui = createGui();
-  // gui.setPosition(650,100);
-  // gui.setPosition(windowHeight + 5, 0);
-
-  // gui.setPosition(10,10);
-  // sliderRange(1, 50, 1);
-  // gui.addGlobals('item',
-  //   'showLSID',
-  //   'showName',
-  //   'showLabel',
-  //   'showUMDs',
-  //   'show433',
-  //   'showTwins_KT',
-  //   'showCampoIbarra',
-  //   'showCampoAraya',
-  //   'showUC',
-  //   'showMARTA',
-  //   'show433_1',
-  //   'show433_2',
-  //   'mult');
+  
   // New gui config
   newGUI = new dat.GUI();
   
@@ -190,9 +138,9 @@ function setup() {
     showLSID : true,
     showUMDs : false
   };
-  infoFolder.add(showInfo, 'showLabel');
   infoFolder.add(showInfo, 'showName');
   infoFolder.add(showInfo, 'showLSID');
+  infoFolder.add(showInfo, 'showLabel');
   infoFolder.add(showInfo, 'showUMDs');
 
   let hexagonsFolder = newGUI.addFolder("Show hexagons");
@@ -209,16 +157,18 @@ function setup() {
 
   let sdFolder = newGUI.addFolder("Show SDs");
   showSDs = {
-    show433 : false,
+    show433 : true,
     showTwins_KT : false,
-    showCampoIbarra : false,
-    showCampoAraya : false
+    showCampoIbarra : true,
+    showCampoAraya : true
   }
   sdFolder.add(showSDs, 'show433');
   sdFolder.add(showSDs, 'showTwins_KT');
   sdFolder.add(showSDs, 'showCampoIbarra');
   sdFolder.add(showSDs, 'showCampoAraya');
-
+  
+  infoFolder.open();
+  
 
   // Data loading
   for (let row of table.rows) {
@@ -408,3 +358,58 @@ function addText() {
 // function windowResized() {
 //   resizeCanvas(windowHeight, windowHeight);
 // }
+
+//GUI settings
+// var strokeWidth = 1;
+// var strokeColor = '#FFFFFF';
+
+// let item = [
+//   'cap_hs',
+//   'ip',
+//   'radio_uptime',
+//   'front_end',
+//   'amiga_box',
+//   'bbox',
+//   'terminado'
+// ];
+
+// var showLabel = true;
+// var showName = false;
+// var showLSID = true;
+// var showUMDs = false;
+
+// var showUC = false;
+// var showMARTA = false;
+// var show433_1 = false;
+// var show433_2 = false;
+
+// var show433 = true;
+// var showTwins_KT = false;
+// var showCampoIbarra = true;
+// var showCampoAraya = true;
+
+// gui
+// var visible = true;
+// var gui;
+
+// Create Layout GUI
+  // gui = createGui();
+  // gui.setPosition(650,100);
+  // gui.setPosition(windowHeight + 5, 0);
+
+  // gui.setPosition(10,10);
+  // sliderRange(1, 50, 1);
+  // gui.addGlobals('item',
+  //   'showLSID',
+  //   'showName',
+  //   'showLabel',
+  //   'showUMDs',
+  //   'show433',
+  //   'showTwins_KT',
+  //   'showCampoIbarra',
+  //   'showCampoAraya',
+  //   'showUC',
+  //   'showMARTA',
+  //   'show433_1',
+  //   'show433_2',
+  //   'mult');
