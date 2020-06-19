@@ -67,6 +67,7 @@ var options = {
   pitch: 0,
   bearing: 0,
   minZoom: 1,
+  maxZoom: 20,
   renderWorldCopies: false,
   scl : 0.00002
 }
