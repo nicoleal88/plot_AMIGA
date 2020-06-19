@@ -149,18 +149,29 @@ class Tank {
         }
         break;
 
-      case 'radio_uptime':
-        this.caseLabel = this.radio_uptime;
-        if (this.caseLabel === "OK") {
+      case 'front_end':
+        this.caseLabel = this.front_end;
+        if (this.caseLabel === "Cyclone") {
           fill(colors.ok);
-        } else if (this.caseLabel === "DEAD") {
-          fill(colors.dead);
-        } else if (this.caseLabel === "REBOOT") {
+        } else if (this.caseLabel === "3.3" || this.caseLabel === "3.1" ) {
           fill(colors.warning);
         } else {
           fill(colors.noData);
         }
         break;
+        
+        case 'radio_uptime':
+          this.caseLabel = this.radio_uptime;
+          if (this.caseLabel === "OK") {
+            fill(colors.ok);
+          } else if (this.caseLabel === "DEAD") {
+            fill(colors.dead);
+          } else if (this.caseLabel === "REBOOT") {
+            fill(colors.warning);
+          } else {
+            fill(colors.noData);
+          }
+          break;
 
       case 'ip':
         this.caseLabel = this.ip;
@@ -170,6 +181,15 @@ class Tank {
           fill(100, 20);
         } else {
           fill(colors.noData);
+        }
+        break;
+
+      case 'observaciones':
+        this.caseLabel = this.observaciones;
+        if (this.caseLabel == "" || this.caseLabel == "-") {
+          fill(colors.noData);
+        } else {
+          fill(colors.warning);
         }
         break;
     }

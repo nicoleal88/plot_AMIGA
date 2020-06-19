@@ -1,11 +1,11 @@
 // ToDo
-// - Add References
-// - Add Roads
 // - Add more data (FrontEnd, BBox, Batteries, etc.)
 // - Add button to export
 // - Add title of the things being plotted
 
 // Done
+// - Add References
+// - Add Roads
 // - Add UMDs
 // - Make objects?
 // - Github.io
@@ -123,13 +123,13 @@ function setup() {
   };
 
   newGUI.add(propiedades, 'item', ['cap_hs',
-    'ip',
-    'radio_uptime',
-    'front_end',
-    'amiga_box',
-    'bbox',
-    'terminado'
-  ])
+                                    'ip',
+                                    'radio_uptime',
+                                    'front_end',
+                                    'amiga_box',
+                                    'terminado',
+                                    'observaciones'
+                                  ])
   newGUI.add(propiedades, 'mult', 1, 50);
 
   let infoFolder = newGUI.addFolder("Show info");
@@ -389,7 +389,7 @@ function showReferences() {
   push();
   stroke(127);
   strokeWeight(1);
-  fill(127, 127);
+  fill(51, 200);
   rect(canvas.width - width, 0, width, height, 5);
   pop();
   push();
