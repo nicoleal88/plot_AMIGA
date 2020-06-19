@@ -293,6 +293,10 @@ function draw() {
     }
   }
 
+  for (let i = 0; i < tanks.length; i++) {
+    tanks[i].update(); // Updates the position on the map
+    tanks[i].showPopup();
+  }
   if (showHexagons.showUC) {
     drawShape(UC, "black");
   }

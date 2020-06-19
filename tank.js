@@ -68,6 +68,25 @@ class Tank {
     fill(127);
     noStroke();
     text(this.textID, this.point.x, this.point.y - this.radius * 2 * scl * propiedades.mult);
+     
+  }
+// Draw popup
+  showPopup(){
+    if (dist(mouseX, mouseY, this.point.x, this.point.y) < 10) {
+      push();
+      textAlign(LEFT);
+      stroke(255,255,191);
+      strokeWeight(2);
+      fill(0, 240);
+    	rect(mouseX+10, mouseY+10, 170,80,7);
+      fill(255);
+      textSize(14);
+      noStroke();
+      text("Name: " + this.name, mouseX + 20, mouseY + 30);
+      text("LSID: " + this.lsid, mouseX + 20, mouseY + 50);
+      text("IP: " + this.ip, mouseX + 20, mouseY + 70);
+      pop();
+    }
   }
 
   showUMD(scl) {
