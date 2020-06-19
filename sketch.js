@@ -384,18 +384,34 @@ function drawShape(lista, col) {
 }
 
 function showReferences() {
-  let width = 150;
-  let height = 200;
+  let width = 120;
+  let height = 160;
   push();
+  stroke(127);
+  strokeWeight(1);
   fill(127, 127);
-  rect(canvas.width - width, 0, width, height);
+  rect(canvas.width - width, 0, width, height, 5);
   pop();
   push();
-  fill(51);
+  fill(200);
   noStroke();
-  textSize(20);
+  textSize(16);
   textAlign(LEFT);
-  text("References", canvas.width - width, 10);
+  text("References:", canvas.width - width + 5, 15);
+  
+  textSize(14);
+  fill(colors.ok);
+  circle(canvas.width - width + 8, 45, 10);
+  text("  : OK", canvas.width - width + 5, 45);
+  fill(colors.warning);
+  circle(canvas.width - width + 8, 75, 10);
+  text("  : Needs fix", canvas.width - width + 5, 75);
+  fill(colors.dead);
+  circle(canvas.width - width + 8, 105, 10);
+  text("  : Critical", canvas.width - width + 5, 105);
+  fill(colors.noData);
+  circle(canvas.width - width + 8, 135, 10);
+  text("  : No Data", canvas.width - width + 5, 135);
   pop();
   // const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
 }
