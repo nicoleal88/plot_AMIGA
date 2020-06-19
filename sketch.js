@@ -32,12 +32,8 @@ var mappa = new Mappa('MapboxGL', key);
 // const mappa = new Mappa('Leaflet');
 
 //Colors
-let colors = {
-  ok: "limegreen",
-  warning: "yellow",
-  dead: "red",
-  noData: "silver"
-}
+let colors;
+let roadsColor;
 
 // New gui
 let newGUI;
@@ -90,6 +86,7 @@ function preload() {
   table = loadTable(url, "csv", "header");
   roadsFile = loadStrings("files/Rutas.dat");
   tracksFile = loadStrings("files/Tracks-AERA.dat");
+  
 }
 
 function setup() {
@@ -98,7 +95,14 @@ function setup() {
   canvas = createCanvas(windowHeight, windowHeight);
 
   frameRate(10);
-
+  colors = {
+    ok: "limegreen",
+    warning: "yellow",
+    dead: "red",
+    noData: "silver",
+    roads : color(255, 204, 0, 50)
+  }
+  
   // console.log(table);
   // console.log(roadsFile);
   roads = loadRoads(roadsFile);
@@ -313,11 +317,11 @@ function draw() {
   if (showHexagons.show433_2) {
     drawShape(h433_2, "cyan");
   }
+  // if (showInfo.showRoads) {
+  //   drawRoads(roads, "white");
+  // }
   if (showInfo.showRoads) {
-    drawRoads(roads, "white");
-  }
-  if (showInfo.showRoads) {
-    drawRoads(tracks, "yellow");
+    drawRoads(tracks, colors.roads);
   }
 
   showReferences();

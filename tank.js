@@ -128,7 +128,7 @@ class Tank {
           fill(colors.ok);
         } else if (this.caseLabel === "CAP") {
           fill("blue");
-        } else if (this.caseLabel === "" && this.radio_mikrotik === "OK") {
+        } else if (this.caseLabel === "OLD") {
           fill(colors.warning);
         } else {
           fill(colors.noData);
