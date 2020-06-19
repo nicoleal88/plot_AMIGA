@@ -386,6 +386,7 @@ function drawShape(lista, col) {
 function showReferences() {
   let width = 120;
   let height = 160;
+  textAlign(LEFT, CENTER);
   push();
   stroke(127);
   strokeWeight(1);

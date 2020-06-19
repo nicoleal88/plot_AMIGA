@@ -52,7 +52,8 @@ class Tank {
     circle(this.point.x, this.point.y, this.radius * 2 * scl * propiedades.mult);
     // Draw label text
     if (label) {
-      text(this.caseLabel, this.point.x, this.point.y + this.radius * 2 * scl * propiedades.mult);
+      textAlign(CENTER, TOP);
+      text(this.caseLabel, this.point.x, this.point.y + this.radius * 1.5 * scl * propiedades.mult);
     }
     // Draw Name and/or LSID
 
@@ -67,11 +68,11 @@ class Tank {
     }
 
     this.textsize = 3 * scl * propiedades.mult;
-    textAlign(CENTER, CENTER);
+    textAlign(CENTER, BOTTOM);
     textSize(this.textsize);
     fill(127);
     noStroke();
-    text(this.textID, this.point.x, this.point.y - this.radius * 2 * scl * propiedades.mult);
+    text(this.textID, this.point.x, this.point.y - this.radius * 1.5 * scl * propiedades.mult);
      
   }
 // Draw popup
