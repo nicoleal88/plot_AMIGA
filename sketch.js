@@ -20,7 +20,9 @@ let url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3WkkXWxUp3TXEBsqGee
 let data = [];
 let tanks = [];
 let roads = [];
+let tracks = [];
 let roadsFile;
+let tracksFile;
 
 //Map settings
 let AMIGA_Map;
@@ -86,7 +88,8 @@ let h433_2 = ['27', '29', '28', '54', '50', '42', '27'];
 
 function preload() {
   table = loadTable(url, "csv", "header");
-  roadsFile = loadStrings("files/roads_TEST.txt");
+  roadsFile = loadStrings("files/Rutas.dat");
+  tracksFile = loadStrings("files/Tracks-AERA.dat");
 }
 
 function setup() {
@@ -98,7 +101,8 @@ function setup() {
 
   // console.log(table);
   // console.log(roadsFile);
-  loadRoads(roadsFile);
+  roads = loadRoads(roadsFile);
+  tracks = loadRoads(tracksFile);
   // tableObject = table.getObject();
   // Create a tile map with the options declared
   AMIGA_Map = mappa.tileMap(options);
@@ -310,7 +314,10 @@ function draw() {
     drawShape(h433_2, "cyan");
   }
   if (showInfo.showRoads) {
-    drawRoads(roads, "grey");
+    drawRoads(roads, "white");
+  }
+  if (showInfo.showRoads) {
+    drawRoads(tracks, "yellow");
   }
 
   showReferences();
@@ -370,22 +377,33 @@ function showReferences() {
 }
 
 function loadRoads(file) {
+  let allroads = [];
   let road = []
   for (i = 0; i < file.length; i++) {
     let line = file[i].split(/\s+/);
     if (line.length == 2) {
-      let val = {
-        lat: line[0],
-        lng: line[1]
+      let pointUTM = {
+        latUTM: line[0],
+        lngUTM: line[1]
       }
-      road.push(val);
+      let utmz = 19;
+      let easting = Number(pointUTM.latUTM);
+      let northing = Number(pointUTM.lngUTM) - 10000000;
+      var utm = new UTMConv.UTMCoords(utmz, easting, northing);
+      var degd = utm.to_deg();
+      var pos = {
+      lat: degd.latd,
+      lng: degd.lngd
+    }
+      road.push(pos);
     } else {
-      roads.push(road);
+      allroads.push(road);
       road = []
     }
   }
-  roads.push(road);
-  console.log(roads);
+  allroads.push(road);
+  console.log(allroads);
+  return allroads;
 }
 
 function drawRoads(list, col) {
