@@ -17,7 +17,7 @@
 let table;
 let tableObject;
 let url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3WkkXWxUp3TXEBsqGeeAtuMNKwVu3ZPASyzY8C43B5fWEyKqp2Xs0sEcM3_VXy_eoJNI_a8Mo8aiN/pub?gid=182439664&single=true&output=csv"
-let data = [];
+// let data = [];
 let tanks = [];
 let roads = [];
 let tracks = [];
@@ -27,6 +27,7 @@ let tracksFile;
 //Map settings
 let AMIGA_Map;
 let canvas;
+// Mapbox API key
 var key = 'pk.eyJ1Ijoibmljb2xlYWw4OCIsImEiOiJjazA3NWRmaHYzdjM5M2xwMHhoeGEwcnNhIn0.U9_rp4dKVkuTWEHODTHdgg';
 var mappa = new Mappa('MapboxGL', key);
 // const mappa = new Mappa('Leaflet');
@@ -72,6 +73,7 @@ var options = {
   scl : 0.00002
 }
 
+// Hexagons
 let UC = ['93', '1574', '1570', '688', '1764', '1773', '93'];
 let MARTA = ['1764', '688', '1760', '1767', '669', '1765', '1764'];
 let h433_1 = ['30', '12', '97', '47', '99', '11', '30'];
@@ -87,15 +89,14 @@ function preload() {
   table = loadTable(url, "csv", "header");
   roadsFile = loadStrings("files/Rutas.dat");
   tracksFile = loadStrings("files/Tracks-AERA.dat");
-  
 }
 
 function setup() {
-  textAlign(CENTER, CENTER);
   // canvas = createCanvas(640, 640);
   canvas = createCanvas(windowHeight, windowHeight);
 
   frameRate(10);
+  
   colors = {
     ok: "limegreen",
     warning: "yellow",
@@ -113,12 +114,11 @@ function setup() {
   AMIGA_Map = mappa.tileMap(options);
   AMIGA_Map.overlay(canvas);
 
-
   // New gui config
   newGUI = new dat.GUI();
 
   propiedades = {
-    item: "ip",
+    item: "cap_hs",
     mult: 25
   };
 
@@ -172,7 +172,6 @@ function setup() {
 
   infoFolder.open();
 
-
   // Data loading
   for (let row of table.rows) {
     let name = row.get('SD');
@@ -186,6 +185,7 @@ function setup() {
     let front_end = row.get('Front_End');
     let bbox = row.get('BBox');
     let tipo = row.get('Tipo');
+    let observaciones = row.get('Observaciones');
 
     //UMDs data
     let id1, id2, id3;
@@ -252,18 +252,18 @@ function setup() {
       dist,
       bbox,
       tipo,
+      observaciones,
       terminado
     }
 
     // Data pushing
-    data.push(datos);
+    // data.push(datos);
     let tank = new Tank(datos);
     tanks.push(tank);
   }
-  console.log(data);
+  // console.log(data);
   console.log(tanks);
   // AMIGA_Map.onChange(drawMap);
-
 }
 
 function draw() {
@@ -279,33 +279,50 @@ function draw() {
   // let escala = constrain(scl * scl2, 2, 6);
   let escalaReal = scl1 * sclm;
 
+  // Disable SDs plotting:
   for (let i = 0; i < tanks.length; i++) {
     tanks[i].update(); // Updates the position on the map
 
     if (showSDs.show433 == false && tanks[i].tipo == '433m') {
-      tanks[i].update();
+      tanks[i].plot = false;
     } else if (showSDs.showTwins_KT == false && tanks[i].tipo == 'Twins_KT') {
-      tanks[i].update();
+      tanks[i].plot = false;
     } else if (showSDs.showCampoIbarra == false && tanks[i].tipo == 'Campo_Ibarra') {
-      tanks[i].update();
+      tanks[i].plot = false;
     } else if (showSDs.showCampoAraya == false && tanks[i].tipo == 'Campo_Araya') {
-      tanks[i].update();
+      tanks[i].plot = false;
     } else {
+      tanks[i].plot = true;
+    }
+  }
+
+  // Plot SDs
+  for (let i = 0; i < tanks.length; i++) {
+    if (tanks[i].plot == true){
       tanks[i].showSD(escalaReal, propiedades.item, showInfo.showLabel, showInfo.showName, showInfo.showLSID); // Plots with a certain scale
     }
+  }
 
-
-    if (showInfo.showUMDs) {
-      if (tanks[i].terminado) { // If the position is finished, and the checkbox is enabled:
-        tanks[i].showUMD(escalaReal); // Show the UMDs
-      }
+  // Plot UMDs
+  for (let i = 0; i < tanks.length; i++) {
+    if (tanks[i].plot == true){
+      if (showInfo.showUMDs) {
+        if (tanks[i].terminado) { // If the position is finished, and the checkbox is enabled:
+          tanks[i].showUMD(escalaReal); // Show the UMDs
+          }
+        }
     }
   }
 
+  // Plot popups
   for (let i = 0; i < tanks.length; i++) {
+    if (tanks[i].plot == true){
     tanks[i].update(); // Updates the position on the map
     tanks[i].showPopup();
+    }
   }
+
+  // Plot hexagons
   if (showHexagons.showUC) {
     drawShape(UC, "black");
   }
@@ -318,6 +335,8 @@ function draw() {
   if (showHexagons.show433_2) {
     drawShape(h433_2, "cyan");
   }
+
+  // Plot roads and tracks
   // if (showInfo.showRoads) {
   //   drawRoads(roads, "white");
   // }
@@ -325,21 +344,22 @@ function draw() {
     drawRoads(tracks, colors.roads);
   }
 
+  // Plot References
   showReferences();
 
   // noLoop();
 }
 
-function keyPressed() {
-  switch (key) {
-    // type [p] to hide / show the GUI
-    case 'p':
-      visible = !visible;
-      if (visible) gui.show();
-      else gui.hide();
-      break;
-  }
-}
+// function keyPressed() {
+//   switch (key) {
+//     // type [p] to hide / show the GUI
+//     case 'p':
+//       visible = !visible;
+//       if (visible) gui.show();
+//       else gui.hide();
+//       break;
+//   }
+// }
 
 function drawShape(lista, col) {
   let puntos = [];
@@ -358,7 +378,6 @@ function drawShape(lista, col) {
   for (var elt of puntos) {
     const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
     vertex(point.x, point.y);
-
   }
   endShape();
   pop();

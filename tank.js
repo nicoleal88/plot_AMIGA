@@ -29,6 +29,7 @@ class Tank {
     this.dist = datos.dist
     this.bbox = datos.bbox
     this.tipo = datos.tipo
+    this.observaciones = datos.observaciones
     this.terminado = datos.terminado
 
     this.caseLabel = "_-_";
@@ -36,6 +37,8 @@ class Tank {
     this.textsize;
 
     this.radius = 1.8;
+
+    this.plot = true;
   }
 
   update() {
@@ -64,6 +67,7 @@ class Tank {
     }
 
     this.textsize = 3 * scl * propiedades.mult;
+    textAlign(CENTER, CENTER);
     textSize(this.textsize);
     fill(127);
     noStroke();
@@ -85,6 +89,7 @@ class Tank {
       text("Name: " + this.name, mouseX + 20, mouseY + 30);
       text("LSID: " + this.lsid, mouseX + 20, mouseY + 50);
       text("IP: " + this.ip, mouseX + 20, mouseY + 70);
+      // text(this.observaciones, mouseX + 20, mouseY + 70);
       pop();
     }
   }
