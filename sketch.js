@@ -103,11 +103,12 @@ function setup() {
   frameRate(10);
   
   colors = {
-    ok: "limegreen",
-    warning: "yellow",
-    dead: "red",
+    ok: "#2ECC40", // green
+    warning: "#FFDC00", // yellow
+    dead: "#FF4136", // red
     noData: "silver",
-    roads : color(255, 204, 0, 50)
+    roads : color(255, 204, 0, 50),
+    selected : "#FF851B" // Orange
   }
   
   // console.log(table);
@@ -124,7 +125,8 @@ function setup() {
 
   propiedades = {
     item: "cap_hs",
-    mult: 25
+    mult: 25,
+    screenshot: takeScreenshot
   };
 
   newGUI.add(propiedades, 'item', ['cap_hs',
@@ -136,6 +138,8 @@ function setup() {
                                     'observaciones'
                                   ])
   newGUI.add(propiedades, 'mult', 1, 50);
+
+  newGUI.add(propiedades, 'screenshot');
 
   let infoFolder = newGUI.addFolder("Show info");
   showInfo = {
@@ -273,7 +277,6 @@ function setup() {
 
 function draw() {
   clear();
-
   // Zoom settings
   const zoom = AMIGA_Map.zoom();
   const scl1 = pow(2, zoom);
@@ -370,9 +373,17 @@ function mouseClicked(){
   for (let i = 0; i < tanks.length; i++) {
     if (tanks[i].plot == true){
     tanks[i].selectSD(); // Updates the position on the map
-    console.log(tanks[i].selected);
+    // console.log(tanks[i].selected);
     }
   }
+}
+
+function takeScreenshot(){
+  push();
+
+  save('myCanvas.png');
+  pop();
+  return false;
 }
 
 function drawShape(lista, col) {

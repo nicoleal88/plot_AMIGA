@@ -47,16 +47,18 @@ class Tank {
   }
 
   showSD(scl, item, label, name, lsid) {
+    this.textsize = constrain(3 * scl * propiedades.mult, 1, 18);
+
     if (this.selected){
       push();
       textAlign(CENTER, CENTER);
-      fill(255);
-      // textSize(48);
+      fill(colors.selected);
+      textSize(3 * scl * propiedades.mult);
       noStroke();
       text("<      >", this.point.x, this.point.y);
       pop();
-      strokeWeight(1 * scl * propiedades.mult);
-      stroke(255, 200);
+      strokeWeight(0.8 * scl * propiedades.mult);
+      stroke(colors.selected);
     }
 
     // Get fill color acording to item
@@ -81,7 +83,6 @@ class Tank {
       this.textID = "(-_-)";
     }
 
-    this.textsize = 3 * scl * propiedades.mult;
     textAlign(CENTER, BOTTOM);
     textSize(this.textsize);
     fill(127);
