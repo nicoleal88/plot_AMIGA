@@ -39,6 +39,7 @@ class Tank {
     this.radius = 1.8;
 
     this.plot = true;
+    this.selected = false;
   }
 
   update() {
@@ -46,6 +47,18 @@ class Tank {
   }
 
   showSD(scl, item, label, name, lsid) {
+    if (this.selected){
+      push();
+      textAlign(CENTER, CENTER);
+      fill(255);
+      // textSize(48);
+      noStroke();
+      text("<      >", this.point.x, this.point.y);
+      pop();
+      strokeWeight(1 * scl * propiedades.mult);
+      stroke(255, 200);
+    }
+
     // Get fill color acording to item
     this.getColor(item);
     // Draw SD
@@ -53,6 +66,7 @@ class Tank {
     // Draw label text
     if (label) {
       textAlign(CENTER, TOP);
+      noStroke();
       text(this.caseLabel, this.point.x, this.point.y + this.radius * 1.5 * scl * propiedades.mult);
     }
     // Draw Name and/or LSID
@@ -73,6 +87,8 @@ class Tank {
     fill(127);
     noStroke();
     text(this.textID, this.point.x, this.point.y - this.radius * 1.5 * scl * propiedades.mult);
+
+    
      
   }
 // Draw popup
@@ -92,6 +108,12 @@ class Tank {
       text("IP: " + this.ip, mouseX + 20, mouseY + 70);
       // text(this.observaciones, mouseX + 20, mouseY + 70);
       pop();
+    }
+  }
+
+  selectSD(){
+    if (dist(mouseX, mouseY, this.point.x, this.point.y) < 10) {
+      this.selected = !this.selected;      
     }
   }
 

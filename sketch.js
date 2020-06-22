@@ -1,10 +1,15 @@
 // ToDo
 // - Add more data (FrontEnd, BBox, Batteries, etc.)
 // - Add button to export
+// - Add trip button
+// - Add selection on click
+// - Add table with selected SDs properties
+// - Add SD png image
 // - Add title of the things being plotted
+// - Add UMDs from UC
 
 // Done
-// - Add References
+// - Add References 
 // - Add Roads
 // - Add UMDs
 // - Make objects?
@@ -17,7 +22,7 @@
 let table;
 let tableObject;
 let url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3WkkXWxUp3TXEBsqGeeAtuMNKwVu3ZPASyzY8C43B5fWEyKqp2Xs0sEcM3_VXy_eoJNI_a8Mo8aiN/pub?gid=182439664&single=true&output=csv"
-// let data = [];
+let data = [];
 let tanks = [];
 let roads = [];
 let tracks = [];
@@ -257,7 +262,7 @@ function setup() {
     }
 
     // Data pushing
-    // data.push(datos);
+    data.push(datos);
     let tank = new Tank(datos);
     tanks.push(tank);
   }
@@ -361,6 +366,15 @@ function draw() {
 //   }
 // }
 
+function mouseClicked(){
+  for (let i = 0; i < tanks.length; i++) {
+    if (tanks[i].plot == true){
+    tanks[i].selectSD(); // Updates the position on the map
+    console.log(tanks[i].selected);
+    }
+  }
+}
+
 function drawShape(lista, col) {
   let puntos = [];
   for (var i of lista) {
@@ -443,7 +457,7 @@ function loadRoads(file) {
     }
   }
   allroads.push(road);
-  console.log(allroads);
+  // console.log(allroads);
   return allroads;
 }
 
