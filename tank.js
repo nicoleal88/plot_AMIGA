@@ -121,11 +121,11 @@ class Tank {
   showUMD(scl) {
     this.update();
     //M101
-    let M101 = new UMD(this.point.x, this.point.y, this.ra1, this.rd1, this.pa1);
+    let M101 = new UMD(this.point.x, this.point.y, this.ra1, this.rd1, this.pa1, this.id1, this.ekit1, "M101");
     M101.show(scl * propiedades.mult);
-    let M102 = new UMD(this.point.x, this.point.y, this.ra2, this.rd2, this.pa2);
+    let M102 = new UMD(this.point.x, this.point.y, this.ra2, this.rd2, this.pa2, this.id2, this.ekit2, "M102");
     M102.show(scl * propiedades.mult);
-    let M103 = new UMD(this.point.x, this.point.y, this.ra3, this.rd3, this.pa3);
+    let M103 = new UMD(this.point.x, this.point.y, this.ra3, this.rd3, this.pa3, this.id3, this.ekit3, "M103");
     M103.show(scl * propiedades.mult);
     // M101.drawLine();
     //M101
@@ -168,6 +168,8 @@ class Tank {
         this.caseLabel = this.terminado;
         if (this.caseLabel === "Terminado") {
           fill(colors.ok);
+        } else if(this.caseLabel === "Casi"){
+          fill(colors.warning);
         } else {
           fill(colors.noData);
         }
