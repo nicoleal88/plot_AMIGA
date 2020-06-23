@@ -18,7 +18,7 @@ class Tank {
     this.pa3 = datos.pa3
     this.radio_mikrotik = datos.radio_mikrotik
     this.ip = datos.ip
-    this.cap_hs = datos.cap_hs
+    this.cap_disipador = datos.cap_disipador
     this.radio_uptime = datos.radio_uptime
     this.front_end = datos.front_end
     this.ekit1 = datos.ekit1
@@ -151,8 +151,8 @@ class Tank {
         }
         break;
 
-      case 'cap_hs':
-        this.caseLabel = this.cap_hs;
+      case 'cap_disipador':
+        this.caseLabel = this.cap_disipador;
         if (this.caseLabel === "OK") {
           fill(colors.ok);
         } else if (this.caseLabel === "CAP") {

@@ -7,6 +7,7 @@
 // - Add SD png image
 // - Add title of the things being plotted
 // - Add UMDs from UC
+// - Fix UMDs on top-left corner
 
 // Done
 // - Add References 
@@ -124,12 +125,12 @@ function setup() {
   newGUI = new dat.GUI();
 
   propiedades = {
-    item: "cap_hs",
+    item: "cap_disipador",
     mult: 25,
     screenshot: takeScreenshot
   };
 
-  newGUI.add(propiedades, 'item', ['cap_hs',
+  newGUI.add(propiedades, 'item', ['cap_disipador',
                                     'ip',
                                     'radio_uptime',
                                     'front_end',
@@ -188,7 +189,7 @@ function setup() {
     let radio_mikrotik = row.get('Radio_Mikrotik');
     let ip = row.get('IP');
     let amiga_box = row.get('AMIGA_Box');
-    let cap_hs = row.get('Cap_HS');
+    let cap_disipador = row.get('Cap_HS');
     let terminado = row.get('Terminado');
     let radio_uptime = row.get('Radio_Uptime');
     let front_end = row.get('Front_End');
@@ -250,7 +251,7 @@ function setup() {
       pa3,
       radio_mikrotik,
       ip,
-      cap_hs,
+      cap_disipador,
       radio_uptime,
       front_end,
       ekit1,
@@ -354,6 +355,7 @@ function draw() {
 
   // Plot References
   showReferences();
+  showTitle(propiedades.item);
 
   // noLoop();
 }
@@ -442,6 +444,28 @@ function showReferences() {
   // const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
 }
 
+function showTitle(text_) {
+  let t = text_.replace("_", " ");
+  t = toTitleCase(t);
+  let width = t.length * 10 + 5;
+  let height = 30;
+  push();
+  stroke(127);
+  strokeWeight(1);
+  fill(51, 200);
+  rectMode(CENTER);
+  rect(canvas.width/2 , height * 0.5 + 5 , width, height, 5);
+  pop();
+  push();
+  fill(200);
+  noStroke();
+  textSize(16);
+  textAlign(CENTER, CENTER);
+  text(t, canvas.width /2, height * 0.5 + 5);
+  pop();
+  // const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
+}
+
 function loadRoads(file) {
   let allroads = [];
   let road = []
@@ -486,6 +510,15 @@ function drawRoads(list, col) {
     endShape();
     pop();
   }
+}
+
+function toTitleCase(str) {
+  return str.replace(
+      /\w\S*/g,
+      function(txt) {
+          return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+  );
 }
 
 // function windowResized() {
