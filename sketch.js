@@ -101,8 +101,9 @@ function preload() {
 
 function setup() {
   // canvas = createCanvas(640, 640);
-  let minSize = min(windowHeight, windowWidth);
-  canvas = createCanvas(minSize, minSize);
+  // let minSize = min(windowHeight, windowWidth);
+  // canvas = createCanvas(minSize, minSize);
+  canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent('sketch-div');
   frameRate(10);
   
@@ -524,9 +525,9 @@ function toTitleCase(str) {
   );
 }
 
-// function windowResized() {
-//   resizeCanvas(windowHeight, windowHeight);
-// }
+function windowResized() {
+  resizeCanvas(windowHeight, windowHeight);
+}
 
 //GUI settings
 // var strokeWidth = 1;
