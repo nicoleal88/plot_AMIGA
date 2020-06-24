@@ -29,6 +29,7 @@ let roads = [];
 let tracks = [];
 let roadsFile;
 let tracksFile;
+// let sd_img;
 
 //Map settings
 let AMIGA_Map;
@@ -95,6 +96,7 @@ function preload() {
   table = loadTable(url, "csv", "header");
   roadsFile = loadStrings("files/Rutas.dat");
   tracksFile = loadStrings("files/Tracks-AERA.dat");
+  // sd_img = loadImage("files/SD.png");
 }
 
 function setup() {

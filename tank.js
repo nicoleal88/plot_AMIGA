@@ -65,6 +65,9 @@ class Tank {
     this.getColor(item);
     // Draw SD
     circle(this.point.x, this.point.y, this.radius * 2 * scl * propiedades.mult);
+    imageMode(CENTER);
+    // tint(255,0,0,127);
+    // image(sd_img,this.point.x, this.point.y, this.radius * 2 * scl * propiedades.mult, this.radius * 2 * 1.185 * scl * propiedades.mult);
     // Draw label text
     if (label) {
       textAlign(CENTER, TOP);
