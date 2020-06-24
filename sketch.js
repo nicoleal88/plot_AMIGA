@@ -101,8 +101,9 @@ function preload() {
 
 function setup() {
   // canvas = createCanvas(640, 640);
-  canvas = createCanvas(windowHeight, windowHeight);
-
+  let minSize = min(windowHeight, windowWidth);
+  canvas = createCanvas(minSize, minSize);
+  canvas.parent('sketch-div');
   frameRate(10);
   
   colors = {
