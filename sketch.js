@@ -1,13 +1,8 @@
 // ToDo
 // - Add more data (FrontEnd, BBox, Batteries, etc.)
-// - Add button to export
 // - Add trip button
-// - Add selection on click
 // - Add table with selected SDs properties
-// - Add SD png image
-// - Add title of the things being plotted
 // - Add UMDs from UC
-// - Fix UMDs on top-left corner
 
 // Done
 // - Add References 
@@ -17,6 +12,14 @@
 // - Github.io
 // - Add classification of SDs (Araya, 433, AERALet, etc.) 
 // - Divide GUI into categories
+// - Add title of the things being plotted
+// - Add SD png image
+// - Add selection on click
+// - Add button to export
+// - Add date to title
+
+// Bugs
+// - Fix UMDs on top-left corner
 
 
 //Data
@@ -415,7 +418,7 @@ function drawShape(lista, col) {
 }
 
 function showReferences() {
-  let width = 120;
+  let width = 100;
   let height = 160;
   textAlign(LEFT, CENTER);
   push();
@@ -434,16 +437,16 @@ function showReferences() {
   textSize(14);
   fill(colors.ok);
   circle(8, 45, 10);
-  text("  : OK", 5, 45);
+  text("    OK", 5, 45);
   fill(colors.warning);
   circle(8, 75, 10);
-  text("  : Needs fix",5, 75);
+  text("    Needs fix",5, 75);
   fill(colors.dead);
   circle(8, 105, 10);
-  text("  : Critical", 5, 105);
+  text("    Critical", 5, 105);
   fill(colors.noData);
   circle(8, 135, 10);
-  text("  : No Data", 5, 135);
+  text("    No Data", 5, 135);
   pop();
   // const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
 }
@@ -451,7 +454,9 @@ function showReferences() {
 function showTitle(text_) {
   let t = text_.replace("_", " ");
   t = toTitleCase(t);
-  let width = t.length * 10 + 5;
+  let date = day().toString() + "/" + month().toString() + "/" + year().toString();
+  let info = t + " ("+date+")";
+  let width = textWidth(info.toString()) * 1.5;
   let height = 30;
   push();
   stroke(127);
@@ -465,7 +470,7 @@ function showTitle(text_) {
   noStroke();
   textSize(16);
   textAlign(CENTER, CENTER);
-  text(t, canvas.width /2, height * 0.5 + 5);
+  text(info, canvas.width /2, height * 0.5 + 5);
   pop();
   // const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
 }
