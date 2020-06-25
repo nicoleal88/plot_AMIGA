@@ -105,7 +105,7 @@ function setup() {
   // canvas = createCanvas(minSize, minSize);
   canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent('sketch-div');
-  frameRate(10);
+  // frameRate(10);
   
   colors = {
     ok: "#2ECC40", // green
@@ -276,7 +276,7 @@ function setup() {
     tanks.push(tank);
   }
   // console.log(data);
-  console.log(tanks);
+  // console.log(tanks);
   // AMIGA_Map.onChange(drawMap);
 }
 
@@ -422,28 +422,28 @@ function showReferences() {
   stroke(127);
   strokeWeight(1);
   fill(51, 200);
-  rect(canvas.width - width, 0, width, height, 5);
+  rect(0, 0, width, height, 5);
   pop();
   push();
   fill(200);
   noStroke();
   textSize(16);
   textAlign(LEFT);
-  text("References:", canvas.width - width + 5, 15);
+  text("References:", 5, 15);
   
   textSize(14);
   fill(colors.ok);
-  circle(canvas.width - width + 8, 45, 10);
-  text("  : OK", canvas.width - width + 5, 45);
+  circle(8, 45, 10);
+  text("  : OK", 5, 45);
   fill(colors.warning);
-  circle(canvas.width - width + 8, 75, 10);
-  text("  : Needs fix", canvas.width - width + 5, 75);
+  circle(8, 75, 10);
+  text("  : Needs fix",5, 75);
   fill(colors.dead);
-  circle(canvas.width - width + 8, 105, 10);
-  text("  : Critical", canvas.width - width + 5, 105);
+  circle(8, 105, 10);
+  text("  : Critical", 5, 105);
   fill(colors.noData);
-  circle(canvas.width - width + 8, 135, 10);
-  text("  : No Data", canvas.width - width + 5, 135);
+  circle(8, 135, 10);
+  text("  : No Data", 5, 135);
   pop();
   // const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
 }
