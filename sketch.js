@@ -456,7 +456,7 @@ function showTitle(text_) {
   t = toTitleCase(t);
   let date = day().toString() + "/" + month().toString() + "/" + year().toString();
   let info = t + " ("+date+")";
-  let width = textWidth(info.toString()) * 1.5;
+  let width = info.length * 10;
   let height = 30;
   push();
   stroke(127);
