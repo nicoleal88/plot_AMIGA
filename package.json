@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/nicoleal88/plot_AMIGA/issues"
   },
-  "homepage": "https://github.com/nicoleal88/plot_AMIGA#readme"
+  "homepage": "https://github.com/nicoleal88/plot_AMIGA#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
