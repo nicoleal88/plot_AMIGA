@@ -3,10 +3,14 @@
 console.log('App running...');
 
 //Import Express library
-const express = require('express')
+const express = require('express');
+
+//Import CORS
+// const cors = require('cors');
 
 // Create Express app
-const app = express()
+const app = express();
+// app.use(cors());
 
 // Start the Express server
 const server = app.listen(3000, listening);
