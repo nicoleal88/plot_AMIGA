@@ -6,11 +6,11 @@ console.log('App running...');
 const express = require('express');
 
 //Import CORS
-// const cors = require('cors');
+const cors = require('cors');
 
 // Create Express app
 const app = express();
-// app.use(cors());
+app.use(cors());
 
 // Start the Express server
 const server = app.listen(3000, listening);
