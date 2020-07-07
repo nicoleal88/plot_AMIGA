@@ -99,6 +99,10 @@ let h433_2 = ['27', '29', '28', '54', '50', '42', '27'];
 //   lng: -69.58333,
 // }
 
+let draww = true;
+let count;
+let n = 60;
+
 function preload() {
   table = loadTable(url, "csv", "header");
   roadsFile = loadStrings("files/Rutas.dat");
@@ -112,6 +116,8 @@ function setup() {
   // canvas = createCanvas(minSize, minSize);
   canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent('sketch-div');
+  canvas.mouseWheel(makeDraw);
+  count = n;
   // frameRate(10);
   
   colors = {
@@ -404,6 +410,8 @@ function setup() {
 }
 
 function draw() {
+  mouseMoving();
+  if (draww){
   clear();
   // Zoom settings
   const zoom = AMIGA_Map.zoom();
@@ -485,6 +493,12 @@ function draw() {
   showTitle(propiedades.item);
 
   // noLoop();
+  text(count, 5, 180);
+  count--;
+    if (count < 0){
+    draww = false;
+    }
+  }
 }
 
 // function keyPressed() {
@@ -498,6 +512,14 @@ function draw() {
 //   }
 // }
 
+function mouseMoving(){
+    let d = dist(mouseX, mouseY, pmouseX, pmouseY);
+    if (d>1){
+      draww = true;
+      count = n;
+    }
+  }
+
 function mouseClicked(){
   for (let i = 0; i < tanks.length; i++) {
     if (tanks[i].plot == true){
@@ -505,6 +527,16 @@ function mouseClicked(){
     // console.log(tanks[i].selected);
     }
   }
+}
+
+function mousePressed(){
+    draww = true;
+    count = n;
+}
+
+function makeDraw(){
+    draww = true;
+    count = n;
 }
 
 function takeScreenshot(){
