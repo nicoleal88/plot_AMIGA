@@ -2,8 +2,6 @@
 // - Add more data (FrontEnd, BBox, Batteries, etc.)
 // - Add trip button
 // - Add table with selected SDs properties
-// - Fix 5m2 UMDs (UC)
-// - Draw UMD only if its data exists (to remove UMDs on 0,0 coordinates)
 
 // Done
 // - Add References 
@@ -19,9 +17,11 @@
 // - Add button to export
 // - Add date to title
 // - Add UMDs from UC
+// - Fix 5m2 UMDs (UC)
+// - Draw UMD only if its data exists (to remove UMDs on 0,0 coordinates)
 
 // Bugs
-// - Fix UMDs on top-left corner
+// - Canvas resizes to square on window's resize
 
 //Data
 let table;

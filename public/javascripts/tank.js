@@ -179,41 +179,53 @@ class Tank {
   showUMD(scl) {
     this.update();
     //M101
-    let M101 = new UMD(this.point.x, this.point.y, this.ra1, this.rd1, this.pa1, this.id1, this.ekit1, "M101");
-    M101.show(scl * propiedades.mult);
+    if(this.id1 !== "-" && this.id1 !== ""){
+      let M101 = new UMD(this.point.x, this.point.y, this.ra1, this.rd1, this.pa1, this.id1, this.ekit1, "M101");
+      M101.show(scl * propiedades.mult)}
     //M102
-    let M102 = new UMD(this.point.x, this.point.y, this.ra2, this.rd2, this.pa2, this.id2, this.ekit2, "M102");
-    M102.show(scl * propiedades.mult);
+    if(this.id2 !== "-" && this.id2 !== ""){
+      let M102 = new UMD(this.point.x, this.point.y, this.ra2, this.rd2, this.pa2, this.id2, this.ekit2, "M102");
+      M102.show(scl * propiedades.mult)}
     //M103
-    let M103 = new UMD(this.point.x, this.point.y, this.ra3, this.rd3, this.pa3, this.id3, this.ekit3, "M103");
-    M103.show(scl * propiedades.mult);
+    if(this.id3 !== "-" && this.id3 !== ""){
+      let M103 = new UMD(this.point.x, this.point.y, this.ra3, this.rd3, this.pa3, this.id3, this.ekit3, "M103");
+      M103.show(scl * propiedades.mult)}
     //M101_cu
-    let M101_cu = new UMD(this.point.x, this.point.y, this.ra1_cu, this.rd1_cu, this.pa1_cu, this.id1_cu, this.ekit1_cu, "M101_CU", this.a1_cu);
-    M101_cu.show(scl * propiedades.mult);
+    if(this.id1_cu !== "-" && this.id1_cu !== ""){
+      let M101_cu = new UMD(this.point.x, this.point.y, this.ra1_cu, this.rd1_cu, this.pa1_cu, this.id1_cu, this.ekit1_cu, "M101_CU", this.a1_cu);
+      M101_cu.show(scl * propiedades.mult)}
     //M102_cu
-    let M102_cu = new UMD(this.point.x, this.point.y, this.ra2_cu, this.rd2_cu, this.pa2_cu, this.id2_cu, this.ekit2_cu, "M102_CU", this.a2_cu);
-    M102_cu.show(scl * propiedades.mult);
+    if(this.id2_cu !== "-" && this.id2_cu !== ""){
+      let M102_cu = new UMD(this.point.x, this.point.y, this.ra2_cu, this.rd2_cu, this.pa2_cu, this.id2_cu, this.ekit2_cu, "M102_CU", this.a2_cu);
+      M102_cu.show(scl * propiedades.mult)}
     //M103_cu
-    let M103_cu = new UMD(this.point.x, this.point.y, this.ra3_cu, this.rd3_cu, this.pa3_cu, this.id3_cu, this.ekit3_cu, "M103_CU", this.a3_cu);
-    M103_cu.show(scl * propiedades.mult);
+    if(this.id3_cu !== "-" && this.id3_cu !== ""){
+      let M103_cu = new UMD(this.point.x, this.point.y, this.ra3_cu, this.rd3_cu, this.pa3_cu, this.id3_cu, this.ekit3_cu, "M103_CU", this.a3_cu);
+      M103_cu.show(scl * propiedades.mult)}
     //M104_cu
-    let M104_cu = new UMD(this.point.x, this.point.y, this.ra4_cu, this.rd4_cu, this.pa4_cu, this.id4_cu, this.ekit4_cu, "M104_CU", this.a4_cu);
-    M104_cu.show(scl * propiedades.mult);
+    if(this.id4_cu !== "-" && this.id4_cu !== ""){
+      let M104_cu = new UMD(this.point.x, this.point.y, this.ra4_cu, this.rd4_cu, this.pa4_cu, this.id4_cu, this.ekit4_cu, "M104_CU", this.a4_cu);
+      M104_cu.show(scl * propiedades.mult)}
     //M105_cu
-    let M105_cu = new UMD(this.point.x, this.point.y, this.ra5_cu, this.rd5_cu, this.pa5_cu, this.id5_cu, this.ekit5_cu, "M105_CU", this.a5_cu);
-    M105_cu.show(scl * propiedades.mult);
+    if(this.id5_cu !== "-" && this.id5_cu !== ""){
+      let M105_cu = new UMD(this.point.x, this.point.y, this.ra5_cu, this.rd5_cu, this.pa5_cu, this.id5_cu, this.ekit5_cu, "M105_CU", this.a5_cu);
+      M105_cu.show(scl * propiedades.mult)}
     //M106_cu
-    let M106_cu = new UMD(this.point.x, this.point.y, this.ra6_cu, this.rd6_cu, this.pa6_cu, this.id6_cu, this.ekit6_cu, "M106_CU", this.a6_cu);
-    M106_cu.show(scl * propiedades.mult);
+    if(this.id6_cu !== "-" && this.id6_cu !== ""){
+      let M106_cu = new UMD(this.point.x, this.point.y, this.ra6_cu, this.rd6_cu, this.pa6_cu, this.id6_cu, this.ekit6_cu, "M106_CU", this.a6_cu);
+      M106_cu.show(scl * propiedades.mult)}
     //M107_cu
-    let M107_cu = new UMD(this.point.x, this.point.y, this.ra7_cu, this.rd7_cu, this.pa7_cu, this.id7_cu, this.ekit7_cu, "M107_CU", this.a7_cu);
-    M107_cu.show(scl * propiedades.mult);
+    if(this.id7_cu !== "-" && this.id7_cu !== ""){
+      let M107_cu = new UMD(this.point.x, this.point.y, this.ra7_cu, this.rd7_cu, this.pa7_cu, this.id7_cu, this.ekit7_cu, "M107_CU", this.a7_cu);
+      M107_cu.show(scl * propiedades.mult)}
     //M108_cu
-    let M108_cu = new UMD(this.point.x, this.point.y, this.ra8_cu, this.rd8_cu, this.pa8_cu, this.id8_cu, this.ekit8_cu, "M108_CU", this.a8_cu);
-    M108_cu.show(scl * propiedades.mult);
+    if(this.id8_cu !== "-" && this.id8_cu !== ""){
+      let M108_cu = new UMD(this.point.x, this.point.y, this.ra8_cu, this.rd8_cu, this.pa8_cu, this.id8_cu, this.ekit8_cu, "M108_CU", this.a8_cu);
+      M108_cu.show(scl * propiedades.mult)}
     //M109_cu
-    let M109_cu = new UMD(this.point.x, this.point.y, this.ra9_cu, this.rd9_cu, this.pa9_cu, this.id9_cu, this.ekit9_cu, "M109_CU", this.a9_cu);
-    M109_cu.show(scl * propiedades.mult);
+    if(this.id9_cu !== "-" && this.id9_cu !== ""){
+      let M109_cu = new UMD(this.point.x, this.point.y, this.ra9_cu, this.rd9_cu, this.pa9_cu, this.id9_cu, this.ekit9_cu, "M109_CU", this.a9_cu);
+      M109_cu.show(scl * propiedades.mult)}
   }
 
   getColor(option) {
