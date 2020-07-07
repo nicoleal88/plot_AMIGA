@@ -1,6 +1,6 @@
 class UMD {
 
-  constructor(x, y, ra, rd, pa, id, ekit, num_) {
+  constructor(x, y, ra, rd, pa, id, ekit, num_, a) {
     this.sd_x = x;
     this.sd_y = y;
     this.ra = ra;
@@ -9,6 +9,15 @@ class UMD {
     this.id = id;
     this.ekit = ekit;
     this.num = num_
+    if (!a){
+      this.len = 9.0;
+    }
+    else if(a == 10){
+      this.len = 9.0;
+    }
+    else{
+      this.len = 4.5;
+    }
   }
 
   show(scl) {
@@ -27,7 +36,7 @@ class UMD {
     strokeWeight(1);
     fill(127, 100);
     stroke(0, 100);
-    rect(0, 0, 1.4 * scl, 9.0 * scl);
+    rect(0, 0, 1.4 * scl, this.len * scl);
 
     // Access tube
     fill(0, 150);
@@ -35,7 +44,7 @@ class UMD {
 
     // Fiber 1 indicator
     fill(255,0,0, 127);
-    circle(-0.5 * scl , -4.3 * scl, 0.2 * scl);
+    circle(-0.5 * scl , (-this.len/2 + 0.2) * scl, 0.2 * scl);
 
     // ID label
     textSize(0.4 * scl);
@@ -50,8 +59,8 @@ class UMD {
     text(this.ekit, 0, -0.5 * scl);
 
     // Position label
-    textAlign(RIGHT, TOP);
-    text(this.num, 0.6 * scl, -4.4 * scl);
+    textAlign(CENTER, BOTTOM);
+    text(this.num, 0, (this.len/2 - 0.1) * scl);
     pop();
   }
   // drawLine() {

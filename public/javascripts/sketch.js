@@ -27,7 +27,7 @@
 let table;
 let tableObject;
 // URL withouth proxy for CORS
-//let url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3WkkXWxUp3TXEBsqGeeAtuMNKwVu3ZPASyzY8C43B5fWEyKqp2Xs0sEcM3_VXy_eoJNI_a8Mo8aiN/pub?gid=182439664&single=true&output=csv"
+// let url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3WkkXWxUp3TXEBsqGeeAtuMNKwVu3ZPASyzY8C43B5fWEyKqp2Xs0sEcM3_VXy_eoJNI_a8Mo8aiN/pub?gid=182439664&single=true&output=csv"
 // URL with heroku proxy for CORS access
 let url = "https://cors-anywhere.herokuapp.com/https://docs.google.com/spreadsheets/d/e/2PACX-1vS3WkkXWxUp3TXEBsqGeeAtuMNKwVu3ZPASyzY8C43B5fWEyKqp2Xs0sEcM3_VXy_eoJNI_a8Mo8aiN/pub?gid=182439664&single=true&output=csv"
 let data = [];
@@ -281,6 +281,16 @@ function setup() {
     ekit7_cu = row.get('eKit_M107_CU');
     ekit8_cu = row.get('eKit_M108_CU');
     ekit9_cu = row.get('eKit_M109_CU');
+    let a1_cu, a2_cu, a3_cu, a4_cu, a5_cu, a6_cu, a7_cu, a8_cu, a9_cu;
+    a1_cu = Number(row.get('a_M101_CU'));
+    a2_cu = Number(row.get('a_M102_CU'));
+    a3_cu = Number(row.get('a_M103_CU'));
+    a4_cu = Number(row.get('a_M104_CU'));
+    a5_cu = Number(row.get('a_M105_CU'));
+    a6_cu = Number(row.get('a_M106_CU'));
+    a7_cu = Number(row.get('a_M107_CU'));
+    a8_cu = Number(row.get('a_M108_CU'));
+    a9_cu = Number(row.get('a_M109_CU'));
 
     let tx = row.get('TX');
     let dist = row.get('Distrib.');
@@ -371,7 +381,16 @@ function setup() {
       ekit6_cu,
       ekit7_cu,
       ekit8_cu,
-      ekit9_cu
+      ekit9_cu,
+      a1_cu,
+      a2_cu,
+      a3_cu,
+      a4_cu,
+      a5_cu,
+      a6_cu,
+      a7_cu,
+      a8_cu,
+      a9_cu
     }
 
     // Data pushing
