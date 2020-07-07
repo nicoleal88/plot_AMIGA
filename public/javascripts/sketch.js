@@ -2,7 +2,8 @@
 // - Add more data (FrontEnd, BBox, Batteries, etc.)
 // - Add trip button
 // - Add table with selected SDs properties
-// - Add UMDs from UC
+// - Fix 5m2 UMDs (UC)
+// - Draw UMD only if its data exists (to remove UMDs on 0,0 coordinates)
 
 // Done
 // - Add References 
@@ -17,6 +18,7 @@
 // - Add selection on click
 // - Add button to export
 // - Add date to title
+// - Add UMDs from UC
 
 // Bugs
 // - Fix UMDs on top-left corner
@@ -228,6 +230,58 @@ function setup() {
     ekit2 = row.get('eKit_M102');
     ekit3 = row.get('eKit_M103');
 
+    //UMDs UC data
+    let id1_cu, id2_cu, id3_cu, id4_cu, id5_cu, id6_cu, id7_cu, id8_cu, id9_cu;
+    id1_cu = row.get('ID_M101_CU');
+    id2_cu = row.get('ID_M102_CU');
+    id3_cu = row.get('ID_M103_CU');
+    id4_cu = row.get('ID_M104_CU');
+    id5_cu = row.get('ID_M105_CU');
+    id6_cu = row.get('ID_M106_CU');
+    id7_cu = row.get('ID_M107_CU');
+    id8_cu = row.get('ID_M108_CU');
+    id9_cu = row.get('ID_M109_CU');
+    let ra1_cu, ra2_cu, ra3_cu, ra4_cu, ra5_cu, ra6_cu, ra7_cu, ra8_cu, ra9_cu;
+    ra1_cu = parseFloat(row.get('RA_M101_CU').replace(/\s/g, "").replace(",", "."));
+    ra2_cu = parseFloat(row.get('RA_M102_CU').replace(/\s/g, "").replace(",", "."));
+    ra3_cu = parseFloat(row.get('RA_M103_CU').replace(/\s/g, "").replace(",", "."));
+    ra4_cu = parseFloat(row.get('RA_M104_CU').replace(/\s/g, "").replace(",", "."));
+    ra5_cu = parseFloat(row.get('RA_M105_CU').replace(/\s/g, "").replace(",", "."));
+    ra6_cu = parseFloat(row.get('RA_M106_CU').replace(/\s/g, "").replace(",", "."));
+    ra7_cu = parseFloat(row.get('RA_M107_CU').replace(/\s/g, "").replace(",", "."));
+    ra8_cu = parseFloat(row.get('RA_M108_CU').replace(/\s/g, "").replace(",", "."));
+    ra9_cu = parseFloat(row.get('RA_M109_CU').replace(/\s/g, "").replace(",", "."));
+    let rd1_cu, rd2_cu, rd3_cu, rd4_cu, rd5_cu, rd6_cu, rd7_cu, rd8_cu, rd9_cu;
+    rd1_cu = parseFloat(row.get('RD_M101_CU').replace(/\s/g, "").replace(",", "."));
+    rd2_cu = parseFloat(row.get('RD_M102_CU').replace(/\s/g, "").replace(",", "."));
+    rd3_cu = parseFloat(row.get('RD_M103_CU').replace(/\s/g, "").replace(",", "."));
+    rd4_cu = parseFloat(row.get('RD_M104_CU').replace(/\s/g, "").replace(",", "."));
+    rd5_cu = parseFloat(row.get('RD_M105_CU').replace(/\s/g, "").replace(",", "."));
+    rd6_cu = parseFloat(row.get('RD_M106_CU').replace(/\s/g, "").replace(",", "."));
+    rd7_cu = parseFloat(row.get('RD_M107_CU').replace(/\s/g, "").replace(",", "."));
+    rd8_cu = parseFloat(row.get('RD_M108_CU').replace(/\s/g, "").replace(",", "."));
+    rd9_cu = parseFloat(row.get('RD_M109_CU').replace(/\s/g, "").replace(",", "."));
+    let pa1_cu, pa2_cu, pa3_cu, pa4_cu, pa5_cu, pa6_cu, pa7_cu, pa8_cu, pa9_cu;
+    pa1_cu = parseFloat(row.get('PA_M101_CU').replace(/\s/g, "").replace(",", "."));
+    pa2_cu = parseFloat(row.get('PA_M102_CU').replace(/\s/g, "").replace(",", "."));
+    pa3_cu = parseFloat(row.get('PA_M103_CU').replace(/\s/g, "").replace(",", "."));
+    pa4_cu = parseFloat(row.get('PA_M104_CU').replace(/\s/g, "").replace(",", "."));
+    pa5_cu = parseFloat(row.get('PA_M105_CU').replace(/\s/g, "").replace(",", "."));
+    pa6_cu = parseFloat(row.get('PA_M106_CU').replace(/\s/g, "").replace(",", "."));
+    pa7_cu = parseFloat(row.get('PA_M107_CU').replace(/\s/g, "").replace(",", "."));
+    pa8_cu = parseFloat(row.get('PA_M108_CU').replace(/\s/g, "").replace(",", "."));
+    pa9_cu = parseFloat(row.get('PA_M109_CU').replace(/\s/g, "").replace(",", "."));
+    let ekit1_cu, ekit2_cu, ekit3_cu, ekit4_cu, ekit5_cu, ekit6_cu, ekit7_cu, ekit8_cu, ekit9_cu;
+    ekit1_cu = row.get('eKit_M101_CU');
+    ekit2_cu = row.get('eKit_M102_CU');
+    ekit3_cu = row.get('eKit_M103_CU');
+    ekit4_cu = row.get('eKit_M104_CU');
+    ekit5_cu = row.get('eKit_M105_CU');
+    ekit6_cu = row.get('eKit_M106_CU');
+    ekit7_cu = row.get('eKit_M107_CU');
+    ekit8_cu = row.get('eKit_M108_CU');
+    ekit9_cu = row.get('eKit_M109_CU');
+
     let tx = row.get('TX');
     let dist = row.get('Distrib.');
 
@@ -272,7 +326,52 @@ function setup() {
       bbox,
       tipo,
       observaciones,
-      terminado
+      terminado,
+      id1_cu,
+      id2_cu,
+      id3_cu,
+      id4_cu,
+      id5_cu,
+      id6_cu,
+      id7_cu,
+      id8_cu,
+      id9_cu,
+      ra1_cu,
+      ra2_cu,
+      ra3_cu,
+      ra4_cu,
+      ra5_cu,
+      ra6_cu,
+      ra7_cu,
+      ra8_cu,
+      ra9_cu,
+      rd1_cu,
+      rd2_cu,
+      rd3_cu,
+      rd4_cu,
+      rd5_cu,
+      rd6_cu,
+      rd7_cu,
+      rd8_cu,
+      rd9_cu,
+      pa1_cu,
+      pa2_cu,
+      pa3_cu,
+      pa4_cu,
+      pa5_cu,
+      pa6_cu,
+      pa7_cu,
+      pa8_cu,
+      pa9_cu,
+      ekit1_cu,
+      ekit2_cu,
+      ekit3_cu,
+      ekit4_cu,
+      ekit5_cu,
+      ekit6_cu,
+      ekit7_cu,
+      ekit8_cu,
+      ekit9_cu
     }
 
     // Data pushing

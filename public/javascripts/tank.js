@@ -32,6 +32,52 @@ class Tank {
     this.observaciones = datos.observaciones
     this.terminado = datos.terminado
 
+    this.id1_cu = datos.id1_cu
+    this.id2_cu = datos.id2_cu
+    this.id3_cu = datos.id3_cu
+    this.id4_cu = datos.id4_cu
+    this.id5_cu = datos.id5_cu
+    this.id6_cu = datos.id6_cu
+    this.id7_cu = datos.id7_cu
+    this.id8_cu = datos.id8_cu
+    this.id9_cu = datos.id9_cu
+    this.ra1_cu = datos.ra1_cu
+    this.ra2_cu = datos.ra2_cu
+    this.ra3_cu = datos.ra3_cu
+    this.ra4_cu = datos.ra4_cu
+    this.ra5_cu = datos.ra5_cu
+    this.ra6_cu = datos.ra6_cu
+    this.ra7_cu = datos.ra7_cu
+    this.ra8_cu = datos.ra8_cu
+    this.ra9_cu = datos.ra9_cu
+    this.rd1_cu = datos.rd1_cu
+    this.rd2_cu = datos.rd2_cu
+    this.rd3_cu = datos.rd3_cu
+    this.rd4_cu = datos.rd4_cu
+    this.rd5_cu = datos.rd5_cu
+    this.rd6_cu = datos.rd6_cu
+    this.rd7_cu = datos.rd7_cu
+    this.rd8_cu = datos.rd8_cu
+    this.rd9_cu = datos.rd9_cu
+    this.pa1_cu = datos.pa1_cu
+    this.pa2_cu = datos.pa2_cu
+    this.pa3_cu = datos.pa3_cu
+    this.pa4_cu = datos.pa4_cu
+    this.pa5_cu = datos.pa5_cu
+    this.pa6_cu = datos.pa6_cu
+    this.pa7_cu = datos.pa7_cu
+    this.pa8_cu = datos.pa8_cu
+    this.pa9_cu = datos.pa9_cu
+    this.ekit1_cu = datos.ekit1_cu
+    this.ekit2_cu = datos.ekit2_cu
+    this.ekit3_cu = datos.ekit3_cu
+    this.ekit4_cu = datos.ekit4_cu
+    this.ekit5_cu = datos.ekit5_cu
+    this.ekit6_cu = datos.ekit6_cu
+    this.ekit7_cu = datos.ekit7_cu
+    this.ekit8_cu = datos.ekit8_cu
+    this.ekit9_cu = datos.ekit9_cu
+
     this.caseLabel = "_-_";
     this.textID;
     this.textsize;
@@ -126,17 +172,39 @@ class Tank {
     //M101
     let M101 = new UMD(this.point.x, this.point.y, this.ra1, this.rd1, this.pa1, this.id1, this.ekit1, "M101");
     M101.show(scl * propiedades.mult);
+    //M102
     let M102 = new UMD(this.point.x, this.point.y, this.ra2, this.rd2, this.pa2, this.id2, this.ekit2, "M102");
     M102.show(scl * propiedades.mult);
+    //M103
     let M103 = new UMD(this.point.x, this.point.y, this.ra3, this.rd3, this.pa3, this.id3, this.ekit3, "M103");
     M103.show(scl * propiedades.mult);
-    // M101.drawLine();
-    //M101
-    // let M102 = new UMD(90, 87, 164);
-    // M102.show();
-    //M101
-    // let M103 = new UMD(90, 102, 166);
-    // M103.show();
+    //M101_cu
+    let M101_cu = new UMD(this.point.x, this.point.y, this.ra1_cu, this.rd1_cu, this.pa1_cu, this.id1_cu, this.ekit1_cu, "M101_CU");
+    M101_cu.show(scl * propiedades.mult);
+    //M102_cu
+    let M102_cu = new UMD(this.point.x, this.point.y, this.ra2_cu, this.rd2_cu, this.pa2_cu, this.id2_cu, this.ekit2_cu, "M102_CU");
+    M102_cu.show(scl * propiedades.mult);
+    //M103_cu
+    let M103_cu = new UMD(this.point.x, this.point.y, this.ra3_cu, this.rd3_cu, this.pa3_cu, this.id3_cu, this.ekit3_cu, "M103_CU");
+    M103_cu.show(scl * propiedades.mult);
+    //M104_cu
+    let M104_cu = new UMD(this.point.x, this.point.y, this.ra4_cu, this.rd4_cu, this.pa4_cu, this.id4_cu, this.ekit4_cu, "M104_CU");
+    M104_cu.show(scl * propiedades.mult);
+    //M105_cu
+    let M105_cu = new UMD(this.point.x, this.point.y, this.ra5_cu, this.rd5_cu, this.pa5_cu, this.id5_cu, this.ekit5_cu, "M105_CU");
+    M105_cu.show(scl * propiedades.mult);
+    //M106_cu
+    let M106_cu = new UMD(this.point.x, this.point.y, this.ra6_cu, this.rd6_cu, this.pa6_cu, this.id6_cu, this.ekit6_cu, "M106_CU");
+    M106_cu.show(scl * propiedades.mult);
+    //M107_cu
+    let M107_cu = new UMD(this.point.x, this.point.y, this.ra7_cu, this.rd7_cu, this.pa7_cu, this.id7_cu, this.ekit7_cu, "M107_CU");
+    M107_cu.show(scl * propiedades.mult);
+    //M108_cu
+    let M108_cu = new UMD(this.point.x, this.point.y, this.ra8_cu, this.rd8_cu, this.pa8_cu, this.id8_cu, this.ekit8_cu, "M108_CU");
+    M108_cu.show(scl * propiedades.mult);
+    //M109_cu
+    let M109_cu = new UMD(this.point.x, this.point.y, this.ra9_cu, this.rd9_cu, this.pa9_cu, this.id9_cu, this.ekit9_cu, "M109_CU");
+    M109_cu.show(scl * propiedades.mult);
   }
 
   getColor(option) {
