@@ -35,7 +35,7 @@ let data = [];
 let tanks = [];
 let roads = [];
 let tracks = [];
-let roadsFile;
+// let roadsFile;
 let tracksFile;
 // let sd_img;
 
@@ -106,8 +106,8 @@ let n = 60;
 
 function preload() {
   table = loadTable(url, "csv", "header");
-  roadsFile = loadStrings("files/Rutas.dat");
-  tracksFile = loadStrings("files/Tracks-AERA.dat");
+  // roadsFile = loadStrings("files/Rutas.dat");
+  tracksFile = loadStrings("files/Tracks-AERA-PM.dat");
   // sd_img = loadImage("files/SD.png");
 }
 
@@ -132,7 +132,7 @@ function setup() {
   
   // console.log(table);
   // console.log(roadsFile);
-  roads = loadRoads(roadsFile);
+  // roads = loadRoads(roadsFile);
   tracks = loadRoads(tracksFile);
   // tableObject = table.getObject();
   // Create a tile map with the options declared
