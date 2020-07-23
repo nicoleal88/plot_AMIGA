@@ -19,6 +19,7 @@
 // - Add UMDs from UC
 // - Fix 5m2 UMDs (UC)
 // - Draw UMD only if its data exists (to remove UMDs on 0,0 coordinates)
+// - Change zoom() to getZoom() to smoother animations
 
 // Bugs
 // - Canvas resizes to square on window's resize
@@ -414,7 +415,7 @@ function draw() {
   if (draww){
   clear();
   // Zoom settings
-  const zoom = AMIGA_Map.zoom();
+  const zoom = AMIGA_Map.getZoom(); //getZoom() returns a float, zoom() an int
   const scl1 = pow(2, zoom);
   // const sclm =  // Escala para unidades en metros Leaflet
   const sclm = options.scl // Escala para unidades en metros Mapbox
