@@ -247,7 +247,7 @@ class Tank {
         this.caseLabel = this.cap_disipador;
         if (this.caseLabel === "OK") {
           fill(colors.ok);
-        } else if (this.caseLabel === "Stable (Old)") {
+        } else if (this.caseLabel === "Stable") {
           fill(colors.ok);
         } else if (this.caseLabel === "OLD") {
           fill(colors.warning);
