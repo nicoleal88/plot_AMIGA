@@ -29,9 +29,9 @@ class Tank {
     this.dist = datos.dist
     this.bbox = datos.bbox
     this.tipo = datos.tipo
-    this.observaciones = datos.observaciones
-    this.terminado = datos.terminado
-
+    this.to_do = datos.to_do
+    this.status = datos.status
+    this.cableado = datos.cableado
     this.id1_cu = datos.id1_cu
     this.id2_cu = datos.id2_cu
     this.id3_cu = datos.id3_cu
@@ -146,9 +146,9 @@ class Tank {
     fill(127);
     noStroke();
     text(this.textID, this.point.x, this.point.y - this.radius * 1.5 * scl * propiedades.mult);
-
     
-     
+    this.showPwr(scl);
+    
   }
 // Draw popup
   showPopup(){
@@ -230,13 +230,16 @@ class Tank {
 
   getColor(option) {
     switch (option) {
-      case 'amiga_box':
-        this.caseLabel = this.amiga_box;
-        if (this.caseLabel !== "" && this.caseLabel !== "-") {
+      case 'surf_electronics':
+        this.caseLabel = "AB: " + this.amiga_box + "\n" + "TX: " + this.tx + "\n" + "Dist: " + this.dist;
+        if (this.amiga_box == "" || this.amiga_box == "-"){
+          this.caseLabel = "";
+        }
+        if (this.caseLabel !== "" && this.caseLabel !== "-" && this.cableado == "OK") {
           fill(colors.ok);
-        } else if (this.caseLabel === "") {
+        } else if (this.caseLabel === ""  && this.cableado == "OK") {
           fill(colors.warning);
-        } else if (this.caseLabel === "-") {
+        } else if (this.caseLabel === "-"  && this.cableado == "OK") {
           fill(100, 20);
         } else {
           fill(colors.noData);
@@ -247,8 +250,8 @@ class Tank {
         this.caseLabel = this.cap_disipador;
         if (this.caseLabel === "OK") {
           fill(colors.ok);
-        } else if (this.caseLabel === "CAP") {
-          fill("blue");
+        } else if (this.caseLabel === "Stable") {
+          fill(colors.ok);
         } else if (this.caseLabel === "OLD") {
           fill(colors.warning);
         } else {
@@ -256,11 +259,11 @@ class Tank {
         }
         break;
 
-      case 'terminado':
-        this.caseLabel = this.terminado;
-        if (this.caseLabel === "Terminado") {
+      case 'status':
+        this.caseLabel = this.status;
+        if (this.caseLabel === "In ACQ") {
           fill(colors.ok);
-        } else if(this.caseLabel === "Casi"){
+        } else if(this.caseLabel === "Deployed"){
           fill(colors.warning);
         } else {
           fill(colors.noData);
@@ -302,14 +305,51 @@ class Tank {
         }
         break;
 
-      case 'observaciones':
-        this.caseLabel = this.observaciones;
+      case 'to_do':
+        this.caseLabel = this.to_do;
         if (this.caseLabel == "" || this.caseLabel == "-") {
           fill(colors.noData);
         } else {
           fill(colors.warning);
         }
         break;
+    }
+  }
+  // Show Power System
+  showPwr(scl){
+    this.update();
+    if (showPower.showTubing) {
+      push();
+      circle(this.point.x + 5 * scl * propiedades.mult, this.point.y, 1 * scl * propiedades.mult);
+      pop();
+    }
+
+    if (showPower.showSupport) {
+      push();
+      rectMode(CENTER)
+      noFill();
+      stroke(127);
+      strokeWeight(3)
+      rect(this.point.x + 5 * scl * propiedades.mult, this.point.y, 3 * scl * propiedades.mult, 3 * scl * propiedades.mult);
+      pop();
+    }
+
+    if (showPower.showSolarPanel) {
+      push();
+      rectMode(CENTER)
+      fill(255);
+      noStroke();
+      rect(this.point.x + 5 * scl * propiedades.mult, this.point.y, 3 * scl * propiedades.mult, 3 * scl * propiedades.mult);
+      pop();
+    }
+
+    if (showPower.showBatteryBox) {
+      push();
+      rectMode(CENTER)
+      fill(255, 0 , 0);
+      noStroke();
+      rect(this.point.x + 5 * scl * propiedades.mult, this.point.y + 5 * scl * propiedades.mult, 3 * scl * propiedades.mult, 3 * scl * propiedades.mult);
+      pop();
     }
   }
 }
