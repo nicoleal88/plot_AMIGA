@@ -29,7 +29,7 @@ class Tank {
     this.dist = datos.dist
     this.bbox = datos.bbox
     this.tipo = datos.tipo
-    this.observaciones = datos.observaciones
+    this.to_do = datos.to_do
     this.status = datos.status
 
     this.id1_cu = datos.id1_cu
@@ -302,8 +302,8 @@ class Tank {
         }
         break;
 
-      case 'observaciones':
-        this.caseLabel = this.observaciones;
+      case 'to_do':
+        this.caseLabel = this.to_do;
         if (this.caseLabel == "" || this.caseLabel == "-") {
           fill(colors.noData);
         } else {

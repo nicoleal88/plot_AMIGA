@@ -148,13 +148,13 @@ function setup() {
     screenshot: takeScreenshot
   };
 
-  newGUI.add(propiedades, 'item', ['cap_disipador',
+  newGUI.add(propiedades, 'item', [ 'status',
+                                    'cap_disipador',
                                     'ip',
                                     'radio_uptime',
                                     'front_end',
                                     'amiga_box',
-                                    'status',
-                                    'observaciones'
+                                    'to_do'
                                   ])
   newGUI.add(propiedades, 'mult', 1, 50);
 
@@ -213,7 +213,7 @@ function setup() {
     let front_end = row.get('Front_End');
     let bbox = row.get('BBox');
     let tipo = row.get('Tipo');
-    let observaciones = row.get('Observaciones');
+    let to_do = row.get('To_Do');
 
     //UMDs data
     let id1, id2, id3;
@@ -342,7 +342,7 @@ function setup() {
       dist,
       bbox,
       tipo,
-      observaciones,
+      to_do,
       status,
       id1_cu,
       id2_cu,
