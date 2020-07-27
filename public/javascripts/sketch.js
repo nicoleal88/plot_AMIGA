@@ -153,7 +153,7 @@ function setup() {
                                     'ip',
                                     'radio_uptime',
                                     'front_end',
-                                    'amiga_box',
+                                    'surf_electronics',
                                     'to_do'
                                   ])
   newGUI.add(propiedades, 'mult', 1, 50);
@@ -216,6 +216,8 @@ function setup() {
     let to_do = row.get('To_Do');
 
     //UMDs data
+    let cableado;
+    cableado = row.get('Cableado_UMDs');
     let id1, id2, id3;
     id1 = row.get('ID_M101');
     id2 = row.get('ID_M102');
@@ -344,6 +346,7 @@ function setup() {
       tipo,
       to_do,
       status,
+      cableado,
       id1_cu,
       id2_cu,
       id3_cu,
