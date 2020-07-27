@@ -27,6 +27,12 @@ class Tank {
     this.amiga_box = datos.amiga_box
     this.tx = datos.tx
     this.dist = datos.dist
+    this.tubing = datos.tubing
+    this.soporte = datos.soporte
+    this.solar_panel = datos.solar_panel
+    this.bat_1 = datos.bat_1
+    this.bat_2 = datos.bat_2
+    this.regulator = datos.regulator
     this.bbox = datos.bbox
     this.tipo = datos.tipo
     this.to_do = datos.to_do
@@ -318,37 +324,43 @@ class Tank {
   // Show Power System
   showPwr(scl){
     this.update();
-    if (showPower.showTubing) {
+    if (showPower.showTubing && this.tubing == "OK") {
       push();
-      circle(this.point.x + 5 * scl * propiedades.mult, this.point.y, 1 * scl * propiedades.mult);
+      circle(this.point.x + 5 * scl * propiedades.mult, this.point.y + 2 * scl * propiedades.mult, 1 * scl * propiedades.mult);
       pop();
     }
 
-    if (showPower.showSupport) {
+    if (showPower.showSupport && this.soporte == "OK") {
       push();
       rectMode(CENTER)
       noFill();
       stroke(127);
-      strokeWeight(3)
-      rect(this.point.x + 5 * scl * propiedades.mult, this.point.y, 3 * scl * propiedades.mult, 3 * scl * propiedades.mult);
+      strokeWeight(0.3 * scl * propiedades.mult)
+      rect(this.point.x + 5 * scl * propiedades.mult, this.point.y, 2 * scl * propiedades.mult, 3 * scl * propiedades.mult);
       pop();
     }
 
-    if (showPower.showSolarPanel) {
+    if (showPower.showSolarPanel && (this.solar_panel !== "" && this.solar_panel !== "-")) {
       push();
       rectMode(CENTER)
-      fill(255);
+      fill(100, 149, 237);
       noStroke();
-      rect(this.point.x + 5 * scl * propiedades.mult, this.point.y, 3 * scl * propiedades.mult, 3 * scl * propiedades.mult);
+      rect(this.point.x + 5 * scl * propiedades.mult, this.point.y, 2 * scl * propiedades.mult, 3 * scl * propiedades.mult);
       pop();
     }
 
-    if (showPower.showBatteryBox) {
+    if (showPower.showBatteryBox && this.bbox == "OK") {
       push();
       rectMode(CENTER)
-      fill(255, 0 , 0);
+      fill(255, 248, 220);
       noStroke();
-      rect(this.point.x + 5 * scl * propiedades.mult, this.point.y + 5 * scl * propiedades.mult, 3 * scl * propiedades.mult, 3 * scl * propiedades.mult);
+      rect(this.point.x - 5 * scl * propiedades.mult, this.point.y, 4 * scl * propiedades.mult, 3 * scl * propiedades.mult);
+      textAlign(CENTER);
+      fill(0);
+      textSize(0.5 * scl * propiedades.mult);
+      text("Reg: " + this.regulator, this.point.x - 5 * scl * propiedades.mult, this.point.y - 0.5 * scl * propiedades.mult);
+      text("Bat_1: \n" + this.bat_1, this.point.x + (- 5 - 1 )* scl * propiedades.mult, this.point.y + (- 0.5 + 1.8) * scl * propiedades.mult);
+      text("Bat_2: \n" + this.bat_2, this.point.x + (- 5 + 1 )* scl * propiedades.mult, this.point.y + (- 0.5 + 1.8) * scl * propiedades.mult);
       pop();
     }
   }

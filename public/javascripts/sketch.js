@@ -103,7 +103,7 @@ let h433_2 = ['27', '29', '28', '54', '50', '42', '27'];
 
 let draww = true;
 let count;
-let n = 60;
+let n = 30;
 
 function preload() {
   table = loadTable(url, "csv", "header");
@@ -144,7 +144,7 @@ function setup() {
   newGUI = new dat.GUI();
 
   propiedades = {
-    item: "cap_disipador",
+    item: "status",
     mult: 25,
     screenshot: takeScreenshot
   };
@@ -224,6 +224,12 @@ function setup() {
     let status = row.get('Status');
     let radio_uptime = row.get('Radio_Uptime');
     let front_end = row.get('Front_End');
+    let tubing = row.get('Tubing_PS');
+    let soporte = row.get('Soporte_PS');
+    let solar_panel = row.get('PS_AMIGA');
+    let bat_1 = row.get('Bateria_1');
+    let bat_2 = row.get('Bateria_2');
+    let regulator = row.get('Regulador');
     let bbox = row.get('BBox');
     let tipo = row.get('Tipo');
     let to_do = row.get('To_Do');
@@ -355,6 +361,12 @@ function setup() {
       amiga_box,
       tx,
       dist,
+      tubing,
+      soporte,
+      solar_panel,
+      bat_1,
+      bat_2,
+      regulator,
       bbox,
       tipo,
       to_do,
