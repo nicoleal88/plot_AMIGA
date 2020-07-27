@@ -204,7 +204,7 @@ function setup() {
     showTubing: false,
     showSupport: false,
     showSolarPanel: false,
-    showBatteryBox: true,
+    showBatteryBox: false,
   }
   powerFolder.add(showPower, 'showTubing');
   powerFolder.add(showPower, 'showSupport');
