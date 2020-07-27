@@ -146,9 +146,9 @@ class Tank {
     fill(127);
     noStroke();
     text(this.textID, this.point.x, this.point.y - this.radius * 1.5 * scl * propiedades.mult);
-
     
-     
+    this.showPwr(scl);
+    
   }
 // Draw popup
   showPopup(){
@@ -313,6 +313,43 @@ class Tank {
           fill(colors.warning);
         }
         break;
+    }
+  }
+  // Show Power System
+  showPwr(scl){
+    this.update();
+    if (showPower.showTubing) {
+      push();
+      circle(this.point.x + 5 * scl * propiedades.mult, this.point.y, 1 * scl * propiedades.mult);
+      pop();
+    }
+
+    if (showPower.showSupport) {
+      push();
+      rectMode(CENTER)
+      noFill();
+      stroke(127);
+      strokeWeight(3)
+      rect(this.point.x + 5 * scl * propiedades.mult, this.point.y, 3 * scl * propiedades.mult, 3 * scl * propiedades.mult);
+      pop();
+    }
+
+    if (showPower.showSolarPanel) {
+      push();
+      rectMode(CENTER)
+      fill(255);
+      noStroke();
+      rect(this.point.x + 5 * scl * propiedades.mult, this.point.y, 3 * scl * propiedades.mult, 3 * scl * propiedades.mult);
+      pop();
+    }
+
+    if (showPower.showBatteryBox) {
+      push();
+      rectMode(CENTER)
+      fill(255, 0 , 0);
+      noStroke();
+      rect(this.point.x + 5 * scl * propiedades.mult, this.point.y + 5 * scl * propiedades.mult, 3 * scl * propiedades.mult, 3 * scl * propiedades.mult);
+      pop();
     }
   }
 }

@@ -57,6 +57,7 @@ let items;
 let showInfo;
 let showHexagons;
 let showSDs;
+let showPower;
 let mult;
 
 // Lets put all our map options in a single object
@@ -197,6 +198,18 @@ function setup() {
   sdFolder.add(showSDs, 'showTwins_KT');
   sdFolder.add(showSDs, 'showCampoIbarra');
   sdFolder.add(showSDs, 'showCampoAraya');
+
+  let powerFolder = newGUI.addFolder("Show Power");
+  showPower = {
+    showTubing: false,
+    showSupport: false,
+    showSolarPanel: false,
+    showBatteryBox: true,
+  }
+  powerFolder.add(showPower, 'showTubing');
+  powerFolder.add(showPower, 'showSupport');
+  powerFolder.add(showPower, 'showSolarPanel');
+  powerFolder.add(showPower, 'showBatteryBox');
 
   infoFolder.open();
 
