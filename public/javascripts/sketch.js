@@ -153,7 +153,7 @@ function setup() {
                                     'radio_uptime',
                                     'front_end',
                                     'amiga_box',
-                                    'terminado',
+                                    'status',
                                     'observaciones'
                                   ])
   newGUI.add(propiedades, 'mult', 1, 50);
@@ -208,7 +208,7 @@ function setup() {
     let ip = row.get('IP');
     let amiga_box = row.get('AMIGA_Box');
     let cap_disipador = row.get('Cap_HS');
-    let terminado = row.get('Terminado');
+    let status = row.get('Status');
     let radio_uptime = row.get('Radio_Uptime');
     let front_end = row.get('Front_End');
     let bbox = row.get('BBox');
@@ -343,7 +343,7 @@ function setup() {
       bbox,
       tipo,
       observaciones,
-      terminado,
+      status,
       id1_cu,
       id2_cu,
       id3_cu,
@@ -452,7 +452,7 @@ function draw() {
   for (let i = 0; i < tanks.length; i++) {
     if (tanks[i].plot == true){
       if (showInfo.showUMDs) {
-        if (tanks[i].terminado) { // If the position is finished, and the checkbox is enabled:
+        if (tanks[i].status) { // If the position is finished, and the checkbox is enabled:
           tanks[i].showUMD(escalaReal); // Show the UMDs
           }
         }
@@ -698,7 +698,7 @@ function windowResized() {
 //   'front_end',
 //   'amiga_box',
 //   'bbox',
-//   'terminado'
+//   'status'
 // ];
 
 // var showLabel = true;

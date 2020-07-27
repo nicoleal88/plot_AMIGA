@@ -30,7 +30,7 @@ class Tank {
     this.bbox = datos.bbox
     this.tipo = datos.tipo
     this.observaciones = datos.observaciones
-    this.terminado = datos.terminado
+    this.status = datos.status
 
     this.id1_cu = datos.id1_cu
     this.id2_cu = datos.id2_cu
@@ -247,8 +247,8 @@ class Tank {
         this.caseLabel = this.cap_disipador;
         if (this.caseLabel === "OK") {
           fill(colors.ok);
-        } else if (this.caseLabel === "CAP") {
-          fill("blue");
+        } else if (this.caseLabel === "Stable (Old)") {
+          fill(colors.ok);
         } else if (this.caseLabel === "OLD") {
           fill(colors.warning);
         } else {
@@ -256,11 +256,11 @@ class Tank {
         }
         break;
 
-      case 'terminado':
-        this.caseLabel = this.terminado;
-        if (this.caseLabel === "Terminado") {
+      case 'status':
+        this.caseLabel = this.status;
+        if (this.caseLabel === "In ACQ") {
           fill(colors.ok);
-        } else if(this.caseLabel === "Casi"){
+        } else if(this.caseLabel === "Deployed"){
           fill(colors.warning);
         } else {
           fill(colors.noData);
