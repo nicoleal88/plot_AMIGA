@@ -155,6 +155,8 @@ function setup() {
                                     'radio_uptime',
                                     'front_end',
                                     'surf_electronics',
+                                    'under_electronics',
+                                    'power_system',
                                     'to_do'
                                   ])
   newGUI.add(propiedades, 'mult', 1, 50);

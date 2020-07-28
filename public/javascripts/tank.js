@@ -26,7 +26,7 @@ class Tank {
     this.ekit3 = datos.ekit3
     this.amiga_box = datos.amiga_box
     this.tx = datos.tx
-    this.dist = datos.dist
+    this.distrib = datos.distrib
     this.tubing = datos.tubing
     this.soporte = datos.soporte
     this.solar_panel = datos.solar_panel
@@ -237,21 +237,122 @@ class Tank {
   getColor(option) {
     switch (option) {
       case 'surf_electronics':
-        this.caseLabel = "AB: " + this.amiga_box + "\n" + "TX: " + this.tx + "\n" + "Dist: " + this.dist;
-        if (this.amiga_box == "" || this.amiga_box == "-"){
+        // this.caseLabel = "AB: " + this.amiga_box + "\n" + "TX: " + this.tx + "\n" + "Dist: " + this.dist;
+        let ab_;
+        if (this.amiga_box !== "" && this.amiga_box !== "-"){
+          ab_ = "OK"
+        }
+        let tx_;
+        if (this.tx !== "" && this.tx !== "-"){
+          tx_ = "OK"
+        }
+        let d_;
+        if (this.distrib !== "" && this.distrib !== "-"){
+          d_ = "OK"
+        }
+
+        if (ab_ == "OK" && tx_ == "OK" && d_ == "OK") {
+          this.caseLabel = "OK";
+        }
+        else if (this.cableado == "" || this.cableado == "-"){
           this.caseLabel = "";
         }
-        if (this.caseLabel !== "" && this.caseLabel !== "-" && this.cableado == "OK") {
+        else{
+          this.caseLabel = "Incomplete";
+        }
+        // if (this.caseLabel !== "" && this.caseLabel !== "-" && this.cableado == "OK") {
+        if (ab_ == "OK" && tx_ == "OK" && d_ == "OK") {
           fill(colors.ok);
-        } else if (this.caseLabel === ""  && this.cableado == "OK") {
+        } else if (this.cableado == "OK") {
           fill(colors.warning);
-        } else if (this.caseLabel === "-"  && this.cableado == "OK") {
-          fill(100, 20);
         } else {
           fill(colors.noData);
         }
         break;
 
+      case 'under_electronics':
+        // this.caseLabel = "AB: " + this.amiga_box + "\n" + "TX: " + this.tx + "\n" + "Dist: " + this.dist;
+        let ekit1_;
+        if (this.ekit1 !== "" && this.ekit1 !== "-"){
+          ekit1_ = "OK"
+        }
+        let ekit2_;
+        if (this.ekit2 !== "" && this.ekit2 !== "-"){
+          ekit2_ = "OK"
+        }
+        let ekit3_;
+        if (this.ekit3 !== "" && this.ekit3 !== "-"){
+          ekit3_ = "OK"
+        }
+
+        if (ekit1_ == "OK" && ekit2_ == "OK" && ekit3_ == "OK" || this.tipo == "CU") {
+          this.caseLabel = "OK";
+        }
+        else if (this.cableado == "" || this.cableado == "-"){
+          this.caseLabel = "";
+        }
+        else{
+          this.caseLabel = "Incomplete";
+        }
+
+        if (ekit1_ == "OK" && ekit2_ == "OK" && ekit3_ == "OK" || this.tipo == "CU") {
+          fill(colors.ok);
+        } else if (this.cableado == "OK") {
+          fill(colors.warning);
+        } else {
+          fill(colors.noData);
+        }
+        break;
+
+        case 'power_system':
+          let tubing_;
+          if (this.tubing !== "" && this.tubing !== "-"){
+            tubing_ = "OK"
+          }
+          let soporte_;
+          if (this.soporte !== "" && this.soporte !== "-"){
+            soporte_ = "OK"
+          }
+          let solar_panel_;
+          if (this.solar_panel !== "" && this.solar_panel !== "-"){
+            solar_panel_ = "OK"
+          }
+          let bbox_;
+          if (this.bbox !== "" && this.bbox !== "-"){
+            bbox_ = "OK"
+          }
+          let bat_1_;
+          if (this.bat_1 !== "" && this.bat_1 !== "-"){
+            bat_1_ = "OK"
+          }
+          let bat_2_;
+          if (this.bat_2 !== "" && this.bat_2 !== "-"){
+            bat_2_ = "OK"
+          }
+          let reg_;
+          if (this.regulator !== "" && this.regulator !== "-"){
+            reg_ = "OK"
+          }
+  
+          if (tubing_ == "OK" && soporte_ == "OK" && solar_panel_ == "OK" && bbox_ == "OK" && bat_1_ == "OK" && bat_2_ == "OK" && reg_ == "OK") {
+            this.caseLabel = "OK";
+          }
+          else if (this.cableado == "" || this.cableado == "-"){
+            this.caseLabel = "";
+          }
+          else{
+            this.caseLabel = "Incomplete";
+          }
+  
+          if (tubing_ == "OK" && soporte_ == "OK" && solar_panel_ == "OK" && bbox_ == "OK" && bat_1_ == "OK" && bat_2_ == "OK" && reg_ == "OK") {
+            fill(colors.ok);
+          } else if (this.cableado == "OK") {
+            fill(colors.warning);
+          } else {
+            fill(colors.noData);
+          }
+          break;
+      
       case 'cap_disipador':
         this.caseLabel = this.cap_disipador;
         if (this.caseLabel === "OK") {
