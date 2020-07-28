@@ -150,13 +150,13 @@ function setup() {
   };
 
   newGUI.add(propiedades, 'item', [ 'status',
-                                    'cap_disipador',
-                                    'ip',
-                                    'radio_uptime',
-                                    'front_end',
                                     'surf_electronics',
                                     'under_electronics',
                                     'power_system',
+                                    'cap_heatsink',
+                                    'radio_uptime',
+                                    'ip',
+                                    'front_end',
                                     'to_do'
                                   ])
   newGUI.add(propiedades, 'mult', 1, 50);

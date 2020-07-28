@@ -353,7 +353,7 @@ class Tank {
           }
           break;
       
-      case 'cap_disipador':
+      case 'cap_heatsink':
         this.caseLabel = this.cap_disipador;
         if (this.caseLabel === "OK") {
           fill(colors.ok);
