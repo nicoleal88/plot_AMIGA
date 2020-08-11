@@ -1,7 +1,7 @@
 // ToDo
-// - Add more data (FrontEnd, BBox, Batteries, etc.)
 // - Add trip button
 // - Add table with selected SDs properties
+// - Change opacity of hexagons
 
 // Done
 // - Add References 
@@ -20,6 +20,8 @@
 // - Fix 5m2 UMDs (UC)
 // - Draw UMD only if its data exists (to remove UMDs on 0,0 coordinates)
 // - Change zoom() to getZoom() to smoother animations
+// - Add more data (FrontEnd, BBox, Batteries, etc.)
+// - Download csv from server async
 
 // Bugs
 // - Canvas resizes to square on window's resize
@@ -30,13 +32,15 @@ let tableObject;
 // URL withouth proxy for CORS
 // let url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3WkkXWxUp3TXEBsqGeeAtuMNKwVu3ZPASyzY8C43B5fWEyKqp2Xs0sEcM3_VXy_eoJNI_a8Mo8aiN/pub?gid=182439664&single=true&output=csv"
 // URL with heroku proxy for CORS access
-let url = "https://cors-anywhere.herokuapp.com/https://docs.google.com/spreadsheets/d/e/2PACX-1vS3WkkXWxUp3TXEBsqGeeAtuMNKwVu3ZPASyzY8C43B5fWEyKqp2Xs0sEcM3_VXy_eoJNI_a8Mo8aiN/pub?gid=182439664&single=true&output=csv"
+// let url = "https://cors-anywhere.herokuapp.com/https://docs.google.com/spreadsheets/d/e/2PACX-1vS3WkkXWxUp3TXEBsqGeeAtuMNKwVu3ZPASyzY8C43B5fWEyKqp2Xs0sEcM3_VXy_eoJNI_a8Mo8aiN/pub?gid=182439664&single=true&output=csv"
 let data = [];
 let tanks = [];
 let roads = [];
 let tracks = [];
 // let roadsFile;
 let tracksFile;
+let lastUpdate;
+let lastUpdateDate;
 // let sd_img;
 
 //Map settings
@@ -86,7 +90,7 @@ var options = {
   minZoom: 1,
   maxZoom: 20,
   renderWorldCopies: false,
-  scl : 0.00002
+  scl: 0.00002
 }
 
 // Hexagons
@@ -106,7 +110,8 @@ let count;
 let n = 30;
 
 function preload() {
-  table = loadTable(url, "csv", "header");
+  table = loadTable("../../csvs/data.csv", "csv", "header");
+  lastUpdate = loadStrings("../../csvs/lastUpdate.txt");
   // roadsFile = loadStrings("files/Rutas.dat");
   tracksFile = loadStrings("files/Tracks-AERA-PM.dat");
   // sd_img = loadImage("files/SD.png");
@@ -121,21 +126,22 @@ function setup() {
   canvas.mouseWheel(makeDraw);
   count = n;
   // frameRate(10);
-  
+
   colors = {
     ok: "#2ECC40", // green
     warning: "#FFDC00", // yellow
     dead: "#FF4136", // red
     noData: "silver",
-    roads : color(255, 204, 0, 50),
-    selected : "#FF851B" // Orange
+    roads: color(255, 204, 0, 50),
+    selected: "#FF851B" // Orange
   }
-  
+
   // console.log(table);
   // console.log(roadsFile);
-  // roads = loadRoads(roadsFile);
+
   tracks = loadRoads(tracksFile);
-  // tableObject = table.getObject();
+  lastUpdateDate = new Date(Number(lastUpdate));
+
   // Create a tile map with the options declared
   AMIGA_Map = mappa.tileMap(options);
   AMIGA_Map.overlay(canvas);
@@ -149,16 +155,16 @@ function setup() {
     screenshot: takeScreenshot
   };
 
-  newGUI.add(propiedades, 'item', [ 'status',
-                                    'surf_electronics',
-                                    'under_electronics',
-                                    'power_system',
-                                    'cap_heatsink',
-                                    'radio_uptime',
-                                    'ip',
-                                    'front_end',
-                                    'to_do'
-                                  ])
+  newGUI.add(propiedades, 'item', ['status',
+    'surf_electronics',
+    'under_electronics',
+    'power_system',
+    'cap_heatsink',
+    'radio_uptime',
+    'ip',
+    'front_end',
+    'to_do'
+  ])
   newGUI.add(propiedades, 'mult', 1, 50);
 
   newGUI.add(propiedades, 'screenshot');
@@ -442,93 +448,95 @@ function setup() {
 
 function draw() {
   mouseMoving();
-  if (draww){
-  clear();
-  // Zoom settings
-  const zoom = AMIGA_Map.getZoom(); //getZoom() returns a float, zoom() an int
-  const scl1 = pow(2, zoom);
-  // const sclm =  // Escala para unidades en metros Leaflet
-  const sclm = options.scl // Escala para unidades en metros Mapbox
-  // const scl2 = 0.0002;
-  // const offset = radius * 1.5;
-  // let escala = constrain(scl * scl2, 2, 6);
-  let escalaReal = scl1 * sclm;
+  if (draww) {
+    clear();
+    // Zoom settings
+    const zoom = AMIGA_Map.getZoom(); //getZoom() returns a float, zoom() an int
+    const scl1 = pow(2, zoom);
+    // const sclm =  // Escala para unidades en metros Leaflet
+    const sclm = options.scl // Escala para unidades en metros Mapbox
+    // const scl2 = 0.0002;
+    // const offset = radius * 1.5;
+    // let escala = constrain(scl * scl2, 2, 6);
+    let escalaReal = scl1 * sclm;
 
-  // Disable SDs plotting:
-  for (let i = 0; i < tanks.length; i++) {
-    tanks[i].update(); // Updates the position on the map
+    // Disable SDs plotting:
+    for (let i = 0; i < tanks.length; i++) {
+      tanks[i].update(); // Updates the position on the map
 
-    if (showSDs.show433 == false && tanks[i].tipo == '433m') {
-      tanks[i].plot = false;
-    } else if (showSDs.showTwins_KT == false && tanks[i].tipo == 'Twins_KT') {
-      tanks[i].plot = false;
-    } else if (showSDs.showCampoIbarra == false && tanks[i].tipo == 'Campo_Ibarra') {
-      tanks[i].plot = false;
-    } else if (showSDs.showCampoAraya == false && tanks[i].tipo == 'Campo_Araya') {
-      tanks[i].plot = false;
-    } else {
-      tanks[i].plot = true;
+      if (showSDs.show433 == false && tanks[i].tipo == '433m') {
+        tanks[i].plot = false;
+      } else if (showSDs.showTwins_KT == false && tanks[i].tipo == 'Twins_KT') {
+        tanks[i].plot = false;
+      } else if (showSDs.showCampoIbarra == false && tanks[i].tipo == 'Campo_Ibarra') {
+        tanks[i].plot = false;
+      } else if (showSDs.showCampoAraya == false && tanks[i].tipo == 'Campo_Araya') {
+        tanks[i].plot = false;
+      } else {
+        tanks[i].plot = true;
+      }
     }
-  }
 
-  // Plot SDs
-  for (let i = 0; i < tanks.length; i++) {
-    if (tanks[i].plot == true){
-      tanks[i].showSD(escalaReal, propiedades.item, showInfo.showLabel, showInfo.showName, showInfo.showLSID); // Plots with a certain scale
+    // Plot SDs
+    for (let i = 0; i < tanks.length; i++) {
+      if (tanks[i].plot == true) {
+        tanks[i].showSD(escalaReal, propiedades.item, showInfo.showLabel, showInfo.showName, showInfo.showLSID); // Plots with a certain scale
+      }
     }
-  }
 
-  // Plot UMDs
-  for (let i = 0; i < tanks.length; i++) {
-    if (tanks[i].plot == true){
-      if (showInfo.showUMDs) {
-        if (tanks[i].status) { // If the position is finished, and the checkbox is enabled:
-          tanks[i].showUMD(escalaReal); // Show the UMDs
+    // Plot UMDs
+    for (let i = 0; i < tanks.length; i++) {
+      if (tanks[i].plot == true) {
+        if (showInfo.showUMDs) {
+          if (tanks[i].status) { // If the position is finished, and the checkbox is enabled:
+            tanks[i].showUMD(escalaReal); // Show the UMDs
           }
         }
+      }
     }
-  }
 
-  // Plot popups
-  for (let i = 0; i < tanks.length; i++) {
-    if (tanks[i].plot == true){
-    tanks[i].update(); // Updates the position on the map
-    tanks[i].showPopup();
+    // Plot popups
+    for (let i = 0; i < tanks.length; i++) {
+      if (tanks[i].plot == true) {
+        tanks[i].update(); // Updates the position on the map
+        tanks[i].showPopup();
+      }
     }
-  }
 
-  // Plot hexagons
-  if (showHexagons.showUC) {
-    drawShape(UC, "black");
-  }
-  if (showHexagons.showMARTA) {
-    drawShape(MARTA, "orange");
-  }
-  if (showHexagons.show433_1) {
-    drawShape(h433_1, "blue");
-  }
-  if (showHexagons.show433_2) {
-    drawShape(h433_2, "cyan");
-  }
+    // Plot hexagons
+    if (showHexagons.showUC) {
+      drawShape(UC, "black");
+    }
+    if (showHexagons.showMARTA) {
+      drawShape(MARTA, "orange");
+    }
+    if (showHexagons.show433_1) {
+      drawShape(h433_1, "blue");
+    }
+    if (showHexagons.show433_2) {
+      drawShape(h433_2, "cyan");
+    }
 
-  // Plot roads and tracks
-  // if (showInfo.showRoads) {
-  //   drawRoads(roads, "white");
-  // }
-  if (showInfo.showRoads) {
-    drawRoads(tracks, colors.roads);
-  }
+    // Plot roads and tracks
+    // if (showInfo.showRoads) {
+    //   drawRoads(roads, "white");
+    // }
+    if (showInfo.showRoads) {
+      drawRoads(tracks, colors.roads);
+    }
 
-  // Plot References
-  showReferences();
-  showTitle(propiedades.item);
+    // Plot References
+    showReferences();
+    showTitle(propiedades.item);
 
-  // noLoop();
-  text(count, 5, 180);
-  count--;
-    if (count < 0){
-    draww = false;
-    }
+    // noLoop();
+    text(count, 5, 180);
+    count--;
+    if (count < 0) {
+      draww = false;
+    }
+
+    showLastUpdate();
   }
 }
 
@@ -543,34 +551,34 @@ function draw() {
 //   }
 // }
 
-function mouseMoving(){
-    let d = dist(mouseX, mouseY, pmouseX, pmouseY);
-    if (d>1){
-      draww = true;
-      count = n;
-    }
+function mouseMoving() {
+  let d = dist(mouseX, mouseY, pmouseX, pmouseY);
+  if (d > 1) {
+    draww = true;
+    count = n;
   }
+}
 
-function mouseClicked(){
+function mouseClicked() {
   for (let i = 0; i < tanks.length; i++) {
-    if (tanks[i].plot == true){
-    tanks[i].selectSD(); // Updates the position on the map
-    // console.log(tanks[i].selected);
+    if (tanks[i].plot == true) {
+      tanks[i].selectSD(); // Updates the position on the map
+      // console.log(tanks[i].selected);
     }
   }
 }
 
-function mousePressed(){
-    draww = true;
-    count = n;
+function mousePressed() {
+  draww = true;
+  count = n;
 }
 
-function makeDraw(){
-    draww = true;
-    count = n;
+function makeDraw() {
+  draww = true;
+  count = n;
 }
 
-function takeScreenshot(){
+function takeScreenshot() {
   push();
 
   save('myCanvas.png');
@@ -616,14 +624,14 @@ function showReferences() {
   textSize(16);
   textAlign(LEFT);
   text("References:", 5, 15);
-  
+
   textSize(14);
   fill(colors.ok);
   circle(8, 45, 10);
   text("    OK", 5, 45);
   fill(colors.warning);
   circle(8, 75, 10);
-  text("    Needs fix",5, 75);
+  text("    Needs fix", 5, 75);
   fill(colors.dead);
   circle(8, 105, 10);
   text("    Critical", 5, 105);
@@ -637,8 +645,9 @@ function showReferences() {
 function showTitle(text_) {
   let t = text_.replace("_", " ");
   t = toTitleCase(t);
-  let date = day().toString() + "/" + month().toString() + "/" + year().toString();
-  let info = t + " ("+date+")";
+  let date = lastUpdateDate.getDate().toString() + "/" + ((lastUpdateDate.getMonth())+1).toString() + "/" + ((lastUpdateDate.getYear())+1900).toString();
+  // let date = day().toString() + "/" + month().toString() + "/" + year().toString();
+  let info = t + " (" + date + ")";
   let width = info.length * 10;
   let height = 30;
   push();
@@ -646,14 +655,26 @@ function showTitle(text_) {
   strokeWeight(1);
   fill(51, 200);
   rectMode(CENTER);
-  rect(canvas.width/2 , height * 0.5 + 5 , width, height, 5);
+  rect(canvas.width / 2, height * 0.5 + 5, width, height, 5);
   pop();
   push();
   fill(200);
   noStroke();
   textSize(16);
   textAlign(CENTER, CENTER);
-  text(info, canvas.width /2, height * 0.5 + 5);
+  text(info, canvas.width / 2, height * 0.5 + 5);
+  pop();
+  // const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
+}
+
+function showLastUpdate() {
+  
+  push();
+  fill(200);
+  noStroke();
+  textSize(12);
+  textAlign(CENTER, CENTER);
+  text("Last update: " + lastUpdateDate.toLocaleString(), width / 2, height - 20)
   pop();
   // const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
 }
@@ -674,9 +695,9 @@ function loadRoads(file) {
       var utm = new UTMConv.UTMCoords(utmz, easting, northing);
       var degd = utm.to_deg();
       var pos = {
-      lat: degd.latd,
-      lng: degd.lngd
-    }
+        lat: degd.latd,
+        lng: degd.lngd
+      }
       road.push(pos);
     } else {
       allroads.push(road);
@@ -706,10 +727,10 @@ function drawRoads(list, col) {
 
 function toTitleCase(str) {
   return str.replace(
-      /\w\S*/g,
-      function(txt) {
-          return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-      }
+    /\w\S*/g,
+    function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    }
   );
 }
 
@@ -771,3 +792,23 @@ function windowResized() {
 //   'show433_1',
 //   'show433_2',
 //   'mult');
+
+function millisecondsToHuman(ms) {
+  const seconds = Math.floor((ms / 1000) % 60);
+  const minutes = Math.floor((ms / 1000 / 60) % 60);
+  const hours = Math.floor(ms / 1000 / 60 / 60);
+
+  const humanized = [
+    pad(hours.toString(), 2),
+    pad(minutes.toString(), 2),
+    pad(seconds.toString(), 2),
+  ].join(':');
+
+  return humanized;
+}
+
+function pad(numberString, size) {
+  let padded = numberString;
+  while (padded.length < size) padded = `0${padded}`;
+  return padded;
+}
