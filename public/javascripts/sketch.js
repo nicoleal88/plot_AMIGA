@@ -110,8 +110,8 @@ let count;
 let n = 30;
 
 function preload() {
-  table = loadTable("../../csvs/data.csv", "csv", "header");
-  lastUpdate = loadStrings("../../csvs/lastUpdate.txt");
+  table = loadTable("../csv/data.csv", "csv", "header");
+  lastUpdate = loadStrings("../csv/lastUpdate.txt");
   // roadsFile = loadStrings("files/Rutas.dat");
   tracksFile = loadStrings("files/Tracks-AERA-PM.dat");
   // sd_img = loadImage("files/SD.png");
