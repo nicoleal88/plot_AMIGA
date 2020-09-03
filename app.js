@@ -50,7 +50,7 @@ function writeDateFile() {
 		if (err) return console.log(err);
 		// console.log('Hello World > helloworld.txt');
 	});
-	console.log('Done!');
+	//console.log('Done!');
 }
  
 let interval = 1000 * 60 * 5
