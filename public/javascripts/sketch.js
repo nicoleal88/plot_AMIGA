@@ -468,7 +468,7 @@ function draw() {
         tanks[i].plot = false;
       } else if (showSDs.showTwins_KT == false && tanks[i].tipo == 'Twins_KT') {
         tanks[i].plot = false;
-      } else if (showSDs.showCampoIbarra == false && tanks[i].tipo == 'Campo_Ibarra') {
+      } else if (showSDs.showCampoIbarra == false && (tanks[i].tipo == 'Campo_Ibarra' || tanks[i].tipo == 'CU')) {
         tanks[i].plot = false;
       } else if (showSDs.showCampoAraya == false && tanks[i].tipo == 'Campo_Araya') {
         tanks[i].plot = false;
