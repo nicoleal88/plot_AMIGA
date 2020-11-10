@@ -123,7 +123,7 @@ class Tank {
     }
 
     // Get fill color acording to item
-    this.getColor(item);
+    this.getColor(item, scl);
     // Draw SD
     circle(this.point.x, this.point.y, this.radius * 2 * scl * propiedades.mult);
     imageMode(CENTER);
@@ -234,8 +234,8 @@ class Tank {
       M109_cu.show(scl * propiedades.mult)}
   }
 
-  getColor(option) {
-    switch (option) {
+  getColor(option, scl) {
+    switch (option, scl) {
       case 'surf_electronics':
         // this.caseLabel = "AB: " + this.amiga_box + "\n" + "TX: " + this.tx + "\n" + "Dist: " + this.dist;
         let ab_;
