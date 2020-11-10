@@ -420,6 +420,15 @@ class Tank {
           fill(colors.warning);
         }
         break;
+
+      case 'trip':
+        this.caseLabel = this.name;
+        if (this.selected) {
+          fill(colors.warning);
+        } else {
+          noFill();
+        }
+        break;
     }
   }
   // Show Power System

@@ -163,7 +163,8 @@ function setup() {
     'radio_uptime',
     'ip',
     'front_end',
-    'to_do'
+    'to_do',
+    'trip'
   ])
   newGUI.add(propiedades, 'mult', 1, 50);
 
