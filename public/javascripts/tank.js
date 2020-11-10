@@ -123,7 +123,7 @@ class Tank {
     }
 
     // Get fill color acording to item
-    this.getColor(item, scl);
+    this.getColor(item);
     // Draw SD
     circle(this.point.x, this.point.y, this.radius * 2 * scl * propiedades.mult);
     imageMode(CENTER);
@@ -234,8 +234,8 @@ class Tank {
       M109_cu.show(scl * propiedades.mult)}
   }
 
-  getColor(option, scl) {
-    switch (option, scl) {
+  getColor(option) {
+    switch (option) {
       case 'surf_electronics':
         // this.caseLabel = "AB: " + this.amiga_box + "\n" + "TX: " + this.tx + "\n" + "Dist: " + this.dist;
         let ab_;
@@ -428,7 +428,7 @@ class Tank {
         } else {
           push();
           noFill();
-          strokeWeight(0.1 * scl * propiedades.mult)
+          strokeWeight(1)
           stroke(127);
           pop();
         }
