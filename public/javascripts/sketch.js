@@ -525,7 +525,9 @@ function draw() {
     if (showInfo.showRoads) {
       drawRoads(tracks, colors.roads);
     }
-
+    if (propiedades.item == "trip"){
+      showInfo.showRoads = true;
+    }
     // Plot References
     showReferences();
     showTitle(propiedades.item);

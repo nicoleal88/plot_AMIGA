@@ -426,11 +426,9 @@ class Tank {
         if (this.selected) {
           fill(colors.warning);
         } else {
-          push();
           noFill();
           strokeWeight(1)
-          stroke(127);
-          pop();
+          stroke(200);
         }
         break;
     }
