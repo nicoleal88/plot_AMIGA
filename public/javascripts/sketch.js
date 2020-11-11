@@ -540,7 +540,9 @@ function draw() {
     }
 
     showLastUpdate();
-    showTable();
+    if(propiedades.item == 'trip'){
+      showTable();
+    }
   }
 }
 
@@ -697,16 +699,16 @@ function showTable() {
   push()
   lista.forEach( function(valor, indice, array) {
     let yOff = 250;
-    let spacing = 30;
+    let spacing = 20;
     let y = yOff + indice * spacing
     stroke(127);
     strokeWeight(1);
     fill(51, 200);
-    rect(0, y-20 , 160, spacing, 4);
+    rect(0, y-15 , 160, spacing, 4);
     let texto = indice+1 + " - " + valor.name + " (" + valor.lsid + ")";
     fill(200);
     noStroke();
-    textSize(14);
+    textSize(12);
     text(texto, 5, y);
 });
   pop();
