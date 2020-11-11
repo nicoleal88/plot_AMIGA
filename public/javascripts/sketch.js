@@ -688,7 +688,7 @@ function showTable() {
   for (let i = 0; i < tanks.length; i++) {
     if(tanks[i].selected == true){
       let dataSelected = {
-        id : tanks[i].id,
+        lsid : tanks[i].lsid,
         name : tanks[i].name
       }
       lista.push(dataSelected)
@@ -702,8 +702,8 @@ function showTable() {
     stroke(127);
     strokeWeight(1);
     fill(51, 200);
-    rect(0, y-20 , 125, spacing, 4);
-    let texto = indice+1 + " - " + valor.name + " (" + valor.id + ")";
+    rect(0, y-20 , 160, spacing, 4);
+    let texto = indice+1 + " - " + valor.name + " (" + valor.lsid + ")";
     fill(200);
     noStroke();
     textSize(14);
