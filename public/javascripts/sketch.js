@@ -540,6 +540,7 @@ function draw() {
     }
 
     showLastUpdate();
+    showTable();
   }
 }
 
@@ -680,6 +681,27 @@ function showLastUpdate() {
   text("Last update: " + lastUpdateDate.toLocaleString(), width / 2, height - 20)
   pop();
   // const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
+}
+
+function showTable() {
+  let lista = [];
+  for (let i = 0; i < tanks.length; i++) {
+    if(tanks[i].selected == true){
+      let dataSelected = {
+        id : tanks[i].id,
+        name : tanks[i].name
+      }
+      lista.push(dataSelected)
+    }
+  }
+  lista.forEach( function(valor, indice, array) {
+    let yOff = 200;
+    let spacing = 20;
+    let y = yOff + indice * spacing
+    rect(0, y-15 , 60, spacing, 4);
+    let texto = indice+1 + " - " + valor.name 
+    text(texto, 5, y);
+});
 }
 
 function loadRoads(file) {
