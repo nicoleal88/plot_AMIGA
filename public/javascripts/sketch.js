@@ -699,8 +699,8 @@ function showTable() {
   push()
   lista.forEach( function(valor, indice, array) {
     let yOff = 250;
-    let spacing = 20;
-    let y = yOff + indice * spacing
+    let spacing = 25;
+    let y = yOff + indice * spacing;
     stroke(127);
     strokeWeight(1);
     fill(51, 200);
@@ -716,7 +716,7 @@ function showTable() {
 
 function loadRoads(file) {
   let allroads = [];
-  let road = []
+  let road = [];
   for (i = 0; i < file.length; i++) {
     let line = file[i].split(/\s+/);
     if (line.length == 2) {
