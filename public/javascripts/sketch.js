@@ -694,14 +694,21 @@ function showTable() {
       lista.push(dataSelected)
     }
   }
+  push()
   lista.forEach( function(valor, indice, array) {
-    let yOff = 200;
+    let yOff = 300;
     let spacing = 20;
     let y = yOff + indice * spacing
+    noFill();
+    stroke(200);
     rect(0, y-15 , 60, spacing, 4);
     let texto = indice+1 + " - " + valor.name 
+    fill(200);
+    noStroke();
+    textSize(14);
     text(texto, 5, y);
 });
+  pop();
 }
 
 function loadRoads(file) {
