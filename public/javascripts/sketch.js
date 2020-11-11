@@ -696,13 +696,14 @@ function showTable() {
   }
   push()
   lista.forEach( function(valor, indice, array) {
-    let yOff = 300;
-    let spacing = 20;
+    let yOff = 250;
+    let spacing = 30;
     let y = yOff + indice * spacing
-    noFill();
-    stroke(200);
-    rect(0, y-15 , 60, spacing, 4);
-    let texto = indice+1 + " - " + valor.name 
+    stroke(127);
+    strokeWeight(1);
+    fill(51, 200);
+    rect(0, y-20 , 125, spacing, 4);
+    let texto = indice+1 + " - " + valor.name + " (" + valor.id + ")";
     fill(200);
     noStroke();
     textSize(14);
