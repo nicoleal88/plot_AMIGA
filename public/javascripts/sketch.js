@@ -540,9 +540,7 @@ function draw() {
     }
 
     showLastUpdate();
-    if(propiedades.item == 'trip'){
-      showTable();
-    }
+    showTable();
   }
 }
 
