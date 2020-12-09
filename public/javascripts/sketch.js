@@ -334,8 +334,8 @@ function setup() {
 
     // Conversion from UTM to LatLng
     let utmz = 19;
-    let easting = Number(row.get('LAT'));
-    let northing = Number(row.get('LON')) - 10000000;
+    let easting = Number(row.get('Easting'));
+    let northing = Number(row.get('Northing')) - 10000000;
     var utm = new UTMConv.UTMCoords(utmz, easting, northing);
     var degd = utm.to_deg();
     var pos = {
