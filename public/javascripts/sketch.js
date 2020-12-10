@@ -533,7 +533,7 @@ function draw() {
     showTitle(propiedades.item);
 
     // noLoop();
-    text(count, 5, 180);
+    // text(count, 5, 180);
     count--;
     if (count < 0) {
       draww = false;
