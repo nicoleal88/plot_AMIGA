@@ -159,7 +159,7 @@ function setup() {
     'surf_electronics',
     'under_electronics',
     'power_system',
-    'cap_heatsink',
+    // 'cap_heatsink',
     'radio_uptime',
     'ip',
     'front_end',

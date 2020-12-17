@@ -353,18 +353,18 @@ class Tank {
           }
           break;
       
-      case 'cap_heatsink':
-        this.caseLabel = this.cap_disipador;
-        if (this.caseLabel === "OK") {
-          fill(colors.ok);
-        } else if (this.caseLabel === "Stable") {
-          fill(colors.ok);
-        } else if (this.caseLabel === "OLD") {
-          fill(colors.warning);
-        } else {
-          fill(colors.noData);
-        }
-        break;
+      // case 'cap_heatsink':
+      //   this.caseLabel = this.cap_disipador;
+      //   if (this.caseLabel === "OK") {
+      //     fill(colors.ok);
+      //   } else if (this.caseLabel === "Stable") {
+      //     fill(colors.ok);
+      //   } else if (this.caseLabel === "OLD") {
+      //     fill(colors.warning);
+      //   } else {
+      //     fill(colors.noData);
+      //   }
+      //   break;
 
       case 'status':
         this.caseLabel = this.status;
