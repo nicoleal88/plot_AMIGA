@@ -113,7 +113,7 @@ function preload() {
   table = loadTable("csv/data.csv", "csv", "header");
   lastUpdate = loadStrings("csv/lastUpdate.txt");
   // roadsFile = loadStrings("files/Rutas.dat");
-  tracksFile = loadStrings("files/Tracks-AERA-PM.dat");
+  tracksFile = loadStrings("files/Tracks-AERA-AMIGA.dat");
   // sd_img = loadImage("files/SD.png");
 }
 
