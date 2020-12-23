@@ -396,6 +396,8 @@ class Tank {
             fill(colors.dead);
           } else if (this.caseLabel === "REBOOT") {
             fill(colors.warning);
+          } else if (this.caseLabel === "-") {
+            fill(100, 20);
           } else {
             fill(colors.noData);
           }
