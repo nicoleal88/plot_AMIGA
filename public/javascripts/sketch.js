@@ -50,9 +50,13 @@ let canvas;
 var mapbox_api_key = 'pk.eyJ1Ijoibmljb2xlYWw4OCIsImEiOiJjazA3NWRmaHYzdjM5M2xwMHhoeGEwcnNhIn0.U9_rp4dKVkuTWEHODTHdgg';
 var mappa = new Mappa('MapboxGL', mapbox_api_key);
 // const mappa = new Mappa('Leaflet');
+let prevSatButton = false;
 
 //Colors
 let colors;
+let colorsDark;
+let colorsSatellite;
+
 let roadsColor;
 
 // New gui
@@ -83,8 +87,13 @@ var options = {
   lat: -35.11631067505913,
   lng: -69.53360985611256,
   zoom: 13.2,
-  // style: "mapbox://styles/mapbox/satellite-streets-v9",
+  // style: "mapbox://styles/mapbox/satellite-streets-v11",
+  // style: "mapbox://styles/mapbox/satellite-v8",
+  // style: "mapbox://styles/mapbox/streets-v11",
   style: "mapbox://styles/mapbox/dark-v9",
+  // To change styles:
+  // AMIGA_Map.options.style = "mapbox://styles/mapbox/dark-v9"
+  // AMIGA_Map.createMap()
   pitch: 0,
   bearing: 0,
   minZoom: 1,
@@ -127,14 +136,27 @@ function setup() {
   count = n;
   // frameRate(10);
 
-  colors = {
+  colorsDark = {
     ok: "#2ECC40", // green
     warning: "#FFDC00", // yellow
     dead: "#FF4136", // red
     noData: "silver",
     roads: color(255, 204, 0, 50),
-    selected: "#FF851B" // Orange
+    selected: "#FF851B", // Orange,
+    name_id: color(127)
   }
+
+  colorsSatellite = {
+    ok: "#2ECC40", // green
+    warning: "#FFDC00", // yellow
+    dead: "#FF4136", // red
+    noData: "gray",
+    roads: color(255, 204, 0, 50),
+    selected: "#FF851B", // Orange,
+    name_id: "white"
+  }
+
+  colors = colorsDark;
 
   // console.log(table);
   // console.log(roadsFile);
@@ -176,13 +198,16 @@ function setup() {
     showName: false,
     showLSID: true,
     showUMDs: false,
-    showRoads: false
+    showRoads: false,
+    satellite: false
   };
+
   infoFolder.add(showInfo, 'showName');
   infoFolder.add(showInfo, 'showLSID');
   infoFolder.add(showInfo, 'showLabel');
   infoFolder.add(showInfo, 'showUMDs');
   infoFolder.add(showInfo, 'showRoads');
+  infoFolder.add(showInfo, 'satellite');
 
   let hexagonsFolder = newGUI.addFolder("Show hexagons");
   showHexagons = {
@@ -449,6 +474,7 @@ function setup() {
 
 function draw() {
   mouseMoving();
+  mapStyle();
   if (draww) {
     clear();
     // Zoom settings
@@ -554,6 +580,35 @@ function draw() {
 //       break;
 //   }
 // }
+
+function mapStyle() {
+  let satButton = showInfo.satellite;
+
+  let changed;
+  if (prevSatButton == satButton){
+    changed = false;
+  }
+  else{
+    changed = true;
+  }
+
+  if (changed){
+    if (satButton == true){
+      AMIGA_Map.options.style = "mapbox://styles/mapbox/satellite-v8"
+      AMIGA_Map.createMap()
+      console.log("Satellite");
+      colors = colorsSatellite;
+    }
+    else{
+      AMIGA_Map.options.style = "mapbox://styles/mapbox/dark-v9"
+      AMIGA_Map.createMap()
+      console.log("Dark");
+      colors = colorsDark;
+    }
+  }
+
+  prevSatButton = satButton;
+}
 
 function mouseMoving() {
   let d = dist(mouseX, mouseY, pmouseX, pmouseY);

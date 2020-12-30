@@ -149,7 +149,7 @@ class Tank {
 
     textAlign(CENTER, BOTTOM);
     textSize(this.textsize);
-    fill(127);
+    fill(colors.name_id);
     noStroke();
     text(this.textID, this.point.x, this.point.y - this.radius * 1.5 * scl * propiedades.mult);
     
