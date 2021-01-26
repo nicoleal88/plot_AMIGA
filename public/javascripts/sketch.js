@@ -1,9 +1,11 @@
+// ################## //
+
 // ToDo
-// - Add trip button
-// - Add table with selected SDs properties
 // - Change opacity of hexagons
 
 // Done
+// - Add trip button
+// - Add table with selected SDs
 // - Add References 
 // - Add Roads
 // - Add UMDs
@@ -25,23 +27,22 @@
 
 // Bugs
 // - Canvas resizes to square on window's resize
+// - Multiple instances when changing from flat to satellite view 
+
+// ################## //
 
 //Data
 let table;
 let tableObject;
 // URL withouth proxy for CORS
 // let url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3WkkXWxUp3TXEBsqGeeAtuMNKwVu3ZPASyzY8C43B5fWEyKqp2Xs0sEcM3_VXy_eoJNI_a8Mo8aiN/pub?gid=182439664&single=true&output=csv"
-// URL with heroku proxy for CORS access
-// let url = "https://cors-anywhere.herokuapp.com/https://docs.google.com/spreadsheets/d/e/2PACX-1vS3WkkXWxUp3TXEBsqGeeAtuMNKwVu3ZPASyzY8C43B5fWEyKqp2Xs0sEcM3_VXy_eoJNI_a8Mo8aiN/pub?gid=182439664&single=true&output=csv"
 let data = [];
 let tanks = [];
 let roads = [];
 let tracks = [];
-// let roadsFile;
 let tracksFile;
 let lastUpdate;
 let lastUpdateDate;
-// let sd_img;
 
 //Map settings
 let AMIGA_Map;
@@ -121,20 +122,15 @@ let n = 30;
 function preload() {
   table = loadTable("csv/data.csv", "csv", "header");
   lastUpdate = loadStrings("csv/lastUpdate.txt");
-  // roadsFile = loadStrings("files/Rutas.dat");
   tracksFile = loadStrings("files/Tracks-AERA-AMIGA.dat");
-  // sd_img = loadImage("files/SD.png");
 }
 
 function setup() {
   // canvas = createCanvas(640, 640);
-  // let minSize = min(windowHeight, windowWidth);
-  // canvas = createCanvas(minSize, minSize);
   canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent('sketch-div');
   canvas.mouseWheel(makeDraw);
   count = n;
-  // frameRate(10);
 
   colorsDark = {
     ok: "#2ECC40", // green
@@ -482,9 +478,6 @@ function draw() {
     const scl1 = pow(2, zoom);
     // const sclm =  // Escala para unidades en metros Leaflet
     const sclm = options.scl // Escala para unidades en metros Mapbox
-    // const scl2 = 0.0002;
-    // const offset = radius * 1.5;
-    // let escala = constrain(scl * scl2, 2, 6);
     let escalaReal = scl1 * sclm;
 
     // Disable SDs plotting:
@@ -544,10 +537,7 @@ function draw() {
       drawShape(h433_2, "cyan");
     }
 
-    // Plot roads and tracks
-    // if (showInfo.showRoads) {
-    //   drawRoads(roads, "white");
-    // }
+    // Plot roads
     if (showInfo.showRoads) {
       drawRoads(tracks, colors.roads);
     }
@@ -569,17 +559,6 @@ function draw() {
     showTable();
   }
 }
-
-// function keyPressed() {
-//   switch (key) {
-//     // type [p] to hide / show the GUI
-//     case 'p':
-//       visible = !visible;
-//       if (visible) gui.show();
-//       else gui.hide();
-//       break;
-//   }
-// }
 
 function mapStyle() {
   let satButton = showInfo.satellite;
@@ -826,60 +805,6 @@ function windowResized() {
   resizeCanvas(windowHeight, windowHeight);
 }
 
-//GUI settings
-// var strokeWidth = 1;
-// var strokeColor = '#FFFFFF';
-
-// let item = [
-//   'cap_hs',
-//   'ip',
-//   'radio_uptime',
-//   'front_end',
-//   'amiga_box',
-//   'bbox',
-//   'status'
-// ];
-
-// var showLabel = true;
-// var showName = false;
-// var showLSID = true;
-// var showUMDs = false;
-
-// var showUC = false;
-// var showMARTA = false;
-// var show433_1 = false;
-// var show433_2 = false;
-
-// var show433 = true;
-// var showTwins_KT = false;
-// var showCampoIbarra = true;
-// var showCampoAraya = true;
-
-// gui
-// var visible = true;
-// var gui;
-
-// Create Layout GUI
-// gui = createGui();
-// gui.setPosition(650,100);
-// gui.setPosition(windowHeight + 5, 0);
-
-// gui.setPosition(10,10);
-// sliderRange(1, 50, 1);
-// gui.addGlobals('item',
-//   'showLSID',
-//   'showName',
-//   'showLabel',
-//   'showUMDs',
-//   'show433',
-//   'showTwins_KT',
-//   'showCampoIbarra',
-//   'showCampoAraya',
-//   'showUC',
-//   'showMARTA',
-//   'show433_1',
-//   'show433_2',
-//   'mult');
 
 function millisecondsToHuman(ms) {
   const seconds = Math.floor((ms / 1000) % 60);
