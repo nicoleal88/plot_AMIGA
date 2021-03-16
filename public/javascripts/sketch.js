@@ -221,7 +221,7 @@ function setup() {
   showSDs = {
     show433: true,
     showTwins_KT: false,
-    swowOthers: false,
+    showOthers: false,
     showCampoIbarra: true,
     showCampoAraya: true
   }
