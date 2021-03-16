@@ -221,11 +221,13 @@ function setup() {
   showSDs = {
     show433: true,
     showTwins_KT: false,
+    swowOthers: false,
     showCampoIbarra: true,
     showCampoAraya: true
   }
   sdFolder.add(showSDs, 'show433');
   sdFolder.add(showSDs, 'showTwins_KT');
+  sdFolder.add(showSDs, 'showOthers');
   sdFolder.add(showSDs, 'showCampoIbarra');
   sdFolder.add(showSDs, 'showCampoAraya');
 
@@ -487,6 +489,8 @@ function draw() {
       if (showSDs.show433 == false && tanks[i].tipo == '433m') {
         tanks[i].plot = false;
       } else if (showSDs.showTwins_KT == false && tanks[i].tipo == 'Twins_KT') {
+        tanks[i].plot = false;
+      } else if (showSDs.showOthers == false && tanks[i].tipo == 'Other') {
         tanks[i].plot = false;
       } else if (showSDs.showCampoIbarra == false && (tanks[i].tipo == 'Campo_Ibarra' || tanks[i].tipo == 'CU')) {
         tanks[i].plot = false;
