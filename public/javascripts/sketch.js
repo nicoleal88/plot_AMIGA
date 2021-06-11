@@ -467,7 +467,16 @@ function setup() {
       a6_cu,
       a7_cu,
       a8_cu,
-      a9_cu
+      a9_cu,
+      label1_cu,
+      label2_cu,
+      label3_cu,
+      label4_cu,
+      label5_cu,
+      label6_cu,
+      label7_cu,
+      label8_cu,
+      label9_cu
     }
 
     // Data pushing
