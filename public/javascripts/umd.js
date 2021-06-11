@@ -1,6 +1,6 @@
 class UMD {
 
-  constructor(x, y, ra, rd, pa, id, ekit, num_, a, label_) {
+  constructor(x, y, ra, rd, pa, id, ekit, num_, a) {
     this.sd_x = x;
     this.sd_y = y;
     this.ra = ra;
@@ -35,7 +35,7 @@ class UMD {
     // UMD
     rectMode(CENTER);
     strokeWeight(1);
-    if (this.label == "DEAD"){
+    if (this.num == "DEAD"){
       fill(0,100);
     }
     else{
