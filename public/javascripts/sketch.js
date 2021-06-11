@@ -567,12 +567,12 @@ function draw() {
     if (propiedades.item == "trip"){
       showInfo.showRoads = true;
     }
-    if (showInfo.showUMDs){
-      propiedades.mult = propiedades.mult -1;
-      if (propiedades.mult < 10){
-        propiedades.mult = 10;
-      }
-    }
+    // if (showInfo.showUMDs){
+    //   propiedades.mult = propiedades.mult -1;
+    //   if (propiedades.mult < 10){
+    //     propiedades.mult = 10;
+    //   }
+    // }
     // Plot References
     showReferences();
     showTitle(propiedades.item);
