@@ -34,7 +34,7 @@ class UMD {
     // UMD
     rectMode(CENTER);
     strokeWeight(1);
-    if (this.num == "DEAD"){
+    if (this.num.slice(-7)=="Not Op."){
       fill(0,100);
     }
     else{
