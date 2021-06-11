@@ -351,6 +351,16 @@ function setup() {
     a7_cu = Number(row.get('a_M107_CU'));
     a8_cu = Number(row.get('a_M108_CU'));
     a9_cu = Number(row.get('a_M109_CU'));
+    let label1_cu, label2_cu, label3_cu, label4_cu, label5_cu, label6_cu, label7_cu, label8_cu, label9_cu;
+    label1_cu = row.get('label_M101_CU');
+    label2_cu = row.get('label_M102_CU');
+    label3_cu = row.get('label_M103_CU');
+    label4_cu = row.get('label_M104_CU');
+    label5_cu = row.get('label_M105_CU');
+    label6_cu = row.get('label_M106_CU');
+    label7_cu = row.get('label_M107_CU');
+    label8_cu = row.get('label_M108_CU');
+    label9_cu = row.get('label_M109_CU');
 
     let tx = row.get('TX');
     let dist = row.get('Distrib.');

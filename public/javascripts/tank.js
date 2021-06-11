@@ -92,6 +92,15 @@ class Tank {
     this.a7_cu = datos.a7_cu
     this.a8_cu = datos.a8_cu
     this.a9_cu = datos.a9_cu
+    this.label1_cu = datos.label1_cu
+    this.label2_cu = datos.label2_cu
+    this.label3_cu = datos.label3_cu
+    this.label4_cu = datos.label4_cu
+    this.label5_cu = datos.label5_cu
+    this.label6_cu = datos.label6_cu
+    this.label7_cu = datos.label7_cu
+    this.label8_cu = datos.label8_cu
+    this.label9_cu = datos.label9_cu
 
     this.caseLabel = "_-_";
     this.textID;
@@ -198,39 +207,39 @@ class Tank {
       M103.show(scl * propiedades.mult)}
     //M101_cu
     if(this.id1_cu !== "-" && this.id1_cu !== ""){
-      let M101_cu = new UMD(this.point.x, this.point.y, this.ra1_cu, this.rd1_cu, this.pa1_cu, this.id1_cu, this.ekit1_cu, "M101_CU", this.a1_cu);
+      let M101_cu = new UMD(this.point.x, this.point.y, this.ra1_cu, this.rd1_cu, this.pa1_cu, this.id1_cu, this.ekit1_cu, this.label1_cu, this.a1_cu);
       M101_cu.show(scl * propiedades.mult)}
     //M102_cu
     if(this.id2_cu !== "-" && this.id2_cu !== ""){
-      let M102_cu = new UMD(this.point.x, this.point.y, this.ra2_cu, this.rd2_cu, this.pa2_cu, this.id2_cu, this.ekit2_cu, "M102_CU", this.a2_cu);
+      let M102_cu = new UMD(this.point.x, this.point.y, this.ra2_cu, this.rd2_cu, this.pa2_cu, this.id2_cu, this.ekit2_cu, this.label2_cu, this.a2_cu);
       M102_cu.show(scl * propiedades.mult)}
     //M103_cu
     if(this.id3_cu !== "-" && this.id3_cu !== ""){
-      let M103_cu = new UMD(this.point.x, this.point.y, this.ra3_cu, this.rd3_cu, this.pa3_cu, this.id3_cu, this.ekit3_cu, "M103_CU", this.a3_cu);
+      let M103_cu = new UMD(this.point.x, this.point.y, this.ra3_cu, this.rd3_cu, this.pa3_cu, this.id3_cu, this.ekit3_cu, this.label3_cu, this.a3_cu);
       M103_cu.show(scl * propiedades.mult)}
     //M104_cu
     if(this.id4_cu !== "-" && this.id4_cu !== ""){
-      let M104_cu = new UMD(this.point.x, this.point.y, this.ra4_cu, this.rd4_cu, this.pa4_cu, this.id4_cu, this.ekit4_cu, "M104_CU", this.a4_cu);
+      let M104_cu = new UMD(this.point.x, this.point.y, this.ra4_cu, this.rd4_cu, this.pa4_cu, this.id4_cu, this.ekit4_cu, this.label4_cu, this.a4_cu);
       M104_cu.show(scl * propiedades.mult)}
     //M105_cu
     if(this.id5_cu !== "-" && this.id5_cu !== ""){
-      let M105_cu = new UMD(this.point.x, this.point.y, this.ra5_cu, this.rd5_cu, this.pa5_cu, this.id5_cu, this.ekit5_cu, "M105_CU", this.a5_cu);
+      let M105_cu = new UMD(this.point.x, this.point.y, this.ra5_cu, this.rd5_cu, this.pa5_cu, this.id5_cu, this.ekit5_cu, this.label5_cu, this.a5_cu);
       M105_cu.show(scl * propiedades.mult)}
     //M106_cu
     if(this.id6_cu !== "-" && this.id6_cu !== ""){
-      let M106_cu = new UMD(this.point.x, this.point.y, this.ra6_cu, this.rd6_cu, this.pa6_cu, this.id6_cu, this.ekit6_cu, "M106_CU", this.a6_cu);
+      let M106_cu = new UMD(this.point.x, this.point.y, this.ra6_cu, this.rd6_cu, this.pa6_cu, this.id6_cu, this.ekit6_cu, this.label6_cu, this.a6_cu);
       M106_cu.show(scl * propiedades.mult)}
     //M107_cu
     if(this.id7_cu !== "-" && this.id7_cu !== ""){
-      let M107_cu = new UMD(this.point.x, this.point.y, this.ra7_cu, this.rd7_cu, this.pa7_cu, this.id7_cu, this.ekit7_cu, "M107_CU", this.a7_cu);
+      let M107_cu = new UMD(this.point.x, this.point.y, this.ra7_cu, this.rd7_cu, this.pa7_cu, this.id7_cu, this.ekit7_cu, this.label7_cu, this.a7_cu);
       M107_cu.show(scl * propiedades.mult)}
     //M108_cu
     if(this.id8_cu !== "-" && this.id8_cu !== ""){
-      let M108_cu = new UMD(this.point.x, this.point.y, this.ra8_cu, this.rd8_cu, this.pa8_cu, this.id8_cu, this.ekit8_cu, "M108_CU", this.a8_cu);
+      let M108_cu = new UMD(this.point.x, this.point.y, this.ra8_cu, this.rd8_cu, this.pa8_cu, this.id8_cu, this.ekit8_cu, this.label8_cu, this.a8_cu);
       M108_cu.show(scl * propiedades.mult)}
     //M109_cu
     if(this.id9_cu !== "-" && this.id9_cu !== ""){
-      let M109_cu = new UMD(this.point.x, this.point.y, this.ra9_cu, this.rd9_cu, this.pa9_cu, this.id9_cu, this.ekit9_cu, "M109_CU", this.a9_cu);
+      let M109_cu = new UMD(this.point.x, this.point.y, this.ra9_cu, this.rd9_cu, this.pa9_cu, this.id9_cu, this.ekit9_cu, this.label9_cu, this.a9_cu);
       M109_cu.show(scl * propiedades.mult)}
   }
 
