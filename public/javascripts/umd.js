@@ -8,8 +8,7 @@ class UMD {
     this.pa = pa;
     this.id = id;
     this.ekit = ekit;
-    this.num = num_
-    this.label = label_;
+    this.num = num_;
     if (!a){
       this.len = 9.0;
     }
