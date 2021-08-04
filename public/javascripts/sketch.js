@@ -709,10 +709,32 @@ function showReferences() {
   // const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
 }
 
+function getDateInString() {
+  let res = new Map()
+
+  // current year
+  res['year'] = lastUpdateDate.getUTCFullYear();
+
+  // current month. Using slice() deletes extraneous 0 in double-digit days, working as a poor man's zero pad.
+  res['month'] = ("0" + (lastUpdateDate.getUTCMonth() + 1)).slice(-2);
+
+  // current day
+  res['day'] = ("0" + lastUpdateDate.getUTCDate()).slice(-2);
+
+  // current hour
+  res['hour'] = ("0" + lastUpdateDate.getUTCHours()).slice(-2);
+
+  // current minute
+  res['minute'] = ("0" + lastUpdateDate.getUTCMinutes()).slice(-2);
+
+  return res
+}
+
 function showTitle(text_) {
   let t = text_.replace("_", " ");
+  let unformattedDate = getDateInString();
   t = toTitleCase(t);
-  let date = lastUpdateDate.getDate().toString() + "/" + ((lastUpdateDate.getMonth())+1).toString() + "/" + ((lastUpdateDate.getYear())+1900).toString();
+  let date = "" + unformattedDate['year'] + "/" + unformattedDate['month'] + "/" + unformattedDate['day'];
   // let date = day().toString() + "/" + month().toString() + "/" + year().toString();
   let info = t + " (" + date + ")";
   let width = info.length * 10;
@@ -735,13 +757,15 @@ function showTitle(text_) {
 }
 
 function showLastUpdate() {
-  
   push();
   fill(200);
   noStroke();
   textSize(12);
   textAlign(CENTER, CENTER);
-  text("Last update: " + lastUpdateDate.toLocaleString('en-GB'), width / 2, height - 20)
+
+  let unformattedDate = getDateInString();
+
+  text("Last update: " + unformattedDate['year'] + "/" + unformattedDate['month'] + "/" + unformattedDate['day'] + " " + unformattedDate['hour'] + ":" + unformattedDate['minute'] + " UTC", width / 2, height - 20);
   pop();
   // const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
 }
