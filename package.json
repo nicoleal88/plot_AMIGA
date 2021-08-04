@@ -20,7 +20,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
-    "google-spreadsheet": "^3.0.11",
+    "google-spreadsheet": "^3.1.15",
     "promisify": "0.0.3",
     "request": "^2.88.2",
     "util": "^0.12.3"
