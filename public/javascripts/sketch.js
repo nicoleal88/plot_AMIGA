@@ -741,7 +741,7 @@ function showLastUpdate() {
   noStroke();
   textSize(12);
   textAlign(CENTER, CENTER);
-  text("Last update: " + lastUpdateDate.toLocaleString(), width / 2, height - 20)
+  text("Last update: " + lastUpdateDate.toLocaleString('en-GB'), width / 2, height - 20)
   pop();
   // const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
 }
