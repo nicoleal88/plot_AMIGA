@@ -57,12 +57,12 @@ class UMD {
     fill(255);
     stroke(0);
     textAlign(CENTER, TOP);
-    text("ID:\n" + this.id, 0, -4 * scl);
+    text("ID:\n" + this.id, 0, (-this.len/2 + 0.2) * scl);
 
     // eKit label
     textSize(0.3 * scl);
     textAlign(CENTER, BOTTOM);
-    text("eKit:\n" + this.ekit, 0, -0.5 * scl);
+    text("eKit:\n" + this.ekit, 0, -0.4 * scl);
 
     // Position label
     textSize(0.5 * scl);
