@@ -52,6 +52,7 @@ var mapbox_api_key = 'pk.eyJ1Ijoibmljb2xlYWw4OCIsImEiOiJjazA3NWRmaHYzdjM5M2xwMHh
 var mappa = new Mappa('MapboxGL', mapbox_api_key);
 // const mappa = new Mappa('Leaflet');
 let prevSatButton = false;
+let prevumdButton = false;
 
 //Colors
 let colors;
@@ -575,10 +576,7 @@ function draw() {
       showInfo.showRoads = true;
     }
     // if (showInfo.showUMDs){
-    //   propiedades.mult = propiedades.mult -1;
-    //   if (propiedades.mult < 10){
-    //     propiedades.mult = 10;
-    //   }
+    //   autoZoom();
     // }
     // Plot References
     showReferences();
@@ -624,6 +622,36 @@ function mapStyle() {
 
   prevSatButton = satButton;
 }
+
+// function autoZoom(){
+//   let umdButton = showInfo.showUMDs;
+
+//   let changed;
+//   if (prevumdButton == umdButton){
+//     changed = false;
+//   }
+//   else{
+//     changed = true;
+//   }
+
+//   if (changed && showInfo.showUMDs){
+//   let target = 10;
+//   if (propiedades.mult < target){
+//     while(propiedades.mult < target){
+//       propiedades.mult ++;
+//       newGUI.updateDisplay();
+//     }
+    
+//   }
+//   else if (propiedades.mult > target){
+//     while(propiedades.mult > target){
+//     propiedades.mult --;
+//     newGUI.updateDisplay();
+//     }
+//   }
+//   prevumdButton = umdButton;
+// }
+// }
 
 function mouseMoving() {
   let d = dist(mouseX, mouseY, pmouseX, pmouseY);
