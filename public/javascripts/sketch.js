@@ -351,6 +351,10 @@ function setup() {
     a7_cu = Number(row.get('a_M107_CU'));
     a8_cu = Number(row.get('a_M108_CU'));
     a9_cu = Number(row.get('a_M109_CU'));
+    let label1, label2, label3;
+    label1 = row.get('label_M101');
+    label2 = row.get('label_M102');
+    label3 = row.get('label_M103');
     let label1_cu, label2_cu, label3_cu, label4_cu, label5_cu, label6_cu, label7_cu, label8_cu, label9_cu;
     label1_cu = row.get('label_M101_CU');
     label2_cu = row.get('label_M102_CU');
@@ -468,6 +472,9 @@ function setup() {
       a7_cu,
       a8_cu,
       a9_cu,
+      label1,
+      label2,
+      label3,
       label1_cu,
       label2_cu,
       label3_cu,

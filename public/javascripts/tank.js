@@ -92,6 +92,9 @@ class Tank {
     this.a7_cu = datos.a7_cu
     this.a8_cu = datos.a8_cu
     this.a9_cu = datos.a9_cu
+    this.label1 = datos.label1
+    this.label2 = datos.label2
+    this.label3 = datos.label3
     this.label1_cu = datos.label1_cu
     this.label2_cu = datos.label2_cu
     this.label3_cu = datos.label3_cu
@@ -195,15 +198,15 @@ class Tank {
     this.update();
     //M101
     if(this.id1 !== "-" && this.id1 !== ""){
-      let M101 = new UMD(this.point.x, this.point.y, this.ra1, this.rd1, this.pa1, this.id1, this.ekit1, "M101");
+      let M101 = new UMD(this.point.x, this.point.y, this.ra1, this.rd1, this.pa1, this.id1, this.ekit1, this.label1);
       M101.show(scl * propiedades.mult)}
     //M102
     if(this.id2 !== "-" && this.id2 !== ""){
-      let M102 = new UMD(this.point.x, this.point.y, this.ra2, this.rd2, this.pa2, this.id2, this.ekit2, "M102");
+      let M102 = new UMD(this.point.x, this.point.y, this.ra2, this.rd2, this.pa2, this.id2, this.ekit2, this.label2);
       M102.show(scl * propiedades.mult)}
     //M103
     if(this.id3 !== "-" && this.id3 !== ""){
-      let M103 = new UMD(this.point.x, this.point.y, this.ra3, this.rd3, this.pa3, this.id3, this.ekit3, "M103");
+      let M103 = new UMD(this.point.x, this.point.y, this.ra3, this.rd3, this.pa3, this.id3, this.ekit3, this.label3);
       M103.show(scl * propiedades.mult)}
     //M101_cu
     if(this.id1_cu !== "-" && this.id1_cu !== ""){

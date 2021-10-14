@@ -3,3 +3,5 @@ npm-debug.log
 .env
 *.swp
 public/csv/
+public/csv/data.csv
+public/csv/lastUpdate.txt

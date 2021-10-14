@@ -57,16 +57,18 @@ class UMD {
     fill(255);
     stroke(0);
     textAlign(CENTER, TOP);
-    text(this.id, 0, 0.5 * scl);
+    text("ID:\n" + this.id, 0, -4 * scl);
 
     // eKit label
     textSize(0.3 * scl);
     textAlign(CENTER, BOTTOM);
-    text(this.ekit, 0, -0.5 * scl);
+    text("eKit:\n" + this.ekit, 0, -0.5 * scl);
 
     // Position label
-    textAlign(CENTER, BOTTOM);
-    text(this.num, 0, (this.len/2 - 0.1) * scl);
+    textSize(0.5 * scl);
+    textAlign(LEFT, CENTER);
+    rotate(-90);
+    text(this.num,(-this.len/2 + 0.2) * scl, 0);
     pop();
   }
   // drawLine() {
