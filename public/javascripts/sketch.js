@@ -224,13 +224,15 @@ function setup() {
     showTwins_KT: false,
     showOthers: false,
     showCampoIbarra: true,
-    showCampoAraya: true
+    showCampoAraya: true,
+    showHeat_Let: false
   }
   sdFolder.add(showSDs, 'show433');
   sdFolder.add(showSDs, 'showTwins_KT');
   sdFolder.add(showSDs, 'showOthers');
   sdFolder.add(showSDs, 'showCampoIbarra');
   sdFolder.add(showSDs, 'showCampoAraya');
+  sdFolder.add(showSDs, 'showHeat_Let');
 
   let powerFolder = newGUI.addFolder("Show Power");
   showPower = {
@@ -518,6 +520,8 @@ function draw() {
       } else if (showSDs.showTwins_KT == false && tanks[i].tipo == 'Twins_KT') {
         tanks[i].plot = false;
       } else if (showSDs.showOthers == false && tanks[i].tipo == 'Other') {
+        tanks[i].plot = false;
+      } else if (showSDs.showHeat_Let == false && tanks[i].tipo == 'Heat_Let') {
         tanks[i].plot = false;
       } else if (showSDs.showCampoIbarra == false && (tanks[i].tipo == 'Campo_Ibarra' || tanks[i].tipo == 'CU')) {
         tanks[i].plot = false;
