@@ -122,7 +122,7 @@ class Tank {
   showSD(scl, item, label, name, lsid) {
     this.textsize = constrain(3 * scl * propiedades.mult, 1, 18);
 
-    if (this.selected){
+    if (this.selected) {
       push();
       textAlign(CENTER, CENTER);
       fill(colors.selected);
@@ -164,19 +164,19 @@ class Tank {
     fill(colors.name_id);
     noStroke();
     text(this.textID, this.point.x, this.point.y - this.radius * 1.5 * scl * propiedades.mult);
-    
+
     this.showPwr(scl);
-    
+
   }
-// Draw popup
-  showPopup(){
+  // Draw popup
+  showPopup() {
     if (dist(mouseX, mouseY, this.point.x, this.point.y) < 10) {
       push();
       textAlign(LEFT);
-      stroke(255,255,191);
+      stroke(255, 255, 191);
       strokeWeight(2);
       fill(0, 240);
-    	rect(mouseX+10, mouseY+10, 170,80,7);
+      rect(mouseX + 10, mouseY + 10, 170, 80, 7);
       fill(255);
       textSize(14);
       noStroke();
@@ -188,62 +188,74 @@ class Tank {
     }
   }
 
-  selectSD(){
+  selectSD() {
     if (dist(mouseX, mouseY, this.point.x, this.point.y) < 10) {
-      this.selected = !this.selected;      
+      this.selected = !this.selected;
     }
   }
 
   showUMD(scl) {
     this.update();
     //M101
-    if(this.id1 !== "-" && this.id1 !== ""){
+    if (this.id1 !== "-" && this.id1 !== "") {
       let M101 = new UMD(this.point.x, this.point.y, this.ra1, this.rd1, this.pa1, this.id1, this.ekit1, this.label1);
-      M101.show(scl * propiedades.mult)}
+      M101.show(scl * propiedades.mult)
+    }
     //M102
-    if(this.id2 !== "-" && this.id2 !== ""){
+    if (this.id2 !== "-" && this.id2 !== "") {
       let M102 = new UMD(this.point.x, this.point.y, this.ra2, this.rd2, this.pa2, this.id2, this.ekit2, this.label2);
-      M102.show(scl * propiedades.mult)}
+      M102.show(scl * propiedades.mult)
+    }
     //M103
-    if(this.id3 !== "-" && this.id3 !== ""){
+    if (this.id3 !== "-" && this.id3 !== "") {
       let M103 = new UMD(this.point.x, this.point.y, this.ra3, this.rd3, this.pa3, this.id3, this.ekit3, this.label3);
-      M103.show(scl * propiedades.mult)}
+      M103.show(scl * propiedades.mult)
+    }
     //M101_cu
-    if(this.id1_cu !== "-" && this.id1_cu !== ""){
+    if (this.id1_cu !== "-" && this.id1_cu !== "") {
       let M101_cu = new UMD(this.point.x, this.point.y, this.ra1_cu, this.rd1_cu, this.pa1_cu, this.id1_cu, this.ekit1_cu, this.label1_cu, this.a1_cu);
-      M101_cu.show(scl * propiedades.mult)}
+      M101_cu.show(scl * propiedades.mult)
+    }
     //M102_cu
-    if(this.id2_cu !== "-" && this.id2_cu !== ""){
+    if (this.id2_cu !== "-" && this.id2_cu !== "") {
       let M102_cu = new UMD(this.point.x, this.point.y, this.ra2_cu, this.rd2_cu, this.pa2_cu, this.id2_cu, this.ekit2_cu, this.label2_cu, this.a2_cu);
-      M102_cu.show(scl * propiedades.mult)}
+      M102_cu.show(scl * propiedades.mult)
+    }
     //M103_cu
-    if(this.id3_cu !== "-" && this.id3_cu !== ""){
+    if (this.id3_cu !== "-" && this.id3_cu !== "") {
       let M103_cu = new UMD(this.point.x, this.point.y, this.ra3_cu, this.rd3_cu, this.pa3_cu, this.id3_cu, this.ekit3_cu, this.label3_cu, this.a3_cu);
-      M103_cu.show(scl * propiedades.mult)}
+      M103_cu.show(scl * propiedades.mult)
+    }
     //M104_cu
-    if(this.id4_cu !== "-" && this.id4_cu !== ""){
+    if (this.id4_cu !== "-" && this.id4_cu !== "") {
       let M104_cu = new UMD(this.point.x, this.point.y, this.ra4_cu, this.rd4_cu, this.pa4_cu, this.id4_cu, this.ekit4_cu, this.label4_cu, this.a4_cu);
-      M104_cu.show(scl * propiedades.mult)}
+      M104_cu.show(scl * propiedades.mult)
+    }
     //M105_cu
-    if(this.id5_cu !== "-" && this.id5_cu !== ""){
+    if (this.id5_cu !== "-" && this.id5_cu !== "") {
       let M105_cu = new UMD(this.point.x, this.point.y, this.ra5_cu, this.rd5_cu, this.pa5_cu, this.id5_cu, this.ekit5_cu, this.label5_cu, this.a5_cu);
-      M105_cu.show(scl * propiedades.mult)}
+      M105_cu.show(scl * propiedades.mult)
+    }
     //M106_cu
-    if(this.id6_cu !== "-" && this.id6_cu !== ""){
+    if (this.id6_cu !== "-" && this.id6_cu !== "") {
       let M106_cu = new UMD(this.point.x, this.point.y, this.ra6_cu, this.rd6_cu, this.pa6_cu, this.id6_cu, this.ekit6_cu, this.label6_cu, this.a6_cu);
-      M106_cu.show(scl * propiedades.mult)}
+      M106_cu.show(scl * propiedades.mult)
+    }
     //M107_cu
-    if(this.id7_cu !== "-" && this.id7_cu !== ""){
+    if (this.id7_cu !== "-" && this.id7_cu !== "") {
       let M107_cu = new UMD(this.point.x, this.point.y, this.ra7_cu, this.rd7_cu, this.pa7_cu, this.id7_cu, this.ekit7_cu, this.label7_cu, this.a7_cu);
-      M107_cu.show(scl * propiedades.mult)}
+      M107_cu.show(scl * propiedades.mult)
+    }
     //M108_cu
-    if(this.id8_cu !== "-" && this.id8_cu !== ""){
+    if (this.id8_cu !== "-" && this.id8_cu !== "") {
       let M108_cu = new UMD(this.point.x, this.point.y, this.ra8_cu, this.rd8_cu, this.pa8_cu, this.id8_cu, this.ekit8_cu, this.label8_cu, this.a8_cu);
-      M108_cu.show(scl * propiedades.mult)}
+      M108_cu.show(scl * propiedades.mult)
+    }
     //M109_cu
-    if(this.id9_cu !== "-" && this.id9_cu !== ""){
+    if (this.id9_cu !== "-" && this.id9_cu !== "") {
       let M109_cu = new UMD(this.point.x, this.point.y, this.ra9_cu, this.rd9_cu, this.pa9_cu, this.id9_cu, this.ekit9_cu, this.label9_cu, this.a9_cu);
-      M109_cu.show(scl * propiedades.mult)}
+      M109_cu.show(scl * propiedades.mult)
+    }
   }
 
   getColor(option) {
@@ -251,25 +263,23 @@ class Tank {
       case 'surf_electronics':
         // this.caseLabel = "AB: " + this.amiga_box + "\n" + "TX: " + this.tx + "\n" + "Dist: " + this.dist;
         let ab_;
-        if (this.amiga_box !== "" && this.amiga_box !== "-"){
+        if (this.amiga_box !== "" && this.amiga_box !== "-") {
           ab_ = "OK"
         }
         let tx_;
-        if (this.tx !== "" && this.tx !== "-"){
+        if (this.tx !== "" && this.tx !== "-") {
           tx_ = "OK"
         }
         let d_;
-        if (this.distrib !== "" && this.distrib !== "-"){
+        if (this.distrib !== "" && this.distrib !== "-") {
           d_ = "OK"
         }
 
         if (ab_ == "OK" && tx_ == "OK" && d_ == "OK") {
           this.caseLabel = "OK";
-        }
-        else if (this.cableado == "" || this.cableado == "-"){
+        } else if (this.cableado == "" || this.cableado == "-") {
           this.caseLabel = "";
-        }
-        else{
+        } else {
           this.caseLabel = "Incomplete";
         }
         // if (this.caseLabel !== "" && this.caseLabel !== "-" && this.cableado == "OK") {
@@ -285,25 +295,23 @@ class Tank {
       case 'under_electronics':
         // this.caseLabel = "AB: " + this.amiga_box + "\n" + "TX: " + this.tx + "\n" + "Dist: " + this.dist;
         let ekit1_;
-        if (this.ekit1 !== "" && this.ekit1 !== "-"){
+        if (this.ekit1 !== "" && this.ekit1 !== "-") {
           ekit1_ = "OK"
         }
         let ekit2_;
-        if (this.ekit2 !== "" && this.ekit2 !== "-"){
+        if (this.ekit2 !== "" && this.ekit2 !== "-") {
           ekit2_ = "OK"
         }
         let ekit3_;
-        if (this.ekit3 !== "" && this.ekit3 !== "-"){
+        if (this.ekit3 !== "" && this.ekit3 !== "-") {
           ekit3_ = "OK"
         }
 
         if (ekit1_ == "OK" && ekit2_ == "OK" && ekit3_ == "OK" || this.tipo == "CU") {
           this.caseLabel = "OK";
-        }
-        else if (this.cableado == "" || this.cableado == "-"){
+        } else if (this.cableado == "" || this.cableado == "-") {
           this.caseLabel = "";
-        }
-        else{
+        } else {
           this.caseLabel = "Incomplete";
         }
 
@@ -316,104 +324,115 @@ class Tank {
         }
         break;
 
-        case 'power_system':
-          let tubing_;
-          if (this.tubing !== "" && this.tubing !== "-"){
-            tubing_ = "OK"
-          }
-          let soporte_;
-          if (this.soporte !== "" && this.soporte !== "-"){
-            soporte_ = "OK"
-          }
-          let solar_panel_;
-          if (this.solar_panel !== "" && this.solar_panel !== "-"){
-            solar_panel_ = "OK"
-          }
-          let bbox_;
-          if (this.bbox !== "" && this.bbox !== "-"){
-            bbox_ = "OK"
-          }
-          let bat_1_;
-          if (this.bat_1 !== "" && this.bat_1 !== "-"){
-            bat_1_ = "OK"
-          }
-          let bat_2_;
-          if (this.bat_2 !== "" && this.bat_2 !== "-"){
-            bat_2_ = "OK"
-          }
-          let reg_;
-          if (this.regulator !== "" && this.regulator !== "-"){
-            reg_ = "OK"
-          }
-  
-          if (tubing_ == "OK" && soporte_ == "OK" && solar_panel_ == "OK" && bbox_ == "OK" && bat_1_ == "OK" && bat_2_ == "OK" && reg_ == "OK") {
-            this.caseLabel = "OK";
-          }
-          else if (this.cableado == "" || this.cableado == "-"){
-            this.caseLabel = "";
-          }
-          else{
-            this.caseLabel = "Incomplete";
-          }
-  
-          if (tubing_ == "OK" && soporte_ == "OK" && solar_panel_ == "OK" && bbox_ == "OK" && bat_1_ == "OK" && bat_2_ == "OK" && reg_ == "OK") {
-            fill(colors.ok);
-          } else if (this.cableado == "OK") {
-            fill(colors.warning);
-          } else {
-            fill(colors.noData);
-          }
-          break;
-      
-      // case 'cap_heatsink':
-      //   this.caseLabel = this.cap_disipador;
-      //   if (this.caseLabel === "OK") {
-      //     fill(colors.ok);
-      //   } else if (this.caseLabel === "Stable") {
-      //     fill(colors.ok);
-      //   } else if (this.caseLabel === "OLD") {
-      //     fill(colors.warning);
-      //   } else {
-      //     fill(colors.noData);
-      //   }
-      //   break;
+      case 'power_system':
+        let tubing_;
+        if (this.tubing !== "" && this.tubing !== "-") {
+          tubing_ = "OK"
+        }
+        let soporte_;
+        if (this.soporte !== "" && this.soporte !== "-") {
+          soporte_ = "OK"
+        }
+        let solar_panel_;
+        if (this.solar_panel !== "" && this.solar_panel !== "-") {
+          solar_panel_ = "OK"
+        }
+        let bbox_;
+        if (this.bbox !== "" && this.bbox !== "-") {
+          bbox_ = "OK"
+        }
+        let bat_1_;
+        if (this.bat_1 !== "" && this.bat_1 !== "-") {
+          bat_1_ = "OK"
+        }
+        let bat_2_;
+        if (this.bat_2 !== "" && this.bat_2 !== "-") {
+          bat_2_ = "OK"
+        }
+        let reg_;
+        if (this.regulator !== "" && this.regulator !== "-") {
+          reg_ = "OK"
+        }
+
+        if (tubing_ == "OK" && soporte_ == "OK" && solar_panel_ == "OK" && bbox_ == "OK" && bat_1_ == "OK" && bat_2_ == "OK" && reg_ == "OK") {
+          this.caseLabel = "OK";
+        } else if (this.cableado == "" || this.cableado == "-") {
+          this.caseLabel = "";
+        } else {
+          this.caseLabel = "Incomplete";
+        }
+
+        if (tubing_ == "OK" && soporte_ == "OK" && solar_panel_ == "OK" && bbox_ == "OK" && bat_1_ == "OK" && bat_2_ == "OK" && reg_ == "OK") {
+          fill(colors.ok);
+        } else if (this.cableado == "OK") {
+          fill(colors.warning);
+        } else {
+          fill(colors.noData);
+        }
+        break;
+
+        // case 'cap_heatsink':
+        //   this.caseLabel = this.cap_disipador;
+        //   if (this.caseLabel === "OK") {
+        //     fill(colors.ok);
+        //   } else if (this.caseLabel === "Stable") {
+        //     fill(colors.ok);
+        //   } else if (this.caseLabel === "OLD") {
+        //     fill(colors.warning);
+        //   } else {
+        //     fill(colors.noData);
+        //   }
+        //   break;
 
       case 'status':
         this.caseLabel = this.status;
         if (this.caseLabel === "In ACQ") {
           fill(colors.ok);
-        } else if(this.caseLabel === "Deployed"){
+        } else if (this.caseLabel === "Deployed") {
           fill(colors.warning);
         } else {
           fill(colors.noData);
         }
         break;
 
+        // case 'front_end':
+        //   this.caseLabel = this.front_end;
+        //   if (this.caseLabel === "Cyclone") {
+        //     fill(colors.ok);
+        //   } else if (this.caseLabel === "3.3" || this.caseLabel === "3.1" ) {
+        //     fill(colors.warning);
+        //   } else {
+        //     fill(colors.noData);
+        //   }
+        //   break;
+
       case 'front_end':
         this.caseLabel = this.front_end;
-        if (this.caseLabel === "Cyclone") {
+        if (this.caseLabel === "UUB-A") {
           fill(colors.ok);
-        } else if (this.caseLabel === "3.3" || this.caseLabel === "3.1" ) {
+        } else if (this.caseLabel === "UUB" || this.caseLabel === "Cyclone") {
+          fill(colors.warning);
+        } else if (this.caseLabel === "3.3" || this.caseLabel === "3.1") {
           fill(colors.warning);
         } else {
           fill(colors.noData);
         }
         break;
-        
-        case 'radio_uptime':
-          this.caseLabel = this.radio_uptime;
-          if (this.caseLabel === "OK") {
-            fill(colors.ok);
-          } else if (this.caseLabel === "DEAD") {
-            fill(colors.dead);
-          } else if (this.caseLabel === "REBOOT") {
-            fill(colors.warning);
-          } else if (this.caseLabel === "-") {
-            fill(100, 20);
-          } else {
-            fill(colors.noData);
-          }
-          break;
+
+      case 'radio_uptime':
+        this.caseLabel = this.radio_uptime;
+        if (this.caseLabel === "OK") {
+          fill(colors.ok);
+        } else if (this.caseLabel === "DEAD") {
+          fill(colors.dead);
+        } else if (this.caseLabel === "REBOOT") {
+          fill(colors.warning);
+        } else if (this.caseLabel === "-") {
+          fill(100, 20);
+        } else {
+          fill(colors.noData);
+        }
+        break;
 
       case 'ip':
         this.caseLabel = this.ip;
@@ -448,7 +467,7 @@ class Tank {
     }
   }
   // Show Power System
-  showPwr(scl){
+  showPwr(scl) {
     this.update();
     if (showPower.showTubing && this.tubing == "OK") {
       push();
@@ -485,8 +504,8 @@ class Tank {
       fill(0);
       textSize(0.5 * scl * propiedades.mult);
       text("Reg: " + this.regulator, this.point.x - 5 * scl * propiedades.mult, this.point.y - 0.5 * scl * propiedades.mult);
-      text("Bat_1: \n" + this.bat_1, this.point.x + (- 5 - 1 )* scl * propiedades.mult, this.point.y + (- 0.5 + 1.8) * scl * propiedades.mult);
-      text("Bat_2: \n" + this.bat_2, this.point.x + (- 5 + 1 )* scl * propiedades.mult, this.point.y + (- 0.5 + 1.8) * scl * propiedades.mult);
+      text("Bat_1: \n" + this.bat_1, this.point.x + (-5 - 1) * scl * propiedades.mult, this.point.y + (-0.5 + 1.8) * scl * propiedades.mult);
+      text("Bat_2: \n" + this.bat_2, this.point.x + (-5 + 1) * scl * propiedades.mult, this.point.y + (-0.5 + 1.8) * scl * propiedades.mult);
       pop();
     }
   }
