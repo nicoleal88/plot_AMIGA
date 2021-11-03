@@ -390,6 +390,8 @@ class Tank {
           fill(colors.ok);
         } else if (this.caseLabel === "Deployed") {
           fill(colors.warning);
+        } else if (this.caseLabel === "Critical") {
+          fill(colors.dead);
         } else {
           fill(colors.noData);
         }
@@ -408,13 +410,17 @@ class Tank {
 
       case 'front_end':
         this.caseLabel = this.front_end;
-        if (this.caseLabel === "UUB-A") {
+        if (this.caseLabel === "UUB-A" && this.cableado == "OK") {
           fill(colors.ok);
-        } else if (this.caseLabel === "UUB" || this.caseLabel === "Cyclone") {
+        } else if (this.caseLabel === "Cyclone" && this.cableado == "OK") {
+          fill(colors.ok);
+        } else if (this.caseLabel === "3.3" || this.caseLabel === "3.1" || this.caseLabel === "Cyclone") {
           fill(colors.warning);
-        } else if (this.caseLabel === "3.3" || this.caseLabel === "3.1") {
+        } else if (this.caseLabel === "UUB" && this.cableado == "OK") {
+          fill(colors.dead);
+        } else if (this.caseLabel === "UUB") {
           fill(colors.warning);
-        } else {
+        }  else {
           fill(colors.noData);
         }
         break;
