@@ -410,7 +410,7 @@ class Tank {
 
       case 'front_end':
         this.caseLabel = this.front_end;
-        if (this.caseLabel === "UUB-A" && this.cableado == "OK") {
+        if (this.caseLabel === "UUB-A") {
           fill(colors.ok);
         } else if (this.caseLabel === "Cyclone" && this.cableado == "OK") {
           fill(colors.ok);
