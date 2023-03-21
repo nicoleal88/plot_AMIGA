@@ -156,7 +156,7 @@ class Tank {
     } else if (name == false && lsid == true) {
       this.textID = "(" + this.lsid + ")";
     } else {
-      this.textID = "(-_-)";
+      this.textID = "";
     }
 
     textAlign(CENTER, BOTTOM);
