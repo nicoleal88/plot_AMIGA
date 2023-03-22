@@ -68,7 +68,7 @@ let showInfo;
 let showHexagons;
 let showSDs;
 let showPower;
-let mult;
+let scale;
 
 // Lets put all our map options in a single object
 
@@ -170,7 +170,7 @@ function setup() {
 
   propiedades = {
     item: "status",
-    mult: 25,
+    scale: 25,
     screenshot: takeScreenshot
   };
 
@@ -182,10 +182,11 @@ function setup() {
     'radio_uptime',
     'ip',
     'front_end',
+    'shielding',
     'to_do',
     'trip'
   ])
-  newGUI.add(propiedades, 'mult', 1, 50);
+  newGUI.add(propiedades, 'scale', 1, 50);
 
   newGUI.add(propiedades, 'screenshot');
 
@@ -371,6 +372,7 @@ function setup() {
 
     let tx = row.get('TX');
     let dist = row.get('Distrib.');
+    let shielding = row.get('Mallado');
 
     // Conversion from UTM to LatLng
     let utmz = 19;
@@ -410,6 +412,7 @@ function setup() {
       amiga_box,
       tx,
       dist,
+      shielding,
       tubing,
       soporte,
       solar_panel,
@@ -640,16 +643,16 @@ function mapStyle() {
 
 //   if (changed && showInfo.showUMDs){
 //   let target = 10;
-//   if (propiedades.mult < target){
-//     while(propiedades.mult < target){
-//       propiedades.mult ++;
+//   if (propiedades.scale < target){
+//     while(propiedades.scale < target){
+//       propiedades.scale ++;
 //       newGUI.updateDisplay();
 //     }
     
 //   }
-//   else if (propiedades.mult > target){
-//     while(propiedades.mult > target){
-//     propiedades.mult --;
+//   else if (propiedades.scale > target){
+//     while(propiedades.scale > target){
+//     propiedades.scale --;
 //     newGUI.updateDisplay();
 //     }
 //   }
@@ -687,7 +690,7 @@ function makeDraw() {
 function takeScreenshot() {
   push();
 
-  save('myCanvas.png');
+  save('AMIGA.png');
   pop();
   return false;
 }
