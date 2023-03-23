@@ -179,7 +179,7 @@ function setup() {
     'under_electronics',
     'power_system',
     // 'cap_heatsink',
-    'radio_uptime',
+    // 'radio_uptime',
     'ip',
     'front_end',
     'shielding',

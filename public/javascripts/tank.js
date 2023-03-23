@@ -27,6 +27,7 @@ class Tank {
     this.amiga_box = datos.amiga_box
     this.tx = datos.tx
     this.distrib = datos.distrib
+    this.shielding = datos.shielding
     this.tubing = datos.tubing
     this.soporte = datos.soporte
     this.solar_panel = datos.solar_panel
@@ -120,32 +121,32 @@ class Tank {
   }
 
   showSD(scl, item, label, name, lsid) {
-    this.textsize = constrain(3 * scl * propiedades.mult, 1, 18);
+    this.textsize = constrain(3 * scl * propiedades.scale, 1, 18);
 
     if (this.selected) {
       push();
       textAlign(CENTER, CENTER);
       fill(colors.selected);
-      textSize(3 * scl * propiedades.mult);
+      textSize(3 * scl * propiedades.scale);
       noStroke();
       text("<      >", this.point.x, this.point.y);
       pop();
-      strokeWeight(0.8 * scl * propiedades.mult);
+      strokeWeight(0.8 * scl * propiedades.scale);
       stroke(colors.selected);
     }
 
     // Get fill color acording to item
     this.getColor(item);
     // Draw SD
-    circle(this.point.x, this.point.y, this.radius * 2 * scl * propiedades.mult);
+    circle(this.point.x, this.point.y, this.radius * 2 * scl * propiedades.scale);
     imageMode(CENTER);
     // tint(255,0,0,127);
-    // image(sd_img,this.point.x, this.point.y, this.radius * 2 * scl * propiedades.mult, this.radius * 2 * 1.185 * scl * propiedades.mult);
+    // image(sd_img,this.point.x, this.point.y, this.radius * 2 * scl * propiedades.scale, this.radius * 2 * 1.185 * scl * propiedades.scale);
     // Draw label text
     if (label) {
       textAlign(CENTER, TOP);
       noStroke();
-      text(this.caseLabel, this.point.x, this.point.y + this.radius * 1.5 * scl * propiedades.mult);
+      text(this.caseLabel, this.point.x, this.point.y + this.radius * 1.5 * scl * propiedades.scale);
     }
     // Draw Name and/or LSID
 
@@ -163,7 +164,7 @@ class Tank {
     textSize(this.textsize);
     fill(colors.name_id);
     noStroke();
-    text(this.textID, this.point.x, this.point.y - this.radius * 1.5 * scl * propiedades.mult);
+    text(this.textID, this.point.x, this.point.y - this.radius * 1.5 * scl * propiedades.scale);
 
     this.showPwr(scl);
 
@@ -199,62 +200,62 @@ class Tank {
     //M101
     if (this.id1 !== "-" && this.id1 !== "") {
       let M101 = new UMD(this.point.x, this.point.y, this.ra1, this.rd1, this.pa1, this.id1, this.ekit1, this.label1);
-      M101.show(scl * propiedades.mult)
+      M101.show(scl * propiedades.scale)
     }
     //M102
     if (this.id2 !== "-" && this.id2 !== "") {
       let M102 = new UMD(this.point.x, this.point.y, this.ra2, this.rd2, this.pa2, this.id2, this.ekit2, this.label2);
-      M102.show(scl * propiedades.mult)
+      M102.show(scl * propiedades.scale)
     }
     //M103
     if (this.id3 !== "-" && this.id3 !== "") {
       let M103 = new UMD(this.point.x, this.point.y, this.ra3, this.rd3, this.pa3, this.id3, this.ekit3, this.label3);
-      M103.show(scl * propiedades.mult)
+      M103.show(scl * propiedades.scale)
     }
     //M101_cu
     if (this.id1_cu !== "-" && this.id1_cu !== "") {
       let M101_cu = new UMD(this.point.x, this.point.y, this.ra1_cu, this.rd1_cu, this.pa1_cu, this.id1_cu, this.ekit1_cu, this.label1_cu, this.a1_cu);
-      M101_cu.show(scl * propiedades.mult)
+      M101_cu.show(scl * propiedades.scale)
     }
     //M102_cu
     if (this.id2_cu !== "-" && this.id2_cu !== "") {
       let M102_cu = new UMD(this.point.x, this.point.y, this.ra2_cu, this.rd2_cu, this.pa2_cu, this.id2_cu, this.ekit2_cu, this.label2_cu, this.a2_cu);
-      M102_cu.show(scl * propiedades.mult)
+      M102_cu.show(scl * propiedades.scale)
     }
     //M103_cu
     if (this.id3_cu !== "-" && this.id3_cu !== "") {
       let M103_cu = new UMD(this.point.x, this.point.y, this.ra3_cu, this.rd3_cu, this.pa3_cu, this.id3_cu, this.ekit3_cu, this.label3_cu, this.a3_cu);
-      M103_cu.show(scl * propiedades.mult)
+      M103_cu.show(scl * propiedades.scale)
     }
     //M104_cu
     if (this.id4_cu !== "-" && this.id4_cu !== "") {
       let M104_cu = new UMD(this.point.x, this.point.y, this.ra4_cu, this.rd4_cu, this.pa4_cu, this.id4_cu, this.ekit4_cu, this.label4_cu, this.a4_cu);
-      M104_cu.show(scl * propiedades.mult)
+      M104_cu.show(scl * propiedades.scale)
     }
     //M105_cu
     if (this.id5_cu !== "-" && this.id5_cu !== "") {
       let M105_cu = new UMD(this.point.x, this.point.y, this.ra5_cu, this.rd5_cu, this.pa5_cu, this.id5_cu, this.ekit5_cu, this.label5_cu, this.a5_cu);
-      M105_cu.show(scl * propiedades.mult)
+      M105_cu.show(scl * propiedades.scale)
     }
     //M106_cu
     if (this.id6_cu !== "-" && this.id6_cu !== "") {
       let M106_cu = new UMD(this.point.x, this.point.y, this.ra6_cu, this.rd6_cu, this.pa6_cu, this.id6_cu, this.ekit6_cu, this.label6_cu, this.a6_cu);
-      M106_cu.show(scl * propiedades.mult)
+      M106_cu.show(scl * propiedades.scale)
     }
     //M107_cu
     if (this.id7_cu !== "-" && this.id7_cu !== "") {
       let M107_cu = new UMD(this.point.x, this.point.y, this.ra7_cu, this.rd7_cu, this.pa7_cu, this.id7_cu, this.ekit7_cu, this.label7_cu, this.a7_cu);
-      M107_cu.show(scl * propiedades.mult)
+      M107_cu.show(scl * propiedades.scale)
     }
     //M108_cu
     if (this.id8_cu !== "-" && this.id8_cu !== "") {
       let M108_cu = new UMD(this.point.x, this.point.y, this.ra8_cu, this.rd8_cu, this.pa8_cu, this.id8_cu, this.ekit8_cu, this.label8_cu, this.a8_cu);
-      M108_cu.show(scl * propiedades.mult)
+      M108_cu.show(scl * propiedades.scale)
     }
     //M109_cu
     if (this.id9_cu !== "-" && this.id9_cu !== "") {
       let M109_cu = new UMD(this.point.x, this.point.y, this.ra9_cu, this.rd9_cu, this.pa9_cu, this.id9_cu, this.ekit9_cu, this.label9_cu, this.a9_cu);
-      M109_cu.show(scl * propiedades.mult)
+      M109_cu.show(scl * propiedades.scale)
     }
   }
 
@@ -274,10 +275,12 @@ class Tank {
         if (this.distrib !== "" && this.distrib !== "-") {
           d_ = "OK"
         }
+  
 
-        if (ab_ == "OK" && tx_ == "OK" && d_ == "OK") {
+        if (ab_ == "OK" && tx_ == "OK" && d_ == "OK" ) {
           this.caseLabel = "OK";
-        } else if (this.cableado == "" || this.cableado == "-") {
+        }
+       else if (this.cableado == "" || this.cableado == "-") {
           this.caseLabel = "";
         } else {
           this.caseLabel = "Incomplete";
@@ -397,6 +400,17 @@ class Tank {
         }
         break;
 
+        case 'shielding':
+        this.caseLabel = this.shielding;
+        if (this.caseLabel === "OK") {
+          fill(colors.ok);
+        } else if (this.caseLabel == "" && this.amiga_box !== "") {
+          fill(colors.warning);
+        } else {
+          fill(colors.noData);
+        }
+        break;
+
         // case 'front_end':
         //   this.caseLabel = this.front_end;
         //   if (this.caseLabel === "Cyclone") {
@@ -477,7 +491,7 @@ class Tank {
     this.update();
     if (showPower.showTubing && this.tubing == "OK") {
       push();
-      circle(this.point.x + 5 * scl * propiedades.mult, this.point.y + 2 * scl * propiedades.mult, 1 * scl * propiedades.mult);
+      circle(this.point.x + 5 * scl * propiedades.scale, this.point.y + 2 * scl * propiedades.scale, 1 * scl * propiedades.scale);
       pop();
     }
 
@@ -486,8 +500,8 @@ class Tank {
       rectMode(CENTER)
       noFill();
       stroke(127);
-      strokeWeight(0.3 * scl * propiedades.mult)
-      rect(this.point.x + 5 * scl * propiedades.mult, this.point.y, 2 * scl * propiedades.mult, 3 * scl * propiedades.mult);
+      strokeWeight(0.3 * scl * propiedades.scale)
+      rect(this.point.x + 5 * scl * propiedades.scale, this.point.y, 2 * scl * propiedades.scale, 3 * scl * propiedades.scale);
       pop();
     }
 
@@ -496,7 +510,7 @@ class Tank {
       rectMode(CENTER)
       fill(100, 149, 237);
       noStroke();
-      rect(this.point.x + 5 * scl * propiedades.mult, this.point.y, 2 * scl * propiedades.mult, 3 * scl * propiedades.mult);
+      rect(this.point.x + 5 * scl * propiedades.scale, this.point.y, 2 * scl * propiedades.scale, 3 * scl * propiedades.scale);
       pop();
     }
 
@@ -505,13 +519,13 @@ class Tank {
       rectMode(CENTER)
       fill(255, 248, 220);
       noStroke();
-      rect(this.point.x - 5 * scl * propiedades.mult, this.point.y, 4 * scl * propiedades.mult, 3 * scl * propiedades.mult);
+      rect(this.point.x - 5 * scl * propiedades.scale, this.point.y, 4 * scl * propiedades.scale, 3 * scl * propiedades.scale);
       textAlign(CENTER);
       fill(0);
-      textSize(0.5 * scl * propiedades.mult);
-      text("Reg: " + this.regulator, this.point.x - 5 * scl * propiedades.mult, this.point.y - 0.5 * scl * propiedades.mult);
-      text("Bat_1: \n" + this.bat_1, this.point.x + (-5 - 1) * scl * propiedades.mult, this.point.y + (-0.5 + 1.8) * scl * propiedades.mult);
-      text("Bat_2: \n" + this.bat_2, this.point.x + (-5 + 1) * scl * propiedades.mult, this.point.y + (-0.5 + 1.8) * scl * propiedades.mult);
+      textSize(0.5 * scl * propiedades.scale);
+      text("Reg: " + this.regulator, this.point.x - 5 * scl * propiedades.scale, this.point.y - 0.5 * scl * propiedades.scale);
+      text("Bat_1: \n" + this.bat_1, this.point.x + (-5 - 1) * scl * propiedades.scale, this.point.y + (-0.5 + 1.8) * scl * propiedades.scale);
+      text("Bat_2: \n" + this.bat_2, this.point.x + (-5 + 1) * scl * propiedades.scale, this.point.y + (-0.5 + 1.8) * scl * propiedades.scale);
       pop();
     }
   }
