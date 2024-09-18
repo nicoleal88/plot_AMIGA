@@ -6,12 +6,12 @@
 // Done
 // - Add trip button
 // - Add table with selected SDs
-// - Add References 
+// - Add References
 // - Add Roads
 // - Add UMDs
 // - Make objects?
 // - Github.io
-// - Add classification of SDs (Araya, 433, AERALet, etc.) 
+// - Add classification of SDs (Araya, 433, AERALet, etc.)
 // - Divide GUI into categories
 // - Add title of the things being plotted
 // - Add SD png image
@@ -27,7 +27,7 @@
 
 // Bugs
 // - Canvas resizes to square on window's resize
-// - Multiple instances when changing from flat to satellite view 
+// - Multiple instances when changing from flat to satellite view
 
 // ################## //
 
@@ -48,8 +48,9 @@ let lastUpdateDate;
 let AMIGA_Map;
 let canvas;
 // Mapbox API key
-var mapbox_api_key = 'pk.eyJ1Ijoibmljb2xlYWw4OCIsImEiOiJjazA3NWRmaHYzdjM5M2xwMHhoeGEwcnNhIn0.U9_rp4dKVkuTWEHODTHdgg';
-var mappa = new Mappa('MapboxGL', mapbox_api_key);
+var mapbox_api_key =
+  "pk.eyJ1Ijoibmljb2xlYWw4OCIsImEiOiJjazA3NWRmaHYzdjM5M2xwMHhoeGEwcnNhIn0.U9_rp4dKVkuTWEHODTHdgg";
+var mappa = new Mappa("MapboxGL", mapbox_api_key);
 // const mappa = new Mappa('Leaflet');
 let prevSatButton = false;
 let prevumdButton = false;
@@ -101,14 +102,14 @@ var options = {
   minZoom: 1,
   maxZoom: 20,
   renderWorldCopies: false,
-  scl: 0.00002
-}
+  scl: 0.000015,
+};
 
 // Hexagons
-let UC = ['93', '1574', '1570', '688', '1764', '1773', '93'];
-let MARTA = ['1764', '688', '1760', '1767', '669', '1765', '1764'];
-let h433_1 = ['30', '12', '97', '47', '99', '11', '30'];
-let h433_2 = ['27', '29', '28', '54', '50', '42', '27'];
+let UC = ["93", "1574", "1570", "688", "1764", "1773", "93"];
+let MARTA = ["1764", "688", "1760", "1767", "669", "1765", "1764"];
+let h433_1 = ["30", "12", "97", "47", "99", "11", "30"];
+let h433_2 = ["27", "29", "28", "54", "50", "42", "27"];
 
 // const malargue = {
 //   // Malargue coords: -35.46667,-69.58333
@@ -127,11 +128,11 @@ function preload() {
 }
 
 function setup() {
-  // canvas = createCanvas(640, 640);
   canvas = createCanvas(windowWidth, windowHeight);
-  canvas.parent('sketch-div');
+  canvas.parent("sketch-div");
   canvas.mouseWheel(makeDraw);
   count = n;
+  draww = true;
 
   colorsDark = {
     ok: "#2ECC40", // green
@@ -140,8 +141,8 @@ function setup() {
     noData: "silver",
     roads: color(255, 204, 0, 50),
     selected: "#FF851B", // Orange,
-    name_id: color(127)
-  }
+    name_id: color(127),
+  };
 
   colorsSatellite = {
     ok: "#2ECC40", // green
@@ -150,8 +151,8 @@ function setup() {
     noData: "gray",
     roads: color(255, 204, 0, 50),
     selected: "#FF851B", // Orange,
-    name_id: "white"
-  }
+    name_id: "white",
+  };
 
   colors = colorsDark;
 
@@ -171,24 +172,25 @@ function setup() {
   propiedades = {
     item: "status",
     scale: 25,
-    screenshot: takeScreenshot
+    screenshot: takeScreenshot,
   };
 
-  newGUI.add(propiedades, 'item', ['status',
-    'surf_electronics',
-    'under_electronics',
-    'power_system',
+  newGUI.add(propiedades, "item", [
+    "status",
+    "surf_electronics",
+    "under_electronics",
+    "power_system",
     // 'cap_heatsink',
     // 'radio_uptime',
-    'ip',
-    'front_end',
-    'shielding',
-    'to_do',
-    'trip'
-  ])
-  newGUI.add(propiedades, 'scale', 1, 50);
+    "ip",
+    "front_end",
+    "shielding",
+    "to_do",
+    "trip",
+  ]);
+  newGUI.add(propiedades, "scale", 1, 50);
 
-  newGUI.add(propiedades, 'screenshot');
+  newGUI.add(propiedades, "screenshot");
 
   let infoFolder = newGUI.addFolder("Show info");
   showInfo = {
@@ -197,27 +199,27 @@ function setup() {
     showLSID: true,
     showUMDs: false,
     showRoads: false,
-    satellite: false
+    satellite: false,
   };
 
-  infoFolder.add(showInfo, 'showName');
-  infoFolder.add(showInfo, 'showLSID');
-  infoFolder.add(showInfo, 'showLabel');
-  infoFolder.add(showInfo, 'showUMDs');
-  infoFolder.add(showInfo, 'showRoads');
-  infoFolder.add(showInfo, 'satellite');
+  infoFolder.add(showInfo, "showName");
+  infoFolder.add(showInfo, "showLSID");
+  infoFolder.add(showInfo, "showLabel");
+  infoFolder.add(showInfo, "showUMDs");
+  infoFolder.add(showInfo, "showRoads");
+  infoFolder.add(showInfo, "satellite");
 
   let hexagonsFolder = newGUI.addFolder("Show hexagons");
   showHexagons = {
     showUC: false,
     showMARTA: false,
     show433_1: false,
-    show433_2: false
-  }
-  hexagonsFolder.add(showHexagons, 'showUC');
-  hexagonsFolder.add(showHexagons, 'showMARTA');
-  hexagonsFolder.add(showHexagons, 'show433_1');
-  hexagonsFolder.add(showHexagons, 'show433_2');
+    show433_2: false,
+  };
+  hexagonsFolder.add(showHexagons, "showUC");
+  hexagonsFolder.add(showHexagons, "showMARTA");
+  hexagonsFolder.add(showHexagons, "show433_1");
+  hexagonsFolder.add(showHexagons, "show433_2");
 
   let sdFolder = newGUI.addFolder("Show SDs");
   showSDs = {
@@ -226,14 +228,14 @@ function setup() {
     showOthers: false,
     showCampoIbarra: true,
     showCampoAraya: true,
-    showHeat_Let: false
-  }
-  sdFolder.add(showSDs, 'show433');
-  sdFolder.add(showSDs, 'showTwins_KT');
-  sdFolder.add(showSDs, 'showOthers');
-  sdFolder.add(showSDs, 'showCampoIbarra');
-  sdFolder.add(showSDs, 'showCampoAraya');
-  sdFolder.add(showSDs, 'showHeat_Let');
+    showHeat_Let: false,
+  };
+  sdFolder.add(showSDs, "show433");
+  sdFolder.add(showSDs, "showTwins_KT");
+  sdFolder.add(showSDs, "showOthers");
+  sdFolder.add(showSDs, "showCampoIbarra");
+  sdFolder.add(showSDs, "showCampoAraya");
+  sdFolder.add(showSDs, "showHeat_Let");
 
   let powerFolder = newGUI.addFolder("Show Power");
   showPower = {
@@ -241,149 +243,219 @@ function setup() {
     showSupport: false,
     showSolarPanel: false,
     showBatteryBox: false,
-  }
-  powerFolder.add(showPower, 'showTubing');
-  powerFolder.add(showPower, 'showSupport');
-  powerFolder.add(showPower, 'showSolarPanel');
-  powerFolder.add(showPower, 'showBatteryBox');
+  };
+  powerFolder.add(showPower, "showTubing");
+  powerFolder.add(showPower, "showSupport");
+  powerFolder.add(showPower, "showSolarPanel");
+  powerFolder.add(showPower, "showBatteryBox");
 
   infoFolder.open();
 
   // Data loading
   for (let row of table.rows) {
-    let name = row.get('SD');
-    let lsid = row.get('LSID');
-    let radio_mikrotik = row.get('Radio_Mikrotik');
-    let ip = row.get('IP');
-    let amiga_box = row.get('AMIGA_Box');
-    let cap_disipador = row.get('Cap_HS');
-    let status = row.get('Status');
-    let radio_uptime = row.get('Radio_Uptime');
-    let front_end = row.get('Front_End');
-    let tubing = row.get('Tubing_PS');
-    let soporte = row.get('Soporte_PS');
-    let solar_panel = row.get('PS_AMIGA');
-    let bat_1 = row.get('Bateria_1');
-    let bat_2 = row.get('Bateria_2');
-    let regulator = row.get('Regulador');
-    let bbox = row.get('BBox');
-    let tipo = row.get('Tipo');
-    let to_do = row.get('To_Do');
+    let name = row.get("SD");
+    let lsid = row.get("LSID");
+    let radio_mikrotik = row.get("Radio_Mikrotik");
+    let ip = row.get("IP");
+    let amiga_box = row.get("AMIGA_Box");
+    let cap_disipador = row.get("Cap_HS");
+    let status = row.get("Status");
+    let radio_uptime = row.get("Radio_Uptime");
+    let front_end = row.get("Front_End");
+    let tubing = row.get("Tubing_PS");
+    let soporte = row.get("Soporte_PS");
+    let solar_panel = row.get("PS_AMIGA");
+    let bat_1 = row.get("Bateria_1");
+    let bat_2 = row.get("Bateria_2");
+    let regulator = row.get("Regulador");
+    let bbox = row.get("BBox");
+    let tipo = row.get("Tipo");
+    let to_do = row.get("To_Do");
 
     //UMDs data
     let cableado;
-    cableado = row.get('Cableado_UMDs');
+    cableado = row.get("Cableado_UMDs");
     let id1, id2, id3;
-    id1 = row.get('ID_M101');
-    id2 = row.get('ID_M102');
-    id3 = row.get('ID_M103');
+    id1 = row.get("ID_M101");
+    id2 = row.get("ID_M102");
+    id3 = row.get("ID_M103");
     let ra1, ra2, ra3;
-    ra1 = Number(row.get('RA_M101'));
-    ra2 = Number(row.get('RA_M102'));
-    ra3 = Number(row.get('RA_M103'));
+    ra1 = Number(row.get("RA_M101"));
+    ra2 = Number(row.get("RA_M102"));
+    ra3 = Number(row.get("RA_M103"));
     let rd1, rd2, rd3;
-    rd1 = parseFloat(row.get('RD_M101').replace(/\s/g, "").replace(",", "."));
-    rd2 = parseFloat(row.get('RD_M102').replace(/\s/g, "").replace(",", "."));
-    rd3 = parseFloat(row.get('RD_M103').replace(/\s/g, "").replace(",", "."));
+    rd1 = parseFloat(row.get("RD_M101").replace(/\s/g, "").replace(",", "."));
+    rd2 = parseFloat(row.get("RD_M102").replace(/\s/g, "").replace(",", "."));
+    rd3 = parseFloat(row.get("RD_M103").replace(/\s/g, "").replace(",", "."));
     let pa1, pa2, pa3;
-    pa1 = Number(row.get('PA_M101'));
-    pa2 = Number(row.get('PA_M102'));
-    pa3 = Number(row.get('PA_M103'));
+    pa1 = Number(row.get("PA_M101"));
+    pa2 = Number(row.get("PA_M102"));
+    pa3 = Number(row.get("PA_M103"));
     let ekit1, ekit2, ekit3;
-    ekit1 = row.get('eKit_M101');
-    ekit2 = row.get('eKit_M102');
-    ekit3 = row.get('eKit_M103');
+    ekit1 = row.get("eKit_M101");
+    ekit2 = row.get("eKit_M102");
+    ekit3 = row.get("eKit_M103");
 
     //UMDs UC data
     let id1_cu, id2_cu, id3_cu, id4_cu, id5_cu, id6_cu, id7_cu, id8_cu, id9_cu;
-    id1_cu = row.get('ID_M101_CU');
-    id2_cu = row.get('ID_M102_CU');
-    id3_cu = row.get('ID_M103_CU');
-    id4_cu = row.get('ID_M104_CU');
-    id5_cu = row.get('ID_M105_CU');
-    id6_cu = row.get('ID_M106_CU');
-    id7_cu = row.get('ID_M107_CU');
-    id8_cu = row.get('ID_M108_CU');
-    id9_cu = row.get('ID_M109_CU');
+    id1_cu = row.get("ID_M101_CU");
+    id2_cu = row.get("ID_M102_CU");
+    id3_cu = row.get("ID_M103_CU");
+    id4_cu = row.get("ID_M104_CU");
+    id5_cu = row.get("ID_M105_CU");
+    id6_cu = row.get("ID_M106_CU");
+    id7_cu = row.get("ID_M107_CU");
+    id8_cu = row.get("ID_M108_CU");
+    id9_cu = row.get("ID_M109_CU");
     let ra1_cu, ra2_cu, ra3_cu, ra4_cu, ra5_cu, ra6_cu, ra7_cu, ra8_cu, ra9_cu;
-    ra1_cu = parseFloat(row.get('RA_M101_CU').replace(/\s/g, "").replace(",", "."));
-    ra2_cu = parseFloat(row.get('RA_M102_CU').replace(/\s/g, "").replace(",", "."));
-    ra3_cu = parseFloat(row.get('RA_M103_CU').replace(/\s/g, "").replace(",", "."));
-    ra4_cu = parseFloat(row.get('RA_M104_CU').replace(/\s/g, "").replace(",", "."));
-    ra5_cu = parseFloat(row.get('RA_M105_CU').replace(/\s/g, "").replace(",", "."));
-    ra6_cu = parseFloat(row.get('RA_M106_CU').replace(/\s/g, "").replace(",", "."));
-    ra7_cu = parseFloat(row.get('RA_M107_CU').replace(/\s/g, "").replace(",", "."));
-    ra8_cu = parseFloat(row.get('RA_M108_CU').replace(/\s/g, "").replace(",", "."));
-    ra9_cu = parseFloat(row.get('RA_M109_CU').replace(/\s/g, "").replace(",", "."));
+    ra1_cu = parseFloat(
+      row.get("RA_M101_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    ra2_cu = parseFloat(
+      row.get("RA_M102_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    ra3_cu = parseFloat(
+      row.get("RA_M103_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    ra4_cu = parseFloat(
+      row.get("RA_M104_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    ra5_cu = parseFloat(
+      row.get("RA_M105_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    ra6_cu = parseFloat(
+      row.get("RA_M106_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    ra7_cu = parseFloat(
+      row.get("RA_M107_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    ra8_cu = parseFloat(
+      row.get("RA_M108_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    ra9_cu = parseFloat(
+      row.get("RA_M109_CU").replace(/\s/g, "").replace(",", ".")
+    );
     let rd1_cu, rd2_cu, rd3_cu, rd4_cu, rd5_cu, rd6_cu, rd7_cu, rd8_cu, rd9_cu;
-    rd1_cu = parseFloat(row.get('RD_M101_CU').replace(/\s/g, "").replace(",", "."));
-    rd2_cu = parseFloat(row.get('RD_M102_CU').replace(/\s/g, "").replace(",", "."));
-    rd3_cu = parseFloat(row.get('RD_M103_CU').replace(/\s/g, "").replace(",", "."));
-    rd4_cu = parseFloat(row.get('RD_M104_CU').replace(/\s/g, "").replace(",", "."));
-    rd5_cu = parseFloat(row.get('RD_M105_CU').replace(/\s/g, "").replace(",", "."));
-    rd6_cu = parseFloat(row.get('RD_M106_CU').replace(/\s/g, "").replace(",", "."));
-    rd7_cu = parseFloat(row.get('RD_M107_CU').replace(/\s/g, "").replace(",", "."));
-    rd8_cu = parseFloat(row.get('RD_M108_CU').replace(/\s/g, "").replace(",", "."));
-    rd9_cu = parseFloat(row.get('RD_M109_CU').replace(/\s/g, "").replace(",", "."));
+    rd1_cu = parseFloat(
+      row.get("RD_M101_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    rd2_cu = parseFloat(
+      row.get("RD_M102_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    rd3_cu = parseFloat(
+      row.get("RD_M103_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    rd4_cu = parseFloat(
+      row.get("RD_M104_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    rd5_cu = parseFloat(
+      row.get("RD_M105_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    rd6_cu = parseFloat(
+      row.get("RD_M106_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    rd7_cu = parseFloat(
+      row.get("RD_M107_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    rd8_cu = parseFloat(
+      row.get("RD_M108_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    rd9_cu = parseFloat(
+      row.get("RD_M109_CU").replace(/\s/g, "").replace(",", ".")
+    );
     let pa1_cu, pa2_cu, pa3_cu, pa4_cu, pa5_cu, pa6_cu, pa7_cu, pa8_cu, pa9_cu;
-    pa1_cu = parseFloat(row.get('PA_M101_CU').replace(/\s/g, "").replace(",", "."));
-    pa2_cu = parseFloat(row.get('PA_M102_CU').replace(/\s/g, "").replace(",", "."));
-    pa3_cu = parseFloat(row.get('PA_M103_CU').replace(/\s/g, "").replace(",", "."));
-    pa4_cu = parseFloat(row.get('PA_M104_CU').replace(/\s/g, "").replace(",", "."));
-    pa5_cu = parseFloat(row.get('PA_M105_CU').replace(/\s/g, "").replace(",", "."));
-    pa6_cu = parseFloat(row.get('PA_M106_CU').replace(/\s/g, "").replace(",", "."));
-    pa7_cu = parseFloat(row.get('PA_M107_CU').replace(/\s/g, "").replace(",", "."));
-    pa8_cu = parseFloat(row.get('PA_M108_CU').replace(/\s/g, "").replace(",", "."));
-    pa9_cu = parseFloat(row.get('PA_M109_CU').replace(/\s/g, "").replace(",", "."));
-    let ekit1_cu, ekit2_cu, ekit3_cu, ekit4_cu, ekit5_cu, ekit6_cu, ekit7_cu, ekit8_cu, ekit9_cu;
-    ekit1_cu = row.get('eKit_M101_CU');
-    ekit2_cu = row.get('eKit_M102_CU');
-    ekit3_cu = row.get('eKit_M103_CU');
-    ekit4_cu = row.get('eKit_M104_CU');
-    ekit5_cu = row.get('eKit_M105_CU');
-    ekit6_cu = row.get('eKit_M106_CU');
-    ekit7_cu = row.get('eKit_M107_CU');
-    ekit8_cu = row.get('eKit_M108_CU');
-    ekit9_cu = row.get('eKit_M109_CU');
+    pa1_cu = parseFloat(
+      row.get("PA_M101_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    pa2_cu = parseFloat(
+      row.get("PA_M102_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    pa3_cu = parseFloat(
+      row.get("PA_M103_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    pa4_cu = parseFloat(
+      row.get("PA_M104_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    pa5_cu = parseFloat(
+      row.get("PA_M105_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    pa6_cu = parseFloat(
+      row.get("PA_M106_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    pa7_cu = parseFloat(
+      row.get("PA_M107_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    pa8_cu = parseFloat(
+      row.get("PA_M108_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    pa9_cu = parseFloat(
+      row.get("PA_M109_CU").replace(/\s/g, "").replace(",", ".")
+    );
+    let ekit1_cu,
+      ekit2_cu,
+      ekit3_cu,
+      ekit4_cu,
+      ekit5_cu,
+      ekit6_cu,
+      ekit7_cu,
+      ekit8_cu,
+      ekit9_cu;
+    ekit1_cu = row.get("eKit_M101_CU");
+    ekit2_cu = row.get("eKit_M102_CU");
+    ekit3_cu = row.get("eKit_M103_CU");
+    ekit4_cu = row.get("eKit_M104_CU");
+    ekit5_cu = row.get("eKit_M105_CU");
+    ekit6_cu = row.get("eKit_M106_CU");
+    ekit7_cu = row.get("eKit_M107_CU");
+    ekit8_cu = row.get("eKit_M108_CU");
+    ekit9_cu = row.get("eKit_M109_CU");
     let a1_cu, a2_cu, a3_cu, a4_cu, a5_cu, a6_cu, a7_cu, a8_cu, a9_cu;
-    a1_cu = Number(row.get('a_M101_CU'));
-    a2_cu = Number(row.get('a_M102_CU'));
-    a3_cu = Number(row.get('a_M103_CU'));
-    a4_cu = Number(row.get('a_M104_CU'));
-    a5_cu = Number(row.get('a_M105_CU'));
-    a6_cu = Number(row.get('a_M106_CU'));
-    a7_cu = Number(row.get('a_M107_CU'));
-    a8_cu = Number(row.get('a_M108_CU'));
-    a9_cu = Number(row.get('a_M109_CU'));
+    a1_cu = Number(row.get("a_M101_CU"));
+    a2_cu = Number(row.get("a_M102_CU"));
+    a3_cu = Number(row.get("a_M103_CU"));
+    a4_cu = Number(row.get("a_M104_CU"));
+    a5_cu = Number(row.get("a_M105_CU"));
+    a6_cu = Number(row.get("a_M106_CU"));
+    a7_cu = Number(row.get("a_M107_CU"));
+    a8_cu = Number(row.get("a_M108_CU"));
+    a9_cu = Number(row.get("a_M109_CU"));
     let label1, label2, label3;
-    label1 = row.get('label_M101');
-    label2 = row.get('label_M102');
-    label3 = row.get('label_M103');
-    let label1_cu, label2_cu, label3_cu, label4_cu, label5_cu, label6_cu, label7_cu, label8_cu, label9_cu;
-    label1_cu = row.get('label_M101_CU');
-    label2_cu = row.get('label_M102_CU');
-    label3_cu = row.get('label_M103_CU');
-    label4_cu = row.get('label_M104_CU');
-    label5_cu = row.get('label_M105_CU');
-    label6_cu = row.get('label_M106_CU');
-    label7_cu = row.get('label_M107_CU');
-    label8_cu = row.get('label_M108_CU');
-    label9_cu = row.get('label_M109_CU');
+    label1 = row.get("label_M101");
+    label2 = row.get("label_M102");
+    label3 = row.get("label_M103");
+    let label1_cu,
+      label2_cu,
+      label3_cu,
+      label4_cu,
+      label5_cu,
+      label6_cu,
+      label7_cu,
+      label8_cu,
+      label9_cu;
+    label1_cu = row.get("label_M101_CU");
+    label2_cu = row.get("label_M102_CU");
+    label3_cu = row.get("label_M103_CU");
+    label4_cu = row.get("label_M104_CU");
+    label5_cu = row.get("label_M105_CU");
+    label6_cu = row.get("label_M106_CU");
+    label7_cu = row.get("label_M107_CU");
+    label8_cu = row.get("label_M108_CU");
+    label9_cu = row.get("label_M109_CU");
 
-    let tx = row.get('TX');
-    let dist = row.get('Distrib.');
-    let shielding = row.get('Mallado');
+    let tx = row.get("TX");
+    let dist = row.get("Distrib.");
+    let shielding = row.get("Mallado");
 
     // Conversion from UTM to LatLng
     let utmz = 19;
-    let easting = Number(row.get('Easting'));
-    let northing = Number(row.get('Northing')) - 10000000;
+    let easting = Number(row.get("Easting"));
+    let northing = Number(row.get("Northing")) - 10000000;
     var utm = new UTMConv.UTMCoords(utmz, easting, northing);
     var degd = utm.to_deg();
     var pos = {
       lat: degd.latd,
-      lng: degd.lngd
-    }
+      lng: degd.lngd,
+    };
 
     let datos = {
       name,
@@ -489,8 +561,8 @@ function setup() {
       label6_cu,
       label7_cu,
       label8_cu,
-      label9_cu
-    }
+      label9_cu,
+    };
 
     // Data pushing
     data.push(datos);
@@ -511,24 +583,30 @@ function draw() {
     const zoom = AMIGA_Map.getZoom(); //getZoom() returns a float, zoom() an int
     const scl1 = pow(2, zoom);
     // const sclm =  // Escala para unidades en metros Leaflet
-    const sclm = options.scl // Escala para unidades en metros Mapbox
+    const sclm = options.scl; // Escala para unidades en metros Mapbox
     let escalaReal = scl1 * sclm;
 
     // Disable SDs plotting:
     for (let i = 0; i < tanks.length; i++) {
       tanks[i].update(); // Updates the position on the map
 
-      if (showSDs.show433 == false && tanks[i].tipo == '433m') {
+      if (showSDs.show433 == false && tanks[i].tipo == "433m") {
         tanks[i].plot = false;
-      } else if (showSDs.showTwins_KT == false && tanks[i].tipo == 'Twins_KT') {
+      } else if (showSDs.showTwins_KT == false && tanks[i].tipo == "Twins_KT") {
         tanks[i].plot = false;
-      } else if (showSDs.showOthers == false && tanks[i].tipo == 'Other') {
+      } else if (showSDs.showOthers == false && tanks[i].tipo == "Other") {
         tanks[i].plot = false;
-      } else if (showSDs.showHeat_Let == false && tanks[i].tipo == 'Heat_Let') {
+      } else if (showSDs.showHeat_Let == false && tanks[i].tipo == "Heat_Let") {
         tanks[i].plot = false;
-      } else if (showSDs.showCampoIbarra == false && (tanks[i].tipo == 'Campo_Ibarra' || tanks[i].tipo == 'CU')) {
+      } else if (
+        showSDs.showCampoIbarra == false &&
+        (tanks[i].tipo == "Campo_Ibarra" || tanks[i].tipo == "CU")
+      ) {
         tanks[i].plot = false;
-      } else if (showSDs.showCampoAraya == false && tanks[i].tipo == 'Campo_Araya') {
+      } else if (
+        showSDs.showCampoAraya == false &&
+        tanks[i].tipo == "Campo_Araya"
+      ) {
         tanks[i].plot = false;
       } else {
         tanks[i].plot = true;
@@ -538,7 +616,13 @@ function draw() {
     // Plot SDs
     for (let i = 0; i < tanks.length; i++) {
       if (tanks[i].plot == true) {
-        tanks[i].showSD(escalaReal, propiedades.item, showInfo.showLabel, showInfo.showName, showInfo.showLSID); // Plots with a certain scale
+        tanks[i].showSD(
+          escalaReal,
+          propiedades.item,
+          showInfo.showLabel,
+          showInfo.showName,
+          showInfo.showLSID
+        ); // Plots with a certain scale
       }
     }
 
@@ -546,7 +630,8 @@ function draw() {
     for (let i = 0; i < tanks.length; i++) {
       if (tanks[i].plot == true) {
         if (showInfo.showUMDs) {
-          if (tanks[i].status) { // If the position is finished, and the checkbox is enabled:
+          if (tanks[i].status) {
+            // If the position is finished, and the checkbox is enabled:
             tanks[i].showUMD(escalaReal); // Show the UMDs
           }
         }
@@ -579,7 +664,7 @@ function draw() {
     if (showInfo.showRoads) {
       drawRoads(tracks, colors.roads);
     }
-    if (propiedades.item == "trip"){
+    if (propiedades.item == "trip") {
       showInfo.showRoads = true;
     }
     // if (showInfo.showUMDs){
@@ -605,23 +690,21 @@ function mapStyle() {
   let satButton = showInfo.satellite;
 
   let changed;
-  if (prevSatButton == satButton){
+  if (prevSatButton == satButton) {
     changed = false;
-  }
-  else{
+  } else {
     changed = true;
   }
 
-  if (changed){
-    if (satButton == true){
-      AMIGA_Map.options.style = "mapbox://styles/mapbox/satellite-v8"
-      AMIGA_Map.createMap()
+  if (changed) {
+    if (satButton == true) {
+      AMIGA_Map.options.style = "mapbox://styles/mapbox/satellite-v8";
+      AMIGA_Map.createMap();
       console.log("Satellite");
       colors = colorsSatellite;
-    }
-    else{
-      AMIGA_Map.options.style = "mapbox://styles/mapbox/dark-v9"
-      AMIGA_Map.createMap()
+    } else {
+      AMIGA_Map.options.style = "mapbox://styles/mapbox/dark-v9";
+      AMIGA_Map.createMap();
       console.log("Dark");
       colors = colorsDark;
     }
@@ -648,7 +731,7 @@ function mapStyle() {
 //       propiedades.scale ++;
 //       newGUI.updateDisplay();
 //     }
-    
+
 //   }
 //   else if (propiedades.scale > target){
 //     while(propiedades.scale > target){
@@ -690,7 +773,7 @@ function makeDraw() {
 function takeScreenshot() {
   push();
 
-  save('AMIGA.png');
+  save("AMIGA.png");
   pop();
   return false;
 }
@@ -752,31 +835,37 @@ function showReferences() {
 }
 
 function getDateInString() {
-  let res = new Map()
+  let res = new Map();
 
   // current year
-  res['year'] = lastUpdateDate.getUTCFullYear();
+  res["year"] = lastUpdateDate.getUTCFullYear();
 
   // current month. Using slice() deletes extraneous 0 in double-digit days, working as a poor man's zero pad.
-  res['month'] = ("0" + (lastUpdateDate.getUTCMonth() + 1)).slice(-2);
+  res["month"] = ("0" + (lastUpdateDate.getUTCMonth() + 1)).slice(-2);
 
   // current day
-  res['day'] = ("0" + lastUpdateDate.getUTCDate()).slice(-2);
+  res["day"] = ("0" + lastUpdateDate.getUTCDate()).slice(-2);
 
   // current hour
-  res['hour'] = ("0" + lastUpdateDate.getUTCHours()).slice(-2);
+  res["hour"] = ("0" + lastUpdateDate.getUTCHours()).slice(-2);
 
   // current minute
-  res['minute'] = ("0" + lastUpdateDate.getUTCMinutes()).slice(-2);
+  res["minute"] = ("0" + lastUpdateDate.getUTCMinutes()).slice(-2);
 
-  return res
+  return res;
 }
 
 function showTitle(text_) {
   let t = text_.replace("_", " ");
   let unformattedDate = getDateInString();
   t = toTitleCase(t);
-  let date = "" + unformattedDate['year'] + "/" + unformattedDate['month'] + "/" + unformattedDate['day'];
+  let date =
+    "" +
+    unformattedDate["year"] +
+    "/" +
+    unformattedDate["month"] +
+    "/" +
+    unformattedDate["day"];
   // let date = day().toString() + "/" + month().toString() + "/" + year().toString();
   let info = t + " (" + date + ")";
   let width = info.length * 10;
@@ -807,7 +896,21 @@ function showLastUpdate() {
 
   let unformattedDate = getDateInString();
 
-  text("Last update: " + unformattedDate['year'] + "/" + unformattedDate['month'] + "/" + unformattedDate['day'] + " " + unformattedDate['hour'] + ":" + unformattedDate['minute'] + " UTC", width / 2, height - 20);
+  text(
+    "Last update: " +
+      unformattedDate["year"] +
+      "/" +
+      unformattedDate["month"] +
+      "/" +
+      unformattedDate["day"] +
+      " " +
+      unformattedDate["hour"] +
+      ":" +
+      unformattedDate["minute"] +
+      " UTC",
+    width / 2,
+    height - 20
+  );
   pop();
   // const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
 }
@@ -815,29 +918,29 @@ function showLastUpdate() {
 function showTable() {
   let lista = [];
   for (let i = 0; i < tanks.length; i++) {
-    if(tanks[i].selected == true){
+    if (tanks[i].selected == true) {
       let dataSelected = {
-        lsid : tanks[i].lsid,
-        name : tanks[i].name
-      }
-      lista.push(dataSelected)
+        lsid: tanks[i].lsid,
+        name: tanks[i].name,
+      };
+      lista.push(dataSelected);
     }
   }
-  push()
-  lista.forEach( function(valor, indice, array) {
+  push();
+  lista.forEach(function (valor, indice, array) {
     let yOff = 250;
     let spacing = 25;
     let y = yOff + indice * spacing;
     stroke(127);
     strokeWeight(1);
     fill(51, 200);
-    rect(0, y-15 , 160, spacing, 4);
-    let texto = indice+1 + " - " + valor.name + " (" + valor.lsid + ")";
+    rect(0, y - 15, 160, spacing, 4);
+    let texto = indice + 1 + " - " + valor.name + " (" + valor.lsid + ")";
     fill(200);
     noStroke();
     textSize(12);
     text(texto, 5, y);
-});
+  });
   pop();
 }
 
@@ -849,8 +952,8 @@ function loadRoads(file) {
     if (line.length == 2) {
       let pointUTM = {
         latUTM: line[0],
-        lngUTM: line[1]
-      }
+        lngUTM: line[1],
+      };
       let utmz = 19;
       let easting = Number(pointUTM.latUTM);
       let northing = Number(pointUTM.lngUTM) - 10000000;
@@ -858,12 +961,12 @@ function loadRoads(file) {
       var degd = utm.to_deg();
       var pos = {
         lat: degd.latd,
-        lng: degd.lngd
-      }
+        lng: degd.lngd,
+      };
       road.push(pos);
     } else {
       allroads.push(road);
-      road = []
+      road = [];
     }
   }
   allroads.push(road);
@@ -888,18 +991,16 @@ function drawRoads(list, col) {
 }
 
 function toTitleCase(str) {
-  return str.replace(
-    /\w\S*/g,
-    function (txt) {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    }
-  );
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
 }
 
 function windowResized() {
-  resizeCanvas(windowHeight, windowHeight);
+  resizeCanvas(windowWidth, windowHeight);
+  AMIGA_Map.overlay(canvas);
+  draww = true;
 }
-
 
 function millisecondsToHuman(ms) {
   const seconds = Math.floor((ms / 1000) % 60);
@@ -910,7 +1011,7 @@ function millisecondsToHuman(ms) {
     pad(hours.toString(), 2),
     pad(minutes.toString(), 2),
     pad(seconds.toString(), 2),
-  ].join(':');
+  ].join(":");
 
   return humanized;
 }
