@@ -1,5 +1,7 @@
 // app.js
 
+require('dotenv').config();
+
 console.log('App running...');
 
 //Import Express library
@@ -21,6 +23,11 @@ function listening() {
 
 app.use(express.static('public'));
 
+// Endpoint to securely provide the Mapbox API key
+app.get('/api/mapbox-key', (req, res) => {
+  res.json({ apiKey: process.env.MAPBOX_API_KEY || '' });
+});
+
 // A sample route
 // app.get('/', (req, res) => res.send('Hello World!'))
 
@@ -28,7 +35,7 @@ const fs = require('fs');
 
 const request = require('request');
 
-const csv_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3WkkXWxUp3TXEBsqGeeAtuMNKwVu3ZPASyzY8C43B5fWEyKqp2Xs0sEcM3_VXy_eoJNI_a8Mo8aiN/pub?gid=182439664&single=true&output=csv"
+const csv_url = process.env.CSV_URL;
 
 const path = './public/csv/'
 

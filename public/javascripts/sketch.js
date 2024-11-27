@@ -48,10 +48,19 @@ let lastUpdateDate;
 let AMIGA_Map;
 let canvas;
 // Mapbox API key
-var mapbox_api_key =
-  "pk.eyJ1Ijoibmljb2xlYWw4OCIsImEiOiJjazA3NWRmaHYzdjM5M2xwMHhoeGEwcnNhIn0.U9_rp4dKVkuTWEHODTHdgg";
-var mappa = new Mappa("MapboxGL", mapbox_api_key);
-// const mappa = new Mappa('Leaflet');
+var mapbox_api_key = '';
+var mappa;
+
+// Fetch the API key before initializing the map
+fetch('/api/mapbox-key')
+  .then(response => response.json())
+  .then(data => {
+    mapbox_api_key = data.apiKey;
+    mappa = new Mappa("MapboxGL", mapbox_api_key);
+    // Initialize your map here if needed
+  })
+  .catch(error => console.error('Error fetching API key:', error));
+
 let prevSatButton = false;
 let prevumdButton = false;
 
