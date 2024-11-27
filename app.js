@@ -10,6 +10,9 @@ const express = require('express');
 //Import CORS
 const cors = require('cors');
 
+// Import node-fetch
+const fetch = require('node-fetch');
+
 // Create Express app
 const app = express();
 app.use(cors());
@@ -33,8 +36,6 @@ app.get('/api/mapbox-key', (req, res) => {
 
 const fs = require('fs');
 
-const request = require('request');
-
 const csv_url = process.env.CSV_URL;
 
 const path = './public/csv/'
@@ -49,12 +50,16 @@ if (!fs.existsSync(path)) {
     console.log('Created directory:', path);
 }
 
-function download(url, path, callback) {
-	request.head(url, (err, res, body) => {
-		request(url)
-			.pipe(fs.createWriteStream(path))
-			.on('close', callback)
-	})
+async function download(url, filePath) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const buffer = await response.buffer();
+        fs.writeFileSync(filePath, buffer);
+        writeDateFile();
+    } catch (error) {
+        console.error('Error downloading file:', error);
+    }
 }
 
 function writeDateFile() {
@@ -69,7 +74,9 @@ function writeDateFile() {
 let interval = 1000 * 60 * 5
 
 // Download immediately when server starts
-download(csv_url, csv_path, writeDateFile);
+download(csv_url, csv_path);
 
 // Then set up interval for future updates
-setInterval(download, interval, csv_url, csv_path, writeDateFile);
+setInterval(() => {
+    download(csv_url, csv_path);
+}, interval);
