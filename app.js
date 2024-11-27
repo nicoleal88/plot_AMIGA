@@ -55,4 +55,8 @@ function writeDateFile() {
  
 let interval = 1000 * 60 * 5
 
+// Download immediately when server starts
+download(csv_url, csv_path, writeDateFile);
+
+// Then set up interval for future updates
 setInterval(download, interval, csv_url, csv_path, writeDateFile);
