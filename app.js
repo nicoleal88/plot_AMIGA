@@ -36,6 +36,12 @@ const csv_path = path + 'data.csv'
 
 const date_path = path + 'lastUpdate.txt';
 
+// Ensure the CSV directory exists
+if (!fs.existsSync(path)) {
+    fs.mkdirSync(path, { recursive: true });
+    console.log('Created directory:', path);
+}
+
 function download(url, path, callback) {
 	request.head(url, (err, res, body) => {
 		request(url)
