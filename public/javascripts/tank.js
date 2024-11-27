@@ -28,6 +28,7 @@ class Tank {
     this.tx = datos.tx
     this.distrib = datos.distrib
     this.shielding = datos.shielding
+    this.grounding = datos.grounding
     this.tubing = datos.tubing
     this.soporte = datos.soporte
     this.solar_panel = datos.solar_panel
@@ -407,6 +408,19 @@ class Tank {
         } else if (this.caseLabel == "" && this.amiga_box !== "") {
           fill(colors.warning);
         } else {
+          fill(colors.noData);
+        }
+        break;
+
+        case 'grounding':
+        this.caseLabel = this.grounding;
+        if (this.caseLabel && this.caseLabel.startsWith("OK")) {
+          fill(colors.ok);}
+          else if (this.caseLabel == "BAD") {
+            fill(colors.dead);} 
+          else if (this.caseLabel == "") {
+          fill(colors.warning);}
+        else {
           fill(colors.noData);
         }
         break;

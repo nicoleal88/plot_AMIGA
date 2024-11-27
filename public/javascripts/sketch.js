@@ -185,6 +185,7 @@ function setup() {
     "ip",
     "front_end",
     "shielding",
+    "grounding",
     "to_do",
     "trip",
   ]);
@@ -445,6 +446,7 @@ function setup() {
     let tx = row.get("TX");
     let dist = row.get("Distrib.");
     let shielding = row.get("Mallado");
+    let grounding = row.get("Grounding");
 
     // Conversion from UTM to LatLng
     let utmz = 19;
@@ -485,6 +487,7 @@ function setup() {
       tx,
       dist,
       shielding,
+      grounding,
       tubing,
       soporte,
       solar_panel,
