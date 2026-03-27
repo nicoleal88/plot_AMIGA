@@ -176,7 +176,7 @@ function setup() {
   AMIGA_Map.overlay(canvas);
 
   // New gui config
-  newGUI = new dat.GUI();
+  newGUI = new lil.GUI();
 
   propiedades = {
     item: "status",
