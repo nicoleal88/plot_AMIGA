@@ -708,15 +708,17 @@ function mapStyle() {
     changed = true;
   }
 
-  if (changed) {
-    if (satButton == true) {
-      AMIGA_Map.options.style = "mapbox://styles/mapbox/satellite-v8";
-      AMIGA_Map.createMap();
+  if (changed && AMIGA_Map && AMIGA_Map.map) {
+    const newStyle = satButton 
+      ? "mapbox://styles/mapbox/satellite-v8" 
+      : "mapbox://styles/mapbox/dark-v9";
+    
+    AMIGA_Map.map.setStyle(newStyle);
+    
+    if (satButton) {
       console.log("Satellite");
       colors = colorsSatellite;
     } else {
-      AMIGA_Map.options.style = "mapbox://styles/mapbox/dark-v9";
-      AMIGA_Map.createMap();
       console.log("Dark");
       colors = colorsDark;
     }
@@ -1010,8 +1012,18 @@ function toTitleCase(str) {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  AMIGA_Map.overlay(canvas);
+  canvas.style('display', 'block');
+  
+  if (AMIGA_Map && AMIGA_Map.map) {
+    AMIGA_Map.map.resize();
+  }
+  
   draww = true;
+  requestAnimationFrame(() => {
+    if (AMIGA_Map && AMIGA_Map.map) {
+      AMIGA_Map.map.resize();
+    }
+  });
 }
 
 function millisecondsToHuman(ms) {
