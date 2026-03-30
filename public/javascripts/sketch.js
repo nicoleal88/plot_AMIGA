@@ -630,7 +630,7 @@ function setup() {
         div.className = 'search-result-item';
         div.innerHTML = `${tank.name} <span class="lsid">(${tank.lsid})</span>`;
         div.addEventListener('click', function() {
-          selectAndZoomTank(tank);
+          selectAndZoomTank(tank, false);
           searchInput.value = tank.name;
           searchResults.classList.remove('show');
         });
@@ -1198,14 +1198,16 @@ function highlightTank(tank) {
   }
 }
 
-function selectAndZoomTank(tank) {
-  // Deselect all others
-  for (const t of tanks) {
-    t.selected = false;
+function selectAndZoomTank(tank, doSelect = true) {
+  // Optionally deselect all others
+  if (doSelect) {
+    for (const t of tanks) {
+      t.selected = false;
+    }
+    tank.selected = true;
   }
   
-  // Select and highlight this tank
-  tank.selected = true;
+  // Always highlight (for the ring)
   highlightTank(tank);
   
   // Zoom to tank position
