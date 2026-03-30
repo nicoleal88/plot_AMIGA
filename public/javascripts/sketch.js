@@ -175,6 +175,30 @@ function setup() {
   AMIGA_Map = mappa.tileMap(options);
   AMIGA_Map.overlay(canvas);
 
+  // Keep drawing while map is moving (polling approach)
+  let lastMapCenter = null;
+  let lastMapZoom = null;
+  
+  setInterval(function() {
+    if (AMIGA_Map && AMIGA_Map.map) {
+      const center = AMIGA_Map.map.getCenter();
+      const zoom = AMIGA_Map.map.getZoom();
+      
+      if (lastMapCenter !== null) {
+        const centerChanged = center.lat !== lastMapCenter.lat || center.lng !== lastMapCenter.lng;
+        const zoomChanged = zoom !== lastMapZoom;
+        
+        if (centerChanged || zoomChanged) {
+          draww = true;
+          count = 10;
+        }
+      }
+      
+      lastMapCenter = { lat: center.lat, lng: center.lng };
+      lastMapZoom = zoom;
+    }
+  }, 100);
+
   // New gui config
   newGUI = new lil.GUI();
 
@@ -584,6 +608,45 @@ function setup() {
   // console.log(data);
   // console.log(tanks);
   // AMIGA_Map.onChange(drawMap);
+
+  // Setup search panel
+  const searchInput = document.getElementById('search-input');
+  const searchResults = document.getElementById('search-results');
+  
+  searchInput.addEventListener('input', function() {
+    const query = this.value.trim();
+    if (query.length < 1) {
+      searchResults.classList.remove('show');
+      highlightTank(null);
+      return;
+    }
+    
+    const results = searchTanks(query);
+    searchResults.innerHTML = '';
+    
+    if (results.length > 0) {
+      for (const tank of results) {
+        const div = document.createElement('div');
+        div.className = 'search-result-item';
+        div.innerHTML = `${tank.name} <span class="lsid">(${tank.lsid})</span>`;
+        div.addEventListener('click', function() {
+          selectAndZoomTank(tank);
+          searchInput.value = tank.name;
+          searchResults.classList.remove('show');
+        });
+        searchResults.appendChild(div);
+      }
+      searchResults.classList.add('show');
+    } else {
+      searchResults.classList.remove('show');
+    }
+  });
+  
+  searchInput.addEventListener('blur', function() {
+    setTimeout(() => {
+      searchResults.classList.remove('show');
+    }, 200);
+  });
 }
 
 function draw() {
@@ -1091,4 +1154,68 @@ function pad(numberString, size) {
   let padded = numberString;
   while (padded.length < size) padded = `0${padded}`;
   return padded;
+}
+
+let highlightedTank = null;
+
+function searchTanks(query) {
+  if (!query || query.trim() === "") {
+    highlightTank(null);
+    return [];
+  }
+  
+  const q = query.toLowerCase().trim();
+  const results = [];
+  
+  for (let i = 0; i < tanks.length; i++) {
+    const name = tanks[i].name ? tanks[i].name.toLowerCase() : "";
+    const lsid = tanks[i].lsid ? tanks[i].lsid.toString().toLowerCase() : "";
+    
+    if (name.includes(q) || lsid.includes(q)) {
+      results.push(tanks[i]);
+    }
+  }
+  
+  if (results.length === 1) {
+    highlightTank(results[0]);
+  } else if (results.length > 1) {
+    highlightTank(null);
+  }
+  
+  return results;
+}
+
+function highlightTank(tank) {
+  // Remove previous highlight
+  if (highlightedTank) {
+    highlightedTank.highlighted = false;
+  }
+  
+  highlightedTank = tank;
+  
+  if (tank) {
+    tank.highlighted = true;
+  }
+}
+
+function selectAndZoomTank(tank) {
+  // Deselect all others
+  for (const t of tanks) {
+    t.selected = false;
+  }
+  
+  // Select and highlight this tank
+  tank.selected = true;
+  highlightTank(tank);
+  
+  // Zoom to tank position
+  if (AMIGA_Map && AMIGA_Map.map) {
+    AMIGA_Map.map.flyTo({
+      center: [tank.pos.lng, tank.pos.lat],
+      zoom: 16,
+      essential: true
+    });
+  }
+  
+  draww = true;
 }

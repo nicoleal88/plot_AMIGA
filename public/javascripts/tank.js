@@ -115,6 +115,7 @@ class Tank {
 
     this.plot = true;
     this.selected = false;
+    this.highlighted = false;
   }
 
   update() {
@@ -134,6 +135,16 @@ class Tank {
       pop();
       strokeWeight(0.8 * scl * propiedades.scale);
       stroke(colors.selected);
+    }
+
+    // Draw highlight ring for search
+    if (this.highlighted) {
+      push();
+      noFill();
+      strokeWeight(2 * scl * propiedades.scale);
+      stroke(255, 255, 255, 200);
+      circle(this.point.x, this.point.y, this.radius * 4 * scl * propiedades.scale);
+      pop();
     }
 
     // Get fill color acording to item
