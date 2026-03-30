@@ -130,6 +130,7 @@ let h433_2 = ["27", "29", "28", "54", "50", "42", "27"];
 let draww = true;
 let count;
 let n = 30;
+let initialDraw = true;
 
 function preload() {
   // Load tracks synchronously (static file)
@@ -229,6 +230,9 @@ function setup() {
         const zoomChanged = zoom !== lastMapZoom;
         
         if (centerChanged || zoomChanged) {
+          if (initialDraw) {
+            initialDraw = false;
+          }
           draww = true;
           count = 10;
         }
@@ -832,9 +836,13 @@ function draw() {
 
     // noLoop();
     // text(count, 5, 180);
-    count--;
-    if (count < 0) {
-      draww = false;
+    if (initialDraw) {
+      // Keep drawing until first mouse movement or map change
+    } else {
+      count--;
+      if (count < 0) {
+        draww = false;
+      }
     }
 
     showLastUpdate();
@@ -951,6 +959,9 @@ function animateScaleTo(targetScale) {
 function mouseMoving() {
   let d = dist(mouseX, mouseY, pmouseX, pmouseY);
   if (d > 1) {
+    if (initialDraw) {
+      initialDraw = false;
+    }
     draww = true;
     count = n;
   }
