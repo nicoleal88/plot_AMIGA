@@ -327,7 +327,10 @@ function setup() {
   powerFolder.add(showPower, "showSolarPanel");
   powerFolder.add(showPower, "showBatteryBox");
 
-  infoFolder.open();
+  // Close all folders by default (they open on click)
+  hexagonsFolder.close();
+  sdFolder.close();
+  powerFolder.close();
 
   // Data loading
   for (let row of table.rows) {

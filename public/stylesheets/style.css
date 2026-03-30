@@ -294,4 +294,99 @@ body {
   font-weight: bold;
 }
 
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  /* Search panel - smaller and centered */
+  #search-panel {
+    width: 90%;
+    max-width: 300px;
+    top: 50px;
+  }
+  
+  #search-input {
+    font-size: 16px; /* Better touch target */
+    padding: 12px 30px 12px 12px;
+  }
+  
+  /* Title - smaller text */
+  #title-panel {
+    font-size: 14px;
+    padding: 6px 15px;
+    width: 90%;
+    max-width: 300px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  
+  /* Selected list - full width at bottom */
+  #selected-list-panel {
+    width: calc(100% - 20px);
+    max-height: 200px;
+    top: auto;
+    bottom: 50px;
+    left: 10px;
+  }
+  
+  /* Hide references on mobile */
+  #references-panel {
+    display: none;
+  }
+  
+  /* Last update - smaller */
+  #last-update-panel {
+    font-size: 10px;
+    padding: 4px 10px;
+    bottom: 5px;
+  }
+  
+  /* lil-gui - smaller and collapsible */
+  .lil-gui {
+    width: 180px !important;
+    max-height: 50vh !important;
+    font-size: 12px !important;
+  }
+  
+  .lil-gui .lil-title {
+    font-size: 11px !important;
+  }
+  
+  .lil-gui .lil-controller {
+    font-size: 11px !important;
+  }
+  
+  /* Larger touch targets */
+  .search-result-item,
+  .selected-item {
+    padding: 12px 12px;
+    font-size: 14px;
+  }
+  
+  .search-result-item .select-btn,
+  .selected-item .remove-btn {
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+  
+  .header-buttons button {
+    padding: 6px 10px;
+    font-size: 16px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  #search-panel {
+    top: 45px;
+  }
+  
+  #title-panel {
+    top: 5px;
+    font-size: 12px;
+  }
+  
+  #selected-list-panel {
+    bottom: 45px;
+  }
+}
+
 
