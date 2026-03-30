@@ -198,7 +198,7 @@ function setup() {
     "to_do",
     "trip",
   ]);
-  newGUI.add(propiedades, "scale", 1, 50);
+  newGUI.add(propiedades, "scale", 1, 50, 1);
 
   newGUI.add(propiedades, "screenshot");
 
@@ -725,6 +725,53 @@ function mapStyle() {
   }
 
   prevSatButton = satButton;
+
+  // Handle showUMDs toggle with scale animation
+  let umdChanged = false;
+  if (prevumdButton !== showInfo.showUMDs) {
+    umdChanged = true;
+    prevumdButton = showInfo.showUMDs;
+  }
+
+  if (umdChanged && showInfo.showUMDs) {
+    animateScaleTo(14);
+  }
+}
+
+let scaleAnimationId = null;
+
+function animateScaleTo(targetScale) {
+  if (scaleAnimationId) {
+    cancelAnimationFrame(scaleAnimationId);
+  }
+
+  const startScale = propiedades.scale;
+  const duration = 500;
+  const startTime = performance.now();
+
+  function animate(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    
+    const easeProgress = 1 - Math.pow(1 - progress, 3);
+    
+    propiedades.scale = startScale + (targetScale - startScale) * easeProgress;
+    
+    if (newGUI) {
+      const controllers = newGUI.controllersRecursive();
+      for (const controller of controllers) {
+        controller.updateDisplay();
+      }
+    }
+
+    if (progress < 1) {
+      scaleAnimationId = requestAnimationFrame(animate);
+    } else {
+      scaleAnimationId = null;
+    }
+  }
+
+  scaleAnimationId = requestAnimationFrame(animate);
 }
 
 // function autoZoom(){
