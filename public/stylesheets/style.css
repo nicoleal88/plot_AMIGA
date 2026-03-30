@@ -17,22 +17,59 @@ body {
 
 #search-panel {
   position: absolute;
-  top: 10px;
-  left: 60px;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1000;
-  width: 250px;
+  width: 300px;
   font-family: Arial, sans-serif;
+}
+
+#title-panel {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  padding: 8px 20px;
+  font-family: Arial, sans-serif;
+  background: rgba(51, 51, 51, 0.9);
+  border: 1px solid #666;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 #search-input {
   width: 100%;
-  padding: 8px 12px;
+  padding: 8px 30px 8px 12px;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
   background: rgba(51, 51, 51, 0.9);
   color: white;
   box-sizing: border-box;
+}
+
+#clear-search-btn {
+  position: absolute;
+  right: 8px;
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+#clear-search-btn:hover {
+  color: white;
 }
 
 #search-input:focus {
@@ -64,6 +101,9 @@ body {
   border-bottom: 1px solid #444;
   color: white;
   font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .search-result-item:last-child {
@@ -73,6 +113,27 @@ body {
 .search-result-item:hover {
   background: #2ECC40;
   color: black;
+}
+
+.search-result-item .item-name {
+  flex: 1;
+  cursor: pointer;
+}
+
+.search-result-item .select-btn {
+  background: none;
+  border: 1px solid #666;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+.search-result-item .select-btn:hover {
+  background: #2ECC40;
+  color: black;
+  border-color: #2ECC40;
 }
 
 .search-result-item .lsid {
@@ -86,7 +147,7 @@ body {
 
 #selected-list-panel {
   position: absolute;
-  top: 250px;
+  top: 120px;
   left: 10px;
   z-index: 1000;
   width: 200px;
@@ -177,4 +238,51 @@ body {
 
 .selected-item .remove-btn:hover {
   color: #FF4136;
+}
+
+#references-panel {
+  position: absolute;
+  bottom: 30px;
+  left: 10px;
+  z-index: 1000;
+  width: 100px;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+  background: rgba(51, 51, 51, 0.9);
+  border: 1px solid #666;
+  border-radius: 5px;
+  color: white;
+  font-size: 13px;
+}
+
+.ref-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.ref-item {
+  display: flex;
+  align-items: center;
+  margin: 4px 0;
+}
+
+.ref-color {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+#last-update-panel {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  padding: 5px 15px;
+  font-family: Arial, sans-serif;
+  color: #999;
+  font-size: 12px;
 }

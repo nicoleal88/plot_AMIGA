@@ -628,12 +628,31 @@ function setup() {
       for (const tank of results) {
         const div = document.createElement('div');
         div.className = 'search-result-item';
-        div.innerHTML = `${tank.name} <span class="lsid">(${tank.lsid})</span>`;
-        div.addEventListener('click', function() {
+        div.innerHTML = `
+          <span class="item-name">${tank.name} <span class="lsid">(${tank.lsid})</span></span>
+          <button class="select-btn" title="Select only">+</button>
+        `;
+        
+        // Click on item - fly to it
+        div.querySelector('.item-name').addEventListener('click', function(e) {
+          e.stopPropagation();
           selectAndZoomTank(tank, false);
           searchInput.value = tank.name;
           searchResults.classList.remove('show');
         });
+        
+        // Click on select button - select without flying
+        div.querySelector('.select-btn').addEventListener('click', function(e) {
+          e.stopPropagation();
+          tank.selected = !tank.selected;
+          draww = true;
+          if (tank.selected) {
+            highlightTank(tank);
+          } else {
+            highlightTank(null);
+          }
+        });
+        
         searchResults.appendChild(div);
       }
       searchResults.classList.add('show');
@@ -647,6 +666,16 @@ function setup() {
       searchResults.classList.remove('show');
     }, 200);
   });
+  
+  const clearBtn = document.getElementById('clear-search-btn');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function() {
+      searchInput.value = '';
+      searchResults.classList.remove('show');
+      highlightTank(null);
+      searchInput.focus();
+    });
+  }
 }
 
 function draw() {
@@ -745,8 +774,7 @@ function draw() {
     // if (showInfo.showUMDs){
     //   autoZoom();
     // }
-    // Plot References
-    showReferences();
+    // Plot References (now in HTML)
     showTitle(propiedades.item);
 
     // noLoop();
@@ -757,7 +785,6 @@ function draw() {
     }
 
     showLastUpdate();
-    showTable();
     updateSelectedList();
   }
 }
@@ -925,40 +952,6 @@ function drawShape(lista, col) {
   pop();
 }
 
-function showReferences() {
-  let width = 100;
-  let height = 160;
-  textAlign(LEFT, CENTER);
-  push();
-  stroke(127);
-  strokeWeight(1);
-  fill(51, 200);
-  rect(0, 0, width, height, 5);
-  pop();
-  push();
-  fill(200);
-  noStroke();
-  textSize(16);
-  textAlign(LEFT);
-  text("References:", 5, 15);
-
-  textSize(14);
-  fill(colors.ok);
-  circle(8, 45, 10);
-  text("    OK", 5, 45);
-  fill(colors.warning);
-  circle(8, 75, 10);
-  text("    Needs fix", 5, 75);
-  fill(colors.dead);
-  circle(8, 105, 10);
-  text("    Critical", 5, 105);
-  fill(colors.noData);
-  circle(8, 135, 10);
-  text("    No Data", 5, 135);
-  pop();
-  // const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
-}
-
 function getDateInString() {
   let res = new Map();
 
@@ -991,83 +984,35 @@ function showTitle(text_) {
     unformattedDate["month"] +
     "/" +
     unformattedDate["day"];
-  // let date = day().toString() + "/" + month().toString() + "/" + year().toString();
   let info = t + " (" + date + ")";
-  let width = info.length * 10;
-  let height = 30;
-  push();
-  stroke(127);
-  strokeWeight(1);
-  fill(51, 200);
-  rectMode(CENTER);
-  rect(canvas.width / 2, height * 0.5 + 5, width, height, 5);
-  pop();
-  push();
-  fill(200);
-  noStroke();
-  textSize(16);
-  textAlign(CENTER, CENTER);
-  text(info, canvas.width / 2, height * 0.5 + 5);
-  pop();
-  // const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
+  
+  const titlePanel = document.getElementById('title-panel');
+  if (titlePanel) {
+    titlePanel.textContent = info;
+  }
 }
 
 function showLastUpdate() {
-  push();
-  fill(200);
-  noStroke();
-  textSize(12);
-  textAlign(CENTER, CENTER);
-
   let unformattedDate = getDateInString();
-
-  text(
-    "Last update: " +
-      unformattedDate["year"] +
-      "/" +
-      unformattedDate["month"] +
-      "/" +
-      unformattedDate["day"] +
-      " " +
-      unformattedDate["hour"] +
-      ":" +
-      unformattedDate["minute"] +
-      " UTC",
-    width / 2,
-    height - 20
-  );
-  pop();
-  // const point = AMIGA_Map.latLngToPixel(elt.lat, elt.lng);
-}
-
-function showTable() {
-  let lista = [];
-  for (let i = 0; i < tanks.length; i++) {
-    if (tanks[i].selected == true) {
-      let dataSelected = {
-        lsid: tanks[i].lsid,
-        name: tanks[i].name,
-      };
-      lista.push(dataSelected);
-    }
+  let text = "Last update: " +
+    unformattedDate["year"] +
+    "/" +
+    unformattedDate["month"] +
+    "/" +
+    unformattedDate["day"] +
+    " " +
+    unformattedDate["hour"] +
+    ":" +
+    unformattedDate["minute"] +
+    " UTC";
+  
+  const lastUpdatePanel = document.getElementById('last-update-panel');
+  if (lastUpdatePanel) {
+    lastUpdatePanel.textContent = text;
   }
-  push();
-  lista.forEach(function (valor, indice, array) {
-    let yOff = 250;
-    let spacing = 25;
-    let y = yOff + indice * spacing;
-    stroke(127);
-    strokeWeight(1);
-    fill(51, 200);
-    rect(0, y - 15, 160, spacing, 4);
-    let texto = indice + 1 + " - " + valor.name + " (" + valor.lsid + ")";
-    fill(200);
-    noStroke();
-    textSize(12);
-    text(texto, 5, y);
-  });
-  pop();
 }
+
+
 
 function loadRoads(file) {
   let allroads = [];

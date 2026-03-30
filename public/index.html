@@ -20,8 +20,13 @@
   <!-- <h1>Map</h1> -->
     <div id="sketch-div"></div>
     
+    <div id="title-panel"></div>
+    
     <div id="search-panel">
-      <input type="text" id="search-input" placeholder="Search SD by name or LSID..." autocomplete="off">
+      <div class="search-input-wrapper">
+        <input type="text" id="search-input" placeholder="Search SD by name or LSID..." autocomplete="off">
+        <button id="clear-search-btn" title="Clear">×</button>
+      </div>
       <div id="search-results"></div>
     </div>
     
@@ -35,5 +40,15 @@
       </div>
       <div id="selected-list"></div>
     </div>
+    
+    <div id="references-panel">
+      <div class="ref-title">References:</div>
+      <div class="ref-item"><span class="ref-color" style="background:#2ECC40"></span>OK</div>
+      <div class="ref-item"><span class="ref-color" style="background:#FFDC00"></span>Needs fix</div>
+      <div class="ref-item"><span class="ref-color" style="background:#FF4136"></span>Critical</div>
+      <div class="ref-item"><span class="ref-color" style="background:silver"></span>No Data</div>
+    </div>
+    
+    <div id="last-update-panel"></div>
 </body>
 </html>
