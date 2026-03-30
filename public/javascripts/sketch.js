@@ -758,6 +758,7 @@ function draw() {
 
     showLastUpdate();
     showTable();
+    updateSelectedList();
   }
 }
 
@@ -1220,4 +1221,138 @@ function selectAndZoomTank(tank, doSelect = true) {
   }
   
   draww = true;
+}
+
+// Update selected SDs list (HTML version)
+let lastSelectedCount = 0;
+
+function updateSelectedList() {
+  const selectedPanel = document.getElementById('selected-list-panel');
+  const selectedList = document.getElementById('selected-list');
+  const clearAllBtn = document.getElementById('clear-all-btn');
+  
+  if (!selectedList) return;
+  
+  // Get selected tanks
+  const selectedTanks = tanks.filter(t => t.selected);
+  
+  // Only update if changed
+  if (selectedTanks.length === lastSelectedCount) return;
+  lastSelectedCount = selectedTanks.length;
+  
+  // Show/hide panel
+  if (selectedTanks.length > 0) {
+    selectedPanel.classList.add('show');
+  } else {
+    selectedPanel.classList.remove('show');
+  }
+  
+  // Build list HTML
+  selectedList.innerHTML = '';
+  selectedTanks.forEach((tank, index) => {
+    const div = document.createElement('div');
+    div.className = 'selected-item';
+    div.innerHTML = `
+      <div class="item-info">
+        <div>${tank.name}</div>
+        <div class="lsid">(${tank.lsid})</div>
+      </div>
+      <button class="remove-btn" title="Remove">×</button>
+    `;
+    
+    // Click on item - fly to it
+    div.querySelector('.item-info').addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (AMIGA_Map && AMIGA_Map.map) {
+        AMIGA_Map.map.flyTo({
+          center: [tank.pos.lng, tank.pos.lat],
+          zoom: 16,
+          essential: true
+        });
+      }
+    });
+    
+    // Click on remove button
+    div.querySelector('.remove-btn').addEventListener('click', function(e) {
+      e.stopPropagation();
+      tank.selected = false;
+      draww = true;
+    });
+    
+    selectedList.appendChild(div);
+  });
+  
+  // Update count display
+  const countEl = document.getElementById('selected-count');
+  if (countEl) {
+    countEl.textContent = `(${selectedTanks.length})`;
+  }
+  
+  // Clear all button
+  if (clearAllBtn) {
+    clearAllBtn.onclick = function() {
+      tanks.forEach(t => t.selected = false);
+      draww = true;
+    };
+  }
+  
+  // Zoom to all button
+  const zoomAllBtn = document.getElementById('zoom-all-btn');
+  if (zoomAllBtn) {
+    zoomAllBtn.onclick = function() {
+      if (selectedTanks.length === 0) return;
+      
+      if (selectedTanks.length === 1) {
+        // Single selection - zoom to it
+        if (AMIGA_Map && AMIGA_Map.map) {
+          AMIGA_Map.map.flyTo({
+            center: [selectedTanks[0].pos.lng, selectedTanks[0].pos.lat],
+            zoom: 16,
+            essential: true
+          });
+        }
+      } else {
+        // Multiple - calculate bounds manually
+        let minLng = Infinity, maxLng = -Infinity;
+        let minLat = Infinity, maxLat = -Infinity;
+        
+        selectedTanks.forEach(t => {
+          minLng = Math.min(minLng, t.pos.lng);
+          maxLng = Math.max(maxLng, t.pos.lng);
+          minLat = Math.min(minLat, t.pos.lat);
+          maxLat = Math.max(maxLat, t.pos.lat);
+        });
+        
+        const centerLng = (minLng + maxLng) / 2;
+        const centerLat = (minLat + maxLat) / 2;
+        
+        // Calculate zoom to fit - use center position to determine scale
+        const lngDiff = maxLng - minLng;
+        const latDiff = maxLat - minLat;
+        const maxDiff = Math.max(lngDiff, latDiff);
+        
+        // Calibrated zoom for AMIGA site (around -35 lat, -69 lng)
+        // Higher zoom = closer view
+        let zoom = 14;
+        if (maxDiff < 0.0005) zoom = 18;
+        else if (maxDiff < 0.001) zoom = 17;
+        else if (maxDiff < 0.002) zoom = 16;
+        else if (maxDiff < 0.004) zoom = 15;
+        else if (maxDiff < 0.008) zoom = 14;
+        else if (maxDiff < 0.015) zoom = 13;
+        else if (maxDiff < 0.03) zoom = 12;
+        else if (maxDiff < 0.06) zoom = 11;
+        else if (maxDiff < 0.1) zoom = 10;
+        else zoom = 9;
+        
+        if (AMIGA_Map && AMIGA_Map.map) {
+          AMIGA_Map.map.flyTo({
+            center: [centerLng, centerLat],
+            zoom: zoom,
+            essential: true
+          });
+        }
+      }
+    };
+  }
 }
