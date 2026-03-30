@@ -63,6 +63,7 @@ fetch('/api/mapbox-key')
 
 let prevSatButton = false;
 let prevumdButton = false;
+let tripRoadsEnabled = false;
 
 //Colors
 let colors;
@@ -768,8 +769,21 @@ function draw() {
     if (showInfo.showRoads) {
       drawRoads(tracks, colors.roads);
     }
-    if (propiedades.item == "trip") {
+    // Auto-enable roads when trip mode is selected (only once)
+    if (propiedades.item == "trip" && !tripRoadsEnabled) {
+      tripRoadsEnabled = true;
       showInfo.showRoads = true;
+      // Update GUI checkbox
+      setTimeout(() => {
+        const controllers = newGUI.controllersRecursive();
+        for (const c of controllers) {
+          if (c.property === 'showRoads') {
+            c.updateDisplay();
+          }
+        }
+      }, 10);
+    } else if (propiedades.item != "trip") {
+      tripRoadsEnabled = false;
     }
     // if (showInfo.showUMDs){
     //   autoZoom();
