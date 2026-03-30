@@ -132,9 +132,48 @@ let count;
 let n = 30;
 
 function preload() {
-  table = loadTable("csv/data.csv", "csv", "header");
-  lastUpdate = loadStrings("csv/lastUpdate.txt");
+  // Load tracks synchronously (static file)
   tracksFile = loadStrings("files/Tracks-AERA-AMIGA.dat");
+  
+  // Load CSV - try localStorage cache first, then server
+  const cachedCSV = localStorage.getItem('plot_amiga_csv');
+  const cachedLastUpdate = localStorage.getItem('plot_amiga_lastupdate');
+  
+  if (cachedCSV) {
+    const blob = new Blob([cachedCSV], { type: 'text/csv' });
+    table = loadTable(URL.createObjectURL(blob), 'csv', 'header');
+    if (cachedLastUpdate) {
+      lastUpdate = [cachedLastUpdate];
+    } else {
+      lastUpdate = loadStrings("csv/lastUpdate.txt");
+    }
+  } else {
+    table = loadTable("csv/data.csv", "csv", "header");
+    lastUpdate = loadStrings("csv/lastUpdate.txt");
+  }
+  
+  // Try to update cache in background
+  updateCacheInBackground();
+}
+
+async function updateCacheInBackground() {
+  try {
+    const response = await fetch('csv/data.csv');
+    if (response.ok) {
+      const csvText = await response.text();
+      localStorage.setItem('plot_amiga_csv', csvText);
+      
+      try {
+        const lastUpdateResponse = await fetch('csv/lastUpdate.txt');
+        if (lastUpdateResponse.ok) {
+          const lastUpdateText = await lastUpdateResponse.text();
+          localStorage.setItem('plot_amiga_lastupdate', lastUpdateText);
+        }
+      } catch (e) {}
+    }
+  } catch (error) {
+    console.log('Could not update cache:', error);
+  }
 }
 
 function setup() {
@@ -1022,6 +1061,12 @@ function showLastUpdate() {
   
   const lastUpdatePanel = document.getElementById('last-update-panel');
   if (lastUpdatePanel) {
+    if (!navigator.onLine) {
+      text = "⚠️ OFFLINE - " + text;
+      lastUpdatePanel.classList.add('offline');
+    } else {
+      lastUpdatePanel.classList.remove('offline');
+    }
     lastUpdatePanel.textContent = text;
   }
 }
