@@ -116,6 +116,7 @@ class Tank {
     this.plot = true;
     this.selected = false;
     this.highlighted = false;
+    this.hitRadius = 10;
   }
 
   update() {
@@ -123,6 +124,11 @@ class Tank {
   }
 
   showSD(scl, item, label, name, lsid) {
+    // Calculate visual radius for hit detection
+    this.visualRadius = this.radius * scl * propiedades.scale;
+    // Minimum hit radius of 10px when circle is very small
+    this.hitRadius = Math.max(this.visualRadius, 10);
+    
     this.textsize = constrain(3 * scl * propiedades.scale, 1, 18);
 
     if (this.selected) {
@@ -183,7 +189,7 @@ class Tank {
   }
   // Draw popup
   showPopup() {
-    if (dist(mouseX, mouseY, this.point.x, this.point.y) < 10) {
+    if (this.hitRadius && dist(mouseX, mouseY, this.point.x, this.point.y) < this.hitRadius) {
       push();
       textAlign(LEFT);
       stroke(255, 255, 191);
@@ -202,7 +208,7 @@ class Tank {
   }
 
   selectSD() {
-    if (dist(mouseX, mouseY, this.point.x, this.point.y) < 10) {
+    if (this.hitRadius && dist(mouseX, mouseY, this.point.x, this.point.y) < this.hitRadius) {
       this.selected = !this.selected;
     }
   }
