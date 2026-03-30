@@ -7,10 +7,15 @@
 - **Tech stack**: Node.js + Express backend, p5.js + Mapbox frontend
 - **Main files**:
   - `app.js` - Express server (backend)
-  - `public/javascripts/sketch.js` - Main p5.js logic (1035 lines)
+  - `public/javascripts/sketch.js` - Main p5.js logic
   - `public/javascripts/tank.js` - SD (Surface Detector) entity class
   - `public/javascripts/umd.js` - UMD (Underground Muon Detector) entity class
   - `public/index.html` - Entry point
+
+### Dependencies
+
+- **Frontend**: p5.js 1.9.x, lil-gui, mappa.js (Mapbox wrapper)
+- **Backend**: Express 4.21.x (native fetch in Node 22)
 
 ---
 
@@ -227,7 +232,7 @@ refactor: extract UMD rendering to separate class
 ## Known Issues / Bugs
 
 - Canvas resizes to square on window resize (unfixed)
-- Multiple map instances when switching from flat to satellite view
+- Multiple map instances when switching from flat to satellite view (FIXED)
 - Hexagon opacity needs adjustment
 
 ---

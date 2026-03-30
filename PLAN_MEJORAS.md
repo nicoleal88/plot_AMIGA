@@ -4,22 +4,22 @@
 
 ### Frontend - Librerías
 
-| Componente | Actual | Alternativas | Recomendación |
-|------------|--------|--------------|----------------|
-| p5.js | 0.8.0 (2019) | 1.9.x (actual) | Actualizar - mejoras performance |
-| Mapbox GL | v8 (deprecated) | v2/v3 (requiere API key nueva) | Actualizar - v8 ya no tiene soporte |
-| mappa.js | ¿? | Mapbox GL directoo, leaflet-gl | Evaluar - puede estar abandonado |
-| dat.gui | ¿? | lil-gui (mantenido), custom UI | Cambiar a lil-gui |
-| quicksettings | ¿? | Eliminar si no se usa | Evaluar uso |
+| Componente | Estado | Alternativas |
+|------------|--------|--------------|
+| p5.js | ✅ Actualizado a 1.9.0 | - |
+| Mapbox GL | ⏳ Pendiente (v8 deprecated) | Requiere API key nueva |
+| mappa.js | ⏳ Pending evaluation | Mapbox GL directo o Leaflet |
+| dat.gui | ✅ Reemplazado por lil-gui | - |
+| quicksettings | ⏳ Evaluar uso | Eliminar si no se usa |
 
 ### Backend
 
-| Componente | Actual | Alternativas | Recomendación |
-|------------|--------|--------------|----------------|
-| Express | 4.x | 5.x (beta) o 4.x latest | Actualizar a latest 4.x |
-| node-fetch | 2.x | 3.x (migrar a fetch nativo Node 18+) | Migrar a fetch nativo |
-| dotenv | 16.x | Mantener | OK |
-| cors | 2.x | 2.x latest | OK |
+| Componente | Estado |
+|------------|--------|
+| Express | ✅ Actualizado a 4.21.0 |
+| node-fetch | ✅ Reemplazado por fetch nativo |
+| dotenv | ✅ OK |
+| cors | ✅ OK |
 
 ---
 
@@ -70,22 +70,26 @@ Opción B: TypeScript progresivo
 
 ### Mejoras existentes
 
-| Funcionalidad | Descripción | Prioridad |
-|---------------|-------------|----------|
-| Fix resize canvas | Bug: canvas se redimensiona a cuadrado | Alta |
-| Fix múltiples instancias map | Bug al cambiar a satélite | Alta |
-| Zoom suave | Animaciones de zoom mejoradas | Media |
-| Cache local | Guardar datos en localStorage | Media |
-| WebSocket/SSE | Updates en tiempo real (opcional a polling) | Baja |
+| Funcionalidad | Estado |
+|---------------|--------|
+| Fix resize canvas | ❌ Pendiente |
+| Fix múltiples instancias map | ✅ Completado |
+| Zoom suave (polling) | ✅ Completado |
+| Animación scale en UMDs | ✅ Completado |
+| Panel de búsqueda HTML | ✅ Completado |
+| Panel de seleccionados HTML | ✅ Completado |
+| Hit detection adaptativo | ✅ Completado |
+| UI HTML overlays | ✅ Completado |
 
 ### Nuevas funcionalidades
 
-| Funcionalidad | Descripción | Prioridad |
-|---------------|-------------|----------|
-| Modo offline/PWA | Funcionar sin conexión | Media |
-| Selector de fecha | Ver datos de fechas anteriores | Baja |
-| Exportar a PDF | Reportes imprimibles | Baja |
-| Móvil responsive | UI adaptada a celular | Alta |
+| Funcionalidad | Prioridad |
+|---------------|----------|
+| Modo offline/PWA | Media |
+| Selector de fecha | Baja |
+| Exportar a PDF | Baja |
+| Móvil responsive | Alta |
+| Panel de búsqueda | ✅ Completado |
 | Panel de búsqueda | Buscar SD por nombre/ID | Media |
 | Historial de cambios | Trackear cambios en el tiempo | Baja |
 
