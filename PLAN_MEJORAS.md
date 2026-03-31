@@ -80,18 +80,16 @@ Opción B: TypeScript progresivo
 | Panel de seleccionados HTML | ✅ Completado |
 | Hit detection adaptativo | ✅ Completado |
 | UI HTML overlays | ✅ Completado |
+| Modo offline/PWA | ✅ Completado |
+| Móvil responsive | ✅ Completado |
 
 ### Nuevas funcionalidades
 
 | Funcionalidad | Prioridad |
 |---------------|----------|
-| Modo offline/PWA | Media |
 | Selector de fecha | Baja |
 | Exportar a PDF | Baja |
-| Móvil responsive | Alta |
-| Panel de búsqueda | ✅ Completado |
-| Panel de búsqueda | Buscar SD por nombre/ID | Media |
-| Historial de cambios | Trackear cambios en el tiempo | Baja |
+| Historial de cambios | Baja |
 
 ---
 
