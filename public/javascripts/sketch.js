@@ -889,7 +889,9 @@ function mapStyle() {
   }
 
   if (umdChanged && showInfo.showUMDs) {
-    animateScaleTo(14);
+    if (propiedades.scale > 14) {
+      animateScaleTo(14);
+    }
   }
 }
 
