@@ -743,6 +743,7 @@ function setup() {
   }
 
   if (loadedFromCache) showOfflinePopup();
+  showLastUpdate();
 }
 
 function draw() {

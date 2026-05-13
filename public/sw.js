@@ -1,4 +1,4 @@
-const CACHE_NAME = 'plot-amiga-v2';
+const CACHE_NAME = 'plot-amiga-v3';
 
 // Install event - cache local assets only
 self.addEventListener('install', (event) => {
@@ -13,6 +13,8 @@ self.addEventListener('install', (event) => {
           '/stylesheets/style.css',
           '/libraries/mappa.js',
           '/libraries/utmconv.js',
+          '/libraries/p5.min.js',
+          '/libraries/lil-gui.umd.min.js',
           '/javascripts/sketch.js',
           '/javascripts/tank.js',
           '/javascripts/umd.js',
