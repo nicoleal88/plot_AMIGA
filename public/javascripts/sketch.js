@@ -995,16 +995,21 @@ function mouseMoving() {
   }
 }
 
+let mousePressX = 0;
+let mousePressY = 0;
+
 function mouseClicked() {
+  if (dist(mousePressX, mousePressY, mouseX, mouseY) > 5) return;
   for (let i = 0; i < tanks.length; i++) {
     if (tanks[i].plot == true) {
-      tanks[i].selectSD(); // Updates the position on the map
-      // console.log(tanks[i].selected);
+      tanks[i].selectSD();
     }
   }
 }
 
 function mousePressed() {
+  mousePressX = mouseX;
+  mousePressY = mouseY;
   draww = true;
   count = n;
 }
