@@ -43,6 +43,7 @@ let tracks = [];
 let tracksFile;
 let lastUpdate;
 let lastUpdateDate;
+let loadedFromCache = false;
 
 //Map settings
 let AMIGA_Map;
@@ -133,27 +134,25 @@ let n = 30;
 let initialDraw = true;
 
 function preload() {
-  // Load tracks synchronously (static file)
   tracksFile = loadStrings("files/Tracks-AERA-AMIGA.dat");
-  
-  // Load CSV - try localStorage cache first, then server
-  const cachedCSV = localStorage.getItem('plot_amiga_csv');
-  const cachedLastUpdate = localStorage.getItem('plot_amiga_lastupdate');
-  
-  if (cachedCSV) {
-    const blob = new Blob([cachedCSV], { type: 'text/csv' });
-    table = loadTable(URL.createObjectURL(blob), 'csv', 'header');
-    if (cachedLastUpdate) {
-      lastUpdate = [cachedLastUpdate];
-    } else {
-      lastUpdate = loadStrings("csv/lastUpdate.txt");
-    }
-  } else {
+
+  if (navigator.onLine) {
     table = loadTable("csv/data.csv", "csv", "header");
     lastUpdate = loadStrings("csv/lastUpdate.txt");
+  } else {
+    const cachedCSV = localStorage.getItem('plot_amiga_csv');
+    if (cachedCSV) {
+      loadedFromCache = true;
+      const blob = new Blob([cachedCSV], { type: 'text/csv' });
+      table = loadTable(URL.createObjectURL(blob), 'csv', 'header');
+      const cachedLastUpdate = localStorage.getItem('plot_amiga_lastupdate');
+      lastUpdate = cachedLastUpdate ? [cachedLastUpdate] : [];
+    } else {
+      table = loadTable("csv/data.csv", "csv", "header");
+      lastUpdate = loadStrings("csv/lastUpdate.txt");
+    }
   }
-  
-  // Try to update cache in background
+
   updateCacheInBackground();
 }
 
@@ -176,6 +175,25 @@ async function updateCacheInBackground() {
     console.log('Could not update cache:', error);
   }
 }
+
+function showOfflinePopup() {
+  const el = document.getElementById('offline-notification');
+  const msg = document.getElementById('offline-msg');
+  if (el && msg) {
+    msg.textContent = '⚠️ Sin conexión — mostrando datos locales';
+    el.classList.add('show');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const closeBtn = document.getElementById('offline-close');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      const el = document.getElementById('offline-notification');
+      if (el) el.classList.remove('show');
+    });
+  }
+});
 
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
@@ -723,6 +741,8 @@ function setup() {
       searchInput.focus();
     });
   }
+
+  if (loadedFromCache) showOfflinePopup();
 }
 
 function draw() {
