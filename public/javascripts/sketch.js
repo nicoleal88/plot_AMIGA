@@ -57,8 +57,8 @@ fetch('/api/mapbox-key')
   .then(response => response.json())
   .then(data => {
     mapbox_api_key = data.apiKey;
+    localStorage.setItem('plot_amiga_mapbox_key', mapbox_api_key);
     mappa = new Mappa("MapboxGL", mapbox_api_key);
-    // Initialize your map here if needed
   })
   .catch(error => console.error('Error fetching API key:', error));
 
@@ -141,6 +141,10 @@ function preload() {
     lastUpdate = loadStrings("csv/lastUpdate.txt");
   } else {
     const cachedCSV = localStorage.getItem('plot_amiga_csv');
+    mapbox_api_key = localStorage.getItem('plot_amiga_mapbox_key') || '';
+    if (mapbox_api_key) {
+      mappa = new Mappa("MapboxGL", mapbox_api_key);
+    }
     if (cachedCSV) {
       loadedFromCache = true;
       const blob = new Blob([cachedCSV], { type: 'text/csv' });
@@ -231,8 +235,10 @@ function setup() {
   lastUpdateDate = new Date(Number(lastUpdate));
 
   // Create a tile map with the options declared
-  AMIGA_Map = mappa.tileMap(options);
-  AMIGA_Map.overlay(canvas);
+  if (mappa) {
+    AMIGA_Map = mappa.tileMap(options);
+    AMIGA_Map.overlay(canvas);
+  }
 
   // Keep drawing while map is moving (polling approach)
   let lastMapCenter = null;
@@ -749,7 +755,7 @@ function setup() {
 function draw() {
   mouseMoving();
   mapStyle();
-  if (draww) {
+  if (draww && AMIGA_Map) {
     clear();
     // Zoom settings
     const zoom = AMIGA_Map.getZoom(); //getZoom() returns a float, zoom() an int
