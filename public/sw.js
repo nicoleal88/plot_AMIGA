@@ -1,4 +1,4 @@
-const CACHE_NAME = 'plot-amiga-v1';
+const CACHE_NAME = 'plot-amiga-v2';
 
 // Install event - cache local assets only
 self.addEventListener('install', (event) => {
@@ -11,6 +11,8 @@ self.addEventListener('install', (event) => {
           '/',
           '/index.html',
           '/stylesheets/style.css',
+          '/libraries/mappa.js',
+          '/libraries/utmconv.js',
           '/javascripts/sketch.js',
           '/javascripts/tank.js',
           '/javascripts/umd.js',
@@ -82,10 +84,11 @@ self.addEventListener('fetch', (event) => {
             return response;
           })
           .catch(() => {
-            // Return offline page for navigation requests
             if (event.request.mode === 'navigate') {
               return caches.match('/index.html');
             }
+            // Return empty response for failed resource requests
+            return new Response('', { status: 503, statusText: 'Offline' });
           });
       })
   );
