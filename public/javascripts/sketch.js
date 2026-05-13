@@ -141,10 +141,6 @@ function preload() {
     lastUpdate = loadStrings("csv/lastUpdate.txt");
   } else {
     const cachedCSV = localStorage.getItem('plot_amiga_csv');
-    mapbox_api_key = localStorage.getItem('plot_amiga_mapbox_key') || '';
-    if (mapbox_api_key) {
-      mappa = new Mappa("MapboxGL", mapbox_api_key);
-    }
     if (cachedCSV) {
       loadedFromCache = true;
       const blob = new Blob([cachedCSV], { type: 'text/csv' });
