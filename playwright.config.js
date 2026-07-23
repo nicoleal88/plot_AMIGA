@@ -5,6 +5,7 @@ module.exports = defineConfig({
   reporter: 'list',
   use: {
     baseURL: 'http://127.0.0.1:3013',
+    serviceWorkers: 'block',
     trace: 'on-first-retry'
   },
   webServer: {

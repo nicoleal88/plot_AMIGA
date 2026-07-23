@@ -722,19 +722,31 @@ function setup() {
     }
     
     const results = searchTanks(query);
-    searchResults.innerHTML = '';
+    searchResults.replaceChildren();
     
     if (results.length > 0) {
       for (const tank of results) {
         const div = document.createElement('div');
         div.className = 'search-result-item';
-        div.innerHTML = `
-          <span class="item-name">${tank.name} <span class="lsid">(${tank.lsid})</span></span>
-          <button class="select-btn" title="Select only">+</button>
-        `;
+        const name = document.createElement('span');
+        name.className = 'item-name';
+        name.textContent = `${tank.name} `;
+
+        const lsid = document.createElement('span');
+        lsid.className = 'lsid';
+        lsid.textContent = `(${tank.lsid})`;
+        name.appendChild(lsid);
+
+        const selectButton = document.createElement('button');
+        selectButton.type = 'button';
+        selectButton.className = 'select-btn';
+        selectButton.title = 'Select only';
+        selectButton.textContent = '+';
+
+        div.append(name, selectButton);
         
         // Click on item - fly to it
-        div.querySelector('.item-name').addEventListener('click', function(e) {
+        name.addEventListener('click', function(e) {
           e.stopPropagation();
           selectAndZoomTank(tank, false);
           searchInput.value = tank.name;
@@ -742,7 +754,7 @@ function setup() {
         });
         
         // Click on select button - select without flying
-        div.querySelector('.select-btn').addEventListener('click', function(e) {
+        selectButton.addEventListener('click', function(e) {
           e.stopPropagation();
           tank.selected = !tank.selected;
           draww = true;
@@ -1033,10 +1045,23 @@ let mousePressY = 0;
 
 function mouseClicked() {
   if (dist(mousePressX, mousePressY, mouseX, mouseY) > 5) return;
+  let hit = null;
+  let hitDistance = Infinity;
+
   for (let i = 0; i < tanks.length; i++) {
-    if (tanks[i].plot == true) {
-      tanks[i].selectSD();
+    const tank = tanks[i];
+    if (tank.plot == true && tank.containsPoint(mouseX, mouseY)) {
+      const distance = tank.distanceTo(mouseX, mouseY);
+      if (distance <= hitDistance) {
+        hit = tank;
+        hitDistance = distance;
+      }
     }
+  }
+
+  if (hit) {
+    hit.selected = !hit.selected;
+    draww = true;
   }
 }
 
@@ -1308,7 +1333,7 @@ function selectAndZoomTank(tank, doSelect = true) {
 }
 
 // Update selected SDs list (HTML version)
-let lastSelectedCount = 0;
+let lastSelectionKey = '';
 
 function updateSelectedList() {
   const selectedPanel = document.getElementById('selected-list-panel');
@@ -1321,8 +1346,12 @@ function updateSelectedList() {
   const selectedTanks = tanks.filter(t => t.selected);
   
   // Only update if changed
-  if (selectedTanks.length === lastSelectedCount) return;
-  lastSelectedCount = selectedTanks.length;
+  const selectionKey = selectedTanks
+    .map(tank => String(tank.lsid))
+    .sort()
+    .join('|');
+  if (selectionKey === lastSelectionKey) return;
+  lastSelectionKey = selectionKey;
   
   // Show/hide panel
   if (selectedTanks.length > 0) {
@@ -1331,21 +1360,31 @@ function updateSelectedList() {
     selectedPanel.classList.remove('show');
   }
   
-  // Build list HTML
-  selectedList.innerHTML = '';
-  selectedTanks.forEach((tank, index) => {
+  selectedList.replaceChildren();
+  selectedTanks.forEach((tank) => {
     const div = document.createElement('div');
     div.className = 'selected-item';
-    div.innerHTML = `
-      <div class="item-info">
-        <div>${tank.name}</div>
-        <div class="lsid">(${tank.lsid})</div>
-      </div>
-      <button class="remove-btn" title="Remove">×</button>
-    `;
+    const itemInfo = document.createElement('div');
+    itemInfo.className = 'item-info';
+
+    const name = document.createElement('div');
+    name.textContent = tank.name;
+
+    const lsid = document.createElement('div');
+    lsid.className = 'lsid';
+    lsid.textContent = `(${tank.lsid})`;
+
+    const removeButton = document.createElement('button');
+    removeButton.type = 'button';
+    removeButton.className = 'remove-btn';
+    removeButton.title = 'Remove';
+    removeButton.textContent = '×';
+
+    itemInfo.append(name, lsid);
+    div.append(itemInfo, removeButton);
     
     // Click on item - fly to it
-    div.querySelector('.item-info').addEventListener('click', function(e) {
+    itemInfo.addEventListener('click', function(e) {
       e.stopPropagation();
       if (AMIGA_Map && AMIGA_Map.map) {
         AMIGA_Map.map.flyTo({
@@ -1357,7 +1396,7 @@ function updateSelectedList() {
     });
     
     // Click on remove button
-    div.querySelector('.remove-btn').addEventListener('click', function(e) {
+    removeButton.addEventListener('click', function(e) {
       e.stopPropagation();
       tank.selected = false;
       draww = true;

@@ -99,6 +99,7 @@ const nodeGlobals = {
   process: 'readonly',
   console: 'readonly',
   fetch: 'readonly',
+  window: 'readonly',
   Buffer: 'readonly',
   Number: 'readonly',
   Promise: 'readonly',

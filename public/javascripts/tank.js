@@ -26,7 +26,7 @@ class Tank {
     this.ekit3 = datos.ekit3
     this.amiga_box = datos.amiga_box
     this.tx = datos.tx
-    this.distrib = datos.distrib
+    this.dist = datos.dist
     this.shielding = datos.shielding
     this.grounding = datos.grounding
     this.tubing = datos.tubing
@@ -208,9 +208,18 @@ class Tank {
   }
 
   selectSD() {
-    if (this.hitRadius && dist(mouseX, mouseY, this.point.x, this.point.y) < this.hitRadius) {
+    if (this.containsPoint(mouseX, mouseY)) {
       this.selected = !this.selected;
     }
+  }
+
+  containsPoint(x, y) {
+    return Boolean(this.hitRadius && this.point && dist(x, y, this.point.x, this.point.y) < this.hitRadius);
+  }
+
+  distanceTo(x, y) {
+    if (!this.point) return Infinity;
+    return dist(x, y, this.point.x, this.point.y);
   }
 
   showUMD(scl) {
@@ -290,7 +299,7 @@ class Tank {
           tx_ = "OK"
         }
         let d_;
-        if (this.distrib !== "" && this.distrib !== "-") {
+        if (this.dist !== "" && this.dist !== "-") {
           d_ = "OK"
         }
   
