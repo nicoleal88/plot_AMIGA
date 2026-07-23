@@ -20,17 +20,30 @@ Data visualization web app for AMIGA (Auger Muons and Infill for the Ground Arra
 
 ## Getting Started
 
+### Requirements
+
+- Node.js 22.x
+- npm
+
 ### Install dependencies
 ```bash
-npm install
+npm ci
 ```
 
 ### Run development server
 ```bash
-node app.js
+npm start
 ```
 
-Server runs at http://localhost:3000
+Server runs at http://localhost:3003 by default. Override it with `PORT`.
+
+### Verify changes
+
+```bash
+npm run check
+```
+
+This runs syntax checks, ESLint, backend smoke tests and Playwright smoke tests.
 
 ### Environment Variables
 
@@ -38,7 +51,11 @@ Create a `.env` file with:
 ```
 MAPBOX_API_KEY=your_mapbox_key
 CSV_URL=your_google_sheets_csv_url
+PORT=3003
+CSV_REFRESH_MS=300000
 ```
+
+Use `.env.example` as the template. Do not commit real tokens or private URLs.
 
 ## License
 

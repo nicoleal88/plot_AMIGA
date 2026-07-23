@@ -3,8 +3,16 @@
   "version": "1.0.0",
   "description": "Data visualization about AMIGA Deployment",
   "main": "app.js",
+  "engines": {
+    "node": ">=22 <23"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "check:syntax": "node --check app.js && node --check public/sw.js && node --check public/javascripts/sketch.js && node --check public/javascripts/tank.js && node --check public/javascripts/umd.js",
+    "lint": "eslint app.js public test",
+    "test": "node --test test/*.test.js",
+    "test:e2e": "playwright test",
+    "check": "npm run check:syntax && npm run lint && npm test && npm run test:e2e"
   },
   "repository": {
     "type": "git",
@@ -24,5 +32,9 @@
   "overrides": {
     "body-parser": "1.20.6",
     "qs": "6.15.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "eslint": "^10.7.0"
   }
 }

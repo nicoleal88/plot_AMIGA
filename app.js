@@ -2,35 +2,69 @@
 
 require('dotenv').config();
 
-console.log('App running...');
-
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 
-const app = express();
-app.use(cors());
+const DEFAULT_PORT = 3003;
+const DEFAULT_REFRESH_MS = 1000 * 60 * 5;
+const csvDir = './public/csv/';
+const csvPath = csvDir + 'data.csv';
+const datePath = csvDir + 'lastUpdate.txt';
 
-const server = app.listen(3003, listening);
+function createApp() {
+  const app = express();
 
-function listening() {
-	console.log('Server listening on port 3003!');
+  app.use(cors());
+  app.use(express.static('public'));
+
+  app.get('/api/mapbox-key', (req, res) => {
+    res.json({ apiKey: process.env.MAPBOX_API_KEY || '' });
+  });
+
+  return app;
 }
 
-app.use(express.static('public'));
+function startServer(options = {}) {
+  console.log('App running...');
 
-app.get('/api/mapbox-key', (req, res) => {
-  res.json({ apiKey: process.env.MAPBOX_API_KEY || '' });
-});
+  const app = options.app || createApp();
+  const port = Number(options.port || process.env.PORT || DEFAULT_PORT);
+  const csvUrl = options.csvUrl || process.env.CSV_URL;
+  const refreshMs = Number(options.refreshMs || process.env.CSV_REFRESH_MS || DEFAULT_REFRESH_MS);
 
-const csv_url = process.env.CSV_URL;
-const path = './public/csv/';
-const csv_path = path + 'data.csv';
-const date_path = path + 'lastUpdate.txt';
+  if (!fs.existsSync(csvDir)) {
+    fs.mkdirSync(csvDir, { recursive: true });
+    console.log('Created directory:', csvDir);
+  }
 
-if (!fs.existsSync(path)) {
-    fs.mkdirSync(path, { recursive: true });
-    console.log('Created directory:', path);
+  const server = app.listen(port, () => {
+    console.log(`Server listening on port ${port}!`);
+  });
+
+  download(csvUrl, csvPath);
+
+  const refreshTimer = setInterval(() => {
+    download(csvUrl, csvPath);
+  }, refreshMs);
+
+  return { app, server, refreshTimer };
+}
+
+function stopServer(startedServer) {
+  if (startedServer.refreshTimer) {
+    clearInterval(startedServer.refreshTimer);
+  }
+
+  return new Promise((resolve, reject) => {
+    startedServer.server.close((error) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+      resolve();
+    });
+  });
 }
 
 async function download(url, filePath) {
@@ -48,19 +82,15 @@ async function download(url, filePath) {
 
 function writeDateFile() {
 	const date = Date.now().toString();
-	fs.writeFile(date_path, date, function (err) {
+	fs.writeFile(datePath, date, function (err) {
 		if (err) return console.log(err);
 		// console.log('Hello World > helloworld.txt');
 	});
 	//console.log('Done!');
 }
- 
-let interval = 1000 * 60 * 5
 
-// Download immediately when server starts
-download(csv_url, csv_path);
+if (require.main === module) {
+  startServer();
+}
 
-// Then set up interval for future updates
-setInterval(() => {
-    download(csv_url, csv_path);
-}, interval);
+module.exports = { createApp, startServer, stopServer };

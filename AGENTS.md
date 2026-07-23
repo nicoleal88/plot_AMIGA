@@ -15,7 +15,7 @@
 ### Dependencies
 
 - **Frontend**: p5.js 1.9.x, lil-gui, mappa.js (Mapbox wrapper)
-- **Backend**: Express 4.21.x (native fetch in Node 22)
+- **Backend**: Express 4.22.x (native fetch in Node 22)
 
 ---
 
@@ -25,29 +25,35 @@
 
 ```bash
 # Install dependencies
-npm install
+npm ci
 
 # Start development server
-node app.js
+npm start
 
-# Server runs at http://localhost:3000
+# Server runs at http://localhost:3003 by default
 ```
 
 ### Testing
 
 ```bash
-# Run tests (currently a placeholder)
+# Run backend tests
 npm test
 
-# Manual testing: open http://localhost:3000 in browser
+# Run browser smoke tests
+npm run test:e2e
+
+# Full verification
+npm run check
+
+# Manual testing: open http://localhost:3003 in browser
 # Check browser console (F12) for errors
 ```
 
 ### Code Quality
 
 ```bash
-# No linter configured yet - consider adding ESLint
-# Manual code review recommended
+npm run check:syntax
+npm run lint
 ```
 
 ---

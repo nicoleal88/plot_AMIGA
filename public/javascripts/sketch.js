@@ -1156,7 +1156,7 @@ function showLastUpdate() {
 function loadRoads(file) {
   let allroads = [];
   let road = [];
-  for (i = 0; i < file.length; i++) {
+  for (let i = 0; i < file.length; i++) {
     let line = file[i].split(/\s+/);
     if (line.length == 2) {
       let pointUTM = {
@@ -1184,7 +1184,7 @@ function loadRoads(file) {
 }
 
 function drawRoads(list, col) {
-  for (i = 0; i < list.length; i++) {
+  for (let i = 0; i < list.length; i++) {
     push();
     strokeWeight(2);
     noFill();

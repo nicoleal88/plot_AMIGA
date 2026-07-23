@@ -5,5 +5,7 @@ npm-debug.log
 *.swp
 public/csv/
 public/csv/data.csv
+test-results/
+playwright-report/
 public/csv/lastUpdate.txt
 public/csv/data.csv
