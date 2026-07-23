@@ -258,6 +258,14 @@ refactor: extract UMD rendering to separate class
 - `update-tech` - Branch for major technology updates
 - Feature branches from `update-tech` or `master`
 
+## Deployment Context
+
+- The public VPS deployment currently serves the `update-tech` branch, not `master`.
+- After pushing deployment-relevant changes to `update-tech`, update the VPS with `git pull`, run `npm ci` when dependencies changed, and restart the Node process/service.
+- The app writes live downloaded data under `public/csv/`, which is intentionally ignored by git. Do not commit files from that directory.
+- If `public/csv/data.csv` is suspected to be stale or contaminated, verify the first line is a CSV header and not HTML. Remove `public/csv/data.csv` and `public/csv/lastUpdate.txt`, then restart the service to force a fresh download from `CSV_URL`.
+- Do not run browser/e2e checks on production data unless the test server is configured with `DISABLE_CSV_DOWNLOAD=1`.
+
 ---
 
-Last updated: 2026-03-27
+Last updated: 2026-07-23
