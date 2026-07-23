@@ -53,9 +53,15 @@ MAPBOX_API_KEY=your_mapbox_key
 CSV_URL=your_google_sheets_csv_url
 PORT=3003
 CSV_REFRESH_MS=300000
+CSV_TIMEOUT_MS=30000
+CSV_MAX_BYTES=2097152
 ```
 
 Use `.env.example` as the template. Do not commit real tokens or private URLs.
+
+The server publishes validated snapshots to `public/csv/data.csv`,
+`public/csv/lastUpdate.txt` and `public/csv/snapshot.json`. The `/healthz`
+endpoint returns readiness without exposing secrets.
 
 ## License
 

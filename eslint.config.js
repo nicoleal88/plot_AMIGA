@@ -100,11 +100,18 @@ const nodeGlobals = {
   console: 'readonly',
   fetch: 'readonly',
   window: 'readonly',
+  globalThis: 'readonly',
+  Response: 'readonly',
+  URL: 'readonly',
+  AbortSignal: 'readonly',
+  TextDecoder: 'readonly',
   Buffer: 'readonly',
   Number: 'readonly',
   Promise: 'readonly',
   setInterval: 'readonly',
-  clearInterval: 'readonly'
+  clearInterval: 'readonly',
+  setTimeout: 'readonly',
+  clearTimeout: 'readonly'
 };
 
 module.exports = [
