@@ -1,4 +1,26 @@
-const CACHE_NAME = 'plot-amiga-v3';
+const CACHE_NAME = 'plot-amiga-v4';
+const DYNAMIC_PATHS = new Set([
+  '/csv/data.csv',
+  '/csv/lastUpdate.txt',
+  '/csv/snapshot.json'
+]);
+
+function isDynamicRequest(request) {
+  const url = new URL(request.url);
+  return DYNAMIC_PATHS.has(url.pathname) || url.pathname.startsWith('/api/');
+}
+
+async function networkOnly(request) {
+  try {
+    const response = await fetch(request, { cache: 'no-store' });
+    if (!response || !response.ok) {
+      return response || new Response('', { status: 503, statusText: 'Offline' });
+    }
+    return response;
+  } catch (error) {
+    return new Response('', { status: 503, statusText: 'Offline' });
+  }
+}
 
 // Install event - cache local assets only
 self.addEventListener('install', (event) => {
@@ -50,7 +72,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch event - serve from cache, fallback to network
+// Fetch event - static shell cache, dynamic data always from network
 self.addEventListener('fetch', (event) => {
   // Skip non-GET requests
   if (event.request.method !== 'GET') return;
@@ -58,6 +80,30 @@ self.addEventListener('fetch', (event) => {
   // Skip cross-origin requests (like Mapbox tiles)
   if (!event.request.url.startsWith(self.location.origin)) {
     // Let Mapbox tiles pass through (browser cache handles them)
+    return;
+  }
+
+  if (isDynamicRequest(event.request)) {
+    event.respondWith(networkOnly(event.request));
+    return;
+  }
+
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (!response || response.status !== 200 || response.type !== 'basic') {
+            return response;
+          }
+
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME)
+            .then((cache) => cache.put(event.request, responseToCache));
+
+          return response;
+        })
+        .catch(() => caches.match('/index.html'))
+    );
     return;
   }
 

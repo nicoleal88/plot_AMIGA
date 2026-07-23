@@ -44,6 +44,7 @@ let tracksFile;
 let lastUpdate;
 let lastUpdateDate;
 let loadedFromCache = false;
+const SNAPSHOT_KEY = 'plot_amiga_snapshot_v1';
 
 //Map settings
 let AMIGA_Map;
@@ -136,51 +137,83 @@ let initialDraw = true;
 function preload() {
   tracksFile = loadStrings("files/Tracks-AERA-AMIGA.dat");
 
-  if (navigator.onLine) {
-    table = loadTable("csv/data.csv", "csv", "header");
-    lastUpdate = loadStrings("csv/lastUpdate.txt");
-  } else {
-    const cachedCSV = localStorage.getItem('plot_amiga_csv');
-    if (cachedCSV) {
-      loadedFromCache = true;
-      const blob = new Blob([cachedCSV], { type: 'text/csv' });
-      table = loadTable(URL.createObjectURL(blob), 'csv', 'header');
-      const cachedLastUpdate = localStorage.getItem('plot_amiga_lastupdate');
-      lastUpdate = cachedLastUpdate ? [cachedLastUpdate] : [];
-    } else {
-      table = loadTable("csv/data.csv", "csv", "header");
-      lastUpdate = loadStrings("csv/lastUpdate.txt");
-    }
-  }
-
-  updateCacheInBackground();
+  const snapshot = loadSnapshotForPreload();
+  loadedFromCache = snapshot.source === 'cache';
+  const blob = new Blob([snapshot.csv], { type: 'text/csv' });
+  table = loadTable(URL.createObjectURL(blob), 'csv', 'header');
+  lastUpdate = [snapshot.updatedAt];
 }
 
-async function updateCacheInBackground() {
+function loadSnapshotForPreload() {
   try {
-    const response = await fetch('csv/data.csv');
-    if (response.ok) {
-      const csvText = await response.text();
-      localStorage.setItem('plot_amiga_csv', csvText);
-      
-      try {
-        const lastUpdateResponse = await fetch('csv/lastUpdate.txt');
-        if (lastUpdateResponse.ok) {
-          const lastUpdateText = await lastUpdateResponse.text();
-          localStorage.setItem('plot_amiga_lastupdate', lastUpdateText);
-        }
-      } catch (e) {}
+    const csv = readTextFromNetwork('csv/data.csv');
+    const updatedAt = readTextFromNetwork('csv/lastUpdate.txt').trim();
+    const snapshot = { csv, updatedAt };
+    saveSnapshot(snapshot);
+    return { ...snapshot, source: 'network' };
+  } catch (error) {
+    const cachedSnapshot = readCachedSnapshot();
+    if (cachedSnapshot) {
+      console.log('Using cached AMIGA data:', error);
+      return { ...cachedSnapshot, source: 'cache' };
+    }
+    throw error;
+  }
+}
+
+function readTextFromNetwork(path) {
+  const request = new XMLHttpRequest();
+  request.open('GET', path + '?t=' + Date.now(), false);
+  request.setRequestHeader('Cache-Control', 'no-cache');
+  request.send(null);
+
+  if (request.status >= 200 && request.status < 300) {
+    return request.responseText;
+  }
+
+  throw new Error('Could not load ' + path + ': HTTP ' + request.status);
+}
+
+function saveSnapshot(snapshot) {
+  if (!snapshot.csv || !snapshot.updatedAt) return;
+
+  localStorage.setItem(SNAPSHOT_KEY, JSON.stringify({
+    schemaVersion: 1,
+    csv: snapshot.csv,
+    updatedAt: snapshot.updatedAt
+  }));
+
+  localStorage.setItem('plot_amiga_csv', snapshot.csv);
+  localStorage.setItem('plot_amiga_lastupdate', snapshot.updatedAt);
+}
+
+function readCachedSnapshot() {
+  try {
+    const rawSnapshot = localStorage.getItem(SNAPSHOT_KEY);
+    if (rawSnapshot) {
+      const snapshot = JSON.parse(rawSnapshot);
+      if (snapshot.schemaVersion === 1 && snapshot.csv && snapshot.updatedAt) {
+        return { csv: snapshot.csv, updatedAt: snapshot.updatedAt };
+      }
     }
   } catch (error) {
-    console.log('Could not update cache:', error);
+    console.log('Could not read AMIGA snapshot:', error);
   }
+
+  const csv = localStorage.getItem('plot_amiga_csv');
+  const updatedAt = localStorage.getItem('plot_amiga_lastupdate');
+  if (csv && updatedAt) return { csv, updatedAt };
+
+  return null;
 }
 
 function showOfflinePopup() {
   const el = document.getElementById('offline-notification');
   const msg = document.getElementById('offline-msg');
   if (el && msg) {
-    msg.textContent = '⚠️ Sin conexión — mostrando datos locales';
+    msg.textContent = navigator.onLine
+      ? '⚠️ No se pudo actualizar — mostrando datos locales'
+      : '⚠️ Sin conexión — mostrando datos locales';
     el.classList.add('show');
   }
 }
@@ -1105,7 +1138,10 @@ function showLastUpdate() {
   
   const lastUpdatePanel = document.getElementById('last-update-panel');
   if (lastUpdatePanel) {
-    if (!navigator.onLine) {
+    if (loadedFromCache) {
+      text = "⚠️ LOCAL DATA - " + text;
+      lastUpdatePanel.classList.add('offline');
+    } else if (!navigator.onLine) {
       text = "⚠️ OFFLINE - " + text;
       lastUpdatePanel.classList.add('offline');
     } else {
