@@ -32,6 +32,7 @@ function startServer(options = {}) {
   const port = Number(options.port || process.env.PORT || DEFAULT_PORT);
   const csvUrl = options.csvUrl || process.env.CSV_URL;
   const refreshMs = Number(options.refreshMs || process.env.CSV_REFRESH_MS || DEFAULT_REFRESH_MS);
+  const csvDownloadDisabled = options.disableCsvDownload || process.env.DISABLE_CSV_DOWNLOAD === '1';
 
   if (!fs.existsSync(csvDir)) {
     fs.mkdirSync(csvDir, { recursive: true });
@@ -42,11 +43,14 @@ function startServer(options = {}) {
     console.log(`Server listening on port ${port}!`);
   });
 
-  download(csvUrl, csvPath);
-
-  const refreshTimer = setInterval(() => {
+  let refreshTimer = null;
+  if (!csvDownloadDisabled) {
     download(csvUrl, csvPath);
-  }, refreshMs);
+
+    refreshTimer = setInterval(() => {
+      download(csvUrl, csvPath);
+    }, refreshMs);
+  }
 
   return { app, server, refreshTimer };
 }

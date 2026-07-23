@@ -14,7 +14,7 @@ module.exports = defineConfig({
     env: {
       PORT: '3013',
       MAPBOX_API_KEY: 'test-mapbox-key',
-      CSV_URL: 'http://127.0.0.1:3013/',
+      DISABLE_CSV_DOWNLOAD: '1',
       CSV_REFRESH_MS: '600000'
     }
   },

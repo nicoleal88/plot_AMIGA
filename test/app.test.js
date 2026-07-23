@@ -61,3 +61,28 @@ describe('application server', () => {
     assert.deepEqual(body, { apiKey: 'test-mapbox-key' });
   });
 });
+
+test('can start without CSV downloads for browser smoke tests', async () => {
+  const { startServer, stopServer } = require('../app');
+  const originalFetch = globalThis.fetch;
+  let fetchCalls = 0;
+
+  globalThis.fetch = async () => {
+    fetchCalls += 1;
+    throw new Error('fetch should not be called');
+  };
+
+  const startedServer = startServer({
+    port: 0,
+    csvUrl: 'https://example.com/data.csv',
+    disableCsvDownload: true
+  });
+
+  try {
+    assert.equal(startedServer.refreshTimer, null);
+    assert.equal(fetchCalls, 0);
+  } finally {
+    await stopServer(startedServer);
+    globalThis.fetch = originalFetch;
+  }
+});
